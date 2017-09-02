@@ -10,6 +10,7 @@
 #import "CanQuoteTableViewCell.h"
 #import "ExpireTableViewCell.h"
 #import "HMSegmentedControl.h"
+#import "QuoteViewController.h"
 
 @interface AviationViewController ()<UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate> {
     NSInteger notAcquireFlag;
@@ -24,6 +25,10 @@
 @end
 
 @implementation AviationViewController
+
+//导航栏的返回按钮只保留那个箭头，去掉后边的文字
+//[[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+//[self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -144,10 +149,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//取消选中状态
     if (tableView == _canQuoteTableView) {
-        //获取要跳转过去的那个页面
-        UINavigationController *signNavi = [Utilities getStoryboardInstance:@"Quote" byIdentity:@"Quote"];
-        //执行跳转
-        [self presentViewController:signNavi animated:YES completion:nil];
+//        //获取要跳转过去的那个页面
+//        UINavigationController *signNavi = [Utilities getStoryboardInstance:@"Quote" byIdentity:@"Quote"];
+//        //执行跳转
+//        [self presentViewController:signNavi animated:YES completion:nil];
+        QuoteViewController *purchaseVC = [Utilities getStoryboardInstance:@"Quote" byIdentity:@"Quote"];
+        //purchaseVC.activity = _activity;
+        [self.navigationController pushViewController:purchaseVC animated:YES];
     }
 }
 
