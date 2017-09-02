@@ -54,6 +54,9 @@
 		8429209F1F59340800A0592D /* BusinessGetHotels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8429209D1F59340800A0592D /* BusinessGetHotels.xcdatamodeld */; };
 		842920A21F59340F00A0592D /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 842920A11F59340F00A0592D /* Order.m */; };
 		842920A51F59552800A0592D /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 842920A41F59552800A0592D /* libc++.tbd */; };
+		846F5C781F5A445E00A093BB /* AviationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F5C771F5A445E00A093BB /* AviationViewController.m */; };
+		846F5C7B1F5A44C700A093BB /* CanQuoteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F5C7A1F5A44C700A093BB /* CanQuoteTableViewCell.m */; };
+		846F5C7E1F5A44F700A093BB /* ExpireTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F5C7D1F5A44F700A093BB /* ExpireTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,6 +160,12 @@
 		842920A11F59340F00A0592D /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
 		842920A31F5934E800A0592D /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		842920A41F59552800A0592D /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		846F5C761F5A445E00A093BB /* AviationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AviationViewController.h; sourceTree = "<group>"; };
+		846F5C771F5A445E00A093BB /* AviationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AviationViewController.m; sourceTree = "<group>"; };
+		846F5C791F5A44C700A093BB /* CanQuoteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanQuoteTableViewCell.h; sourceTree = "<group>"; };
+		846F5C7A1F5A44C700A093BB /* CanQuoteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanQuoteTableViewCell.m; sourceTree = "<group>"; };
+		846F5C7C1F5A44F700A093BB /* ExpireTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpireTableViewCell.h; sourceTree = "<group>"; };
+		846F5C7D1F5A44F700A093BB /* ExpireTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpireTableViewCell.m; sourceTree = "<group>"; };
 		CC7A89D5CD0C306B69B07EA3 /* libPods-BusinessGetHotels.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BusinessGetHotels.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -337,6 +346,7 @@
 		842920161F59300200A0592D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				846F5C751F5A440600A093BB /* AviationViewController */,
 				842920891F5930CD00A0592D /* ViewController.h */,
 				8429208A1F5930CD00A0592D /* ViewController.m */,
 			);
@@ -426,6 +436,19 @@
 				8409DE581F5A347800C4B2A3 /* Quote.storyboard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		846F5C751F5A440600A093BB /* AviationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				846F5C761F5A445E00A093BB /* AviationViewController.h */,
+				846F5C771F5A445E00A093BB /* AviationViewController.m */,
+				846F5C791F5A44C700A093BB /* CanQuoteTableViewCell.h */,
+				846F5C7A1F5A44C700A093BB /* CanQuoteTableViewCell.m */,
+				846F5C7C1F5A44F700A093BB /* ExpireTableViewCell.h */,
+				846F5C7D1F5A44F700A093BB /* ExpireTableViewCell.m */,
+			);
+			name = AviationViewController;
 			sourceTree = "<group>";
 		};
 		9F622398C157CB7FCBA246BD /* Pods */ = {
@@ -634,6 +657,7 @@
 				8429207E1F59300300A0592D /* AppAPIClient.m in Sources */,
 				8429207B1F59300300A0592D /* openssl_wrapper.m in Sources */,
 				842920851F59300300A0592D /* RequestAPI.m in Sources */,
+				846F5C781F5A445E00A093BB /* AviationViewController.m in Sources */,
 				842920841F59300300A0592D /* NSString+Crypt.m in Sources */,
 				8429207D1F59300300A0592D /* RSADataVerifier.m in Sources */,
 				842920821F59300300A0592D /* NSDate+Utility.m in Sources */,
@@ -642,6 +666,7 @@
 				842920771F59300300A0592D /* DataSigner.m in Sources */,
 				842920781F59300300A0592D /* DataVerifier.m in Sources */,
 				842920861F59300300A0592D /* StorageMgr.m in Sources */,
+				846F5C7E1F5A44F700A093BB /* ExpireTableViewCell.m in Sources */,
 				84291FD41F58F20600A0592D /* AppDelegate.m in Sources */,
 				8429207F1F59300300A0592D /* ErrorHandler.m in Sources */,
 				842920801F59300300A0592D /* JSONS.m in Sources */,
@@ -651,6 +676,7 @@
 				842920881F59300300A0592D /* Utilities.m in Sources */,
 				842920631F59300300A0592D /* BasicEncodingRules.m in Sources */,
 				842920791F59300300A0592D /* MD5DataSigner.m in Sources */,
+				846F5C7B1F5A44C700A093BB /* CanQuoteTableViewCell.m in Sources */,
 				8429207A1F59300300A0592D /* NSDataEx.m in Sources */,
 				842920641F59300300A0592D /* ZLImageViewDisplayView.m in Sources */,
 				84291FD11F58F20600A0592D /* main.m in Sources */,
