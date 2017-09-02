@@ -570,7 +570,7 @@
         <!--Navigation Controller-->
         <scene sceneID="ld2-SP-lHQ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="IMI-QI-SLR" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Quote" automaticallyAdjustsScrollViewInsets="NO" id="IMI-QI-SLR" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="FRN-bI-htc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
