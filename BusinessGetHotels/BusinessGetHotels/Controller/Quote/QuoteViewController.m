@@ -41,6 +41,13 @@
     // Do any additional setup after loading the view.
     _confirmBtn.enabled = NO;
     _confirmBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
+    [self naviConfing];
+}
+//将要来到此页面（隐藏导航栏）
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,6 +55,27 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)naviConfing
+{
+    //self.navigationController.navigationBar.backgroundColor = [UIColor blueColor];
+    //设置导航条的风格颜色
+    self.navigationController.navigationBar.barTintColor = UIColorFromRGB(1, 150, 255);
+    //设置导航条标题颜色
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+    //设置导航条按钮的分格颜色
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    //是否需要毛玻璃的效果
+    self.navigationController.navigationBar.translucent = YES;
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
+    //导航栏的返回按钮只保留那个箭头，去掉后边的文字
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    self.navigationItem.backBarButtonItem = item;
+}
+////自定的返回按钮的事件
+//- (void)leftButtonAction: (UIButton *)sender{
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
 /*
 #pragma mark - Navigation
 

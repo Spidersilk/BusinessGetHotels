@@ -153,7 +153,7 @@
 //        UINavigationController *signNavi = [Utilities getStoryboardInstance:@"Quote" byIdentity:@"Quote"];
 //        //执行跳转
 //        [self presentViewController:signNavi animated:YES completion:nil];
-        QuoteViewController *purchaseVC = [Utilities getStoryboardInstance:@"Quote" byIdentity:@"Quote"];
+        QuoteViewController *purchaseVC = [Utilities getStoryboardInstance:@"Quote" byIdentity:@"Quote1"];
         //purchaseVC.activity = _activity;
         [self.navigationController pushViewController:purchaseVC animated:YES];
     }

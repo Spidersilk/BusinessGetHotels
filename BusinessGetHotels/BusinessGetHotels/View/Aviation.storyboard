@@ -12,7 +12,7 @@
         <!--航空报价-->
         <scene sceneID="0Tk-KB-G31">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="fAc-AP-FuI" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fAc-AP-FuI" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="航空报价" image="aviation" id="dqW-UG-atw"/>
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>

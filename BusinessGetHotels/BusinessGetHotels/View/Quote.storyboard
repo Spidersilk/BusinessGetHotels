@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="THv-c7-3hR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -12,7 +12,7 @@
         <!--Quote View Controller-->
         <scene sceneID="dpX-mI-Qa4">
             <objects>
-                <viewController id="THv-c7-3hR" customClass="QuoteViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Quote1" id="THv-c7-3hR" customClass="QuoteViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="oRb-4T-4mt"/>
                         <viewControllerLayoutGuide type="bottom" id="A9L-F4-HYd"/>
@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="73l-XE-Yk6">
-                                <rect key="frame" x="0.0" y="64" width="375" height="205"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="205"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Agm-Sc-TIP">
                                         <rect key="frame" x="15" y="20" width="67" height="28"/>
@@ -316,7 +316,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fRH-Rc-cKp">
-                                <rect key="frame" x="0.0" y="274" width="375" height="393"/>
+                                <rect key="frame" x="0.0" y="230" width="375" height="437"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="quoteCell" rowHeight="139" id="ud2-RX-rCK" customClass="QuoteTableViewCell">
@@ -546,7 +546,6 @@
                             <constraint firstItem="fRH-Rc-cKp" firstAttribute="top" secondItem="73l-XE-Yk6" secondAttribute="bottom" constant="5" id="pzj-WF-YpT"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="mfj-XI-AGR"/>
                     <connections>
                         <outlet property="arriveBtn" destination="A3K-ax-DdQ" id="UCu-hK-PsH"/>
                         <outlet property="companyTextField" destination="8eZ-yu-OJK" id="uz6-Xn-pbZ"/>
@@ -566,24 +565,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aS1-rw-9Se" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1440.8" y="178.56071964017991"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ld2-SP-lHQ">
-            <objects>
-                <navigationController storyboardIdentifier="Quote" automaticallyAdjustsScrollViewInsets="NO" id="IMI-QI-SLR" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FRN-bI-htc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="THv-c7-3hR" kind="relationship" relationship="rootViewController" id="qcf-Yf-i4Q"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5TO-kM-R4N" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="501.60000000000002" y="178.56071964017991"/>
         </scene>
     </scenes>
 </document>
