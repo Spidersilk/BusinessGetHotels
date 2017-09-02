@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ozA-d3-TJK">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="XUg-Xa-73S">
+            <objects>
+                <viewController id="Spa-av-Ufm" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Yja-n2-p9d"/>
+                        <viewControllerLayoutGuide type="bottom" id="gJN-Je-IjT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tkW-2C-dB1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hJX-vv-ObG">
+                                <rect key="frame" x="119" y="241" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.25098040700000002" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ns2-5o-Dbq"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cex-ig-GZO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1248.8" y="201.94902548725639"/>
+        </scene>
+        <!--酒店发布-->
+        <scene sceneID="uts-eI-RSA">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ozA-d3-TJK" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="酒店发布" image="hotel" id="dtN-1V-owo"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MkF-Zr-QZS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Spa-av-Ufm" kind="relationship" relationship="rootViewController" id="JIq-B0-5dc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TJW-5V-pwS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="309.60000000000002" y="201.94902548725639"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="hotel" width="22" height="22"/>
+    </resources>
+</document>
