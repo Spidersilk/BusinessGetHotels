@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2D5D9B60FF17918638C2E1C8 /* libPods-BusinessGetHotels.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC7A89D5CD0C306B69B07EA3 /* libPods-BusinessGetHotels.a */; };
 		8409DE551F5A33E200C4B2A3 /* Aviation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8409DE541F5A33E200C4B2A3 /* Aviation.storyboard */; };
-		8409DE571F5A343800C4B2A3 /*  HotelIssued.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8409DE561F5A343800C4B2A3 /*  HotelIssued.storyboard */; };
+		8409DE571F5A343800C4B2A3 /* HotelIssued.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8409DE561F5A343800C4B2A3 /* HotelIssued.storyboard */; };
 		8409DE591F5A347800C4B2A3 /* Quote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8409DE581F5A347800C4B2A3 /* Quote.storyboard */; };
 		84291FD11F58F20600A0592D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84291FD01F58F20600A0592D /* main.m */; };
 		84291FD41F58F20600A0592D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84291FD31F58F20600A0592D /* AppDelegate.m */; };
@@ -77,7 +77,7 @@
 		534E4FCE40DCC739D55EA9BB /* Pods-BusinessGetHotels.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessGetHotels.release.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessGetHotels/Pods-BusinessGetHotels.release.xcconfig"; sourceTree = "<group>"; };
 		78E7E21501A71585E28D07F4 /* Pods-BusinessGetHotels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessGetHotels.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessGetHotels/Pods-BusinessGetHotels.debug.xcconfig"; sourceTree = "<group>"; };
 		8409DE541F5A33E200C4B2A3 /* Aviation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Aviation.storyboard; sourceTree = "<group>"; };
-		8409DE561F5A343800C4B2A3 /*  HotelIssued.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = " HotelIssued.storyboard"; sourceTree = "<group>"; };
+		8409DE561F5A343800C4B2A3 /* HotelIssued.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HotelIssued.storyboard; sourceTree = "<group>"; };
 		8409DE581F5A347800C4B2A3 /* Quote.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Quote.storyboard; sourceTree = "<group>"; };
 		84291FCC1F58F20500A0592D /* BusinessGetHotels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusinessGetHotels.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84291FD01F58F20600A0592D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -422,7 +422,7 @@
 				84291FD81F58F20600A0592D /* Main.storyboard */,
 				84291FE01F58F20700A0592D /* LaunchScreen.storyboard */,
 				8409DE541F5A33E200C4B2A3 /* Aviation.storyboard */,
-				8409DE561F5A343800C4B2A3 /*  HotelIssued.storyboard */,
+				8409DE561F5A343800C4B2A3 /* HotelIssued.storyboard */,
 				8409DE581F5A347800C4B2A3 /* Quote.storyboard */,
 			);
 			path = View;
@@ -550,7 +550,7 @@
 				842920661F59300300A0592D /* Main.storyboard in Resources */,
 				842920651F59300300A0592D /* LaunchScreen.storyboard in Resources */,
 				8409DE551F5A33E200C4B2A3 /* Aviation.storyboard in Resources */,
-				8409DE571F5A343800C4B2A3 /*  HotelIssued.storyboard in Resources */,
+				8409DE571F5A343800C4B2A3 /* HotelIssued.storyboard in Resources */,
 				8409DE591F5A347800C4B2A3 /* Quote.storyboard in Resources */,
 				84291FDF1F58F20600A0592D /* Assets.xcassets in Resources */,
 				84291FDA1F58F20600A0592D /* Main.storyboard in Resources */,
