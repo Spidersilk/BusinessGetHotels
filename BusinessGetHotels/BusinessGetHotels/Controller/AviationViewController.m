@@ -143,7 +143,12 @@
 //细胞选中后调用
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//取消选中状态
-    
+    if (tableView == _canQuoteTableView) {
+        //获取要跳转过去的那个页面
+        UINavigationController *signNavi = [Utilities getStoryboardInstance:@"Quote" byIdentity:@"Quote"];
+        //执行跳转
+        [self presentViewController:signNavi animated:YES completion:nil];
+    }
 }
 
 /*
