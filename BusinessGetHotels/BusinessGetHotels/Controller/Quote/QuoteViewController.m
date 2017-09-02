@@ -8,7 +8,9 @@
 
 #import "QuoteViewController.h"
 
-@interface QuoteViewController ()
+@interface QuoteViewController (){
+    NSInteger flag;
+}
 @property (weak, nonatomic) IBOutlet UIButton *confirmBtn;
 @property (weak, nonatomic) IBOutlet UIButton *arriveBtn;
 @property (weak, nonatomic) IBOutlet UIButton *takeoffBtn;
@@ -63,11 +65,13 @@
 }
 //起飞时间的按钮事件
 - (IBAction)takeoffTime:(UIButton *)sender forEvent:(UIEvent *)event {
+    flag = 0;
     _quoteToolbar.hidden = NO;
     _quoteDatePicker.hidden = NO;
 }
 //到达时间的按钮事件
 - (IBAction)arriveTime:(UIButton *)sender forEvent:(UIEvent *)event {
+    flag = 1;
     _quoteToolbar.hidden = NO;
     _quoteDatePicker.hidden = NO;
 }
@@ -88,6 +92,16 @@
 }
 //toolbar上的确定按钮事件
 - (IBAction)sureAction:(UIBarButtonItem *)sender {
+   
+    NSDate *date = _quoteDatePicker.date;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    NSString *theDate = [formatter stringFromDate:date];
+    if(flag == 0){
+        [_takeoffBtn setTitle:theDate forState:UIControlStateNormal];
+    }else{
+         [_arriveBtn setTitle:theDate forState:UIControlStateNormal];
+    }
     _quoteToolbar.hidden = YES;
     _quoteDatePicker.hidden = YES;
 }
