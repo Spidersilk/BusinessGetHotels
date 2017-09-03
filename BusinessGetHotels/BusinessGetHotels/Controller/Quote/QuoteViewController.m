@@ -11,6 +11,7 @@
 @interface QuoteViewController (){
     NSInteger flag;
 }
+@property (weak, nonatomic) IBOutlet UIView *aviView;
 @property (weak, nonatomic) IBOutlet UIButton *confirmBtn;
 @property (weak, nonatomic) IBOutlet UIButton *arriveBtn;
 @property (weak, nonatomic) IBOutlet UIButton *takeoffBtn;
@@ -58,14 +59,15 @@
 - (void)naviConfing
 {
     //self.navigationController.navigationBar.backgroundColor = [UIColor blueColor];
+    self.navigationItem.title = @"报价";
     //设置导航条的风格颜色
-    self.navigationController.navigationBar.barTintColor = UIColorFromRGB(1, 150, 255);
+    self.navigationController.navigationBar.barTintColor = UIColorFromRGB(45, 120, 255);
     //设置导航条标题颜色
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     //设置导航条按钮的分格颜色
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     //是否需要毛玻璃的效果
-    self.navigationController.navigationBar.translucent = YES;
+    //self.navigationController.navigationBar.translucent = YES;
     UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
     //导航栏的返回按钮只保留那个箭头，去掉后边的文字
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
@@ -96,12 +98,14 @@
     flag = 0;
     _quoteToolbar.hidden = NO;
     _quoteDatePicker.hidden = NO;
+    _aviView.hidden = NO;
 }
 //到达时间的按钮事件
 - (IBAction)arriveTime:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 1;
     _quoteToolbar.hidden = NO;
     _quoteDatePicker.hidden = NO;
+    _aviView.hidden = NO;
 }
 //确定按钮事件
 - (IBAction)confirmAction:(UIButton *)sender forEvent:(UIEvent *)event {
@@ -115,8 +119,10 @@
 }
 //toolbar上的取消按钮事件
 - (IBAction)cancel:(UIBarButtonItem *)sender {
+    _aviView.hidden = YES;
     _quoteToolbar.hidden = YES;
     _quoteDatePicker.hidden = YES;
+    
 }
 //toolbar上的确定按钮事件
 - (IBAction)sureAction:(UIBarButtonItem *)sender {
@@ -130,6 +136,7 @@
     }else{
          [_arriveBtn setTitle:theDate forState:UIControlStateNormal];
     }
+    _aviView.hidden = YES;
     _quoteToolbar.hidden = YES;
     _quoteDatePicker.hidden = YES;
 }
