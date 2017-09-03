@@ -59,7 +59,7 @@
     _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"可报价",@"已过期"]];
     //设置segmentedControl的大小位置
     _segmentedControl.frame = CGRectMake(0, _headerView.frame.size.height, UI_SCREEN_W, 40);
-    //设置segmentedControl的默认@"已获取"的位置
+    //设置segmentedControl的默认@"可报价"的位置
     _segmentedControl.selectedSegmentIndex = 0;
     //设置segmentedControl的背景色
     _segmentedControl.backgroundColor = UIColorFromRGB(75, 139, 246);
@@ -155,7 +155,7 @@
 //        [self presentViewController:signNavi animated:YES completion:nil];
         QuoteViewController *purchaseVC = [Utilities getStoryboardInstance:@"Quote" byIdentity:@"Quote1"];
         //purchaseVC.activity = _activity;
-        [self.navigationController pushViewController:purchaseVC animated:YES];
+        [self.navigationController pushViewController:purchaseVC animated:NO];
     }
 }
 
