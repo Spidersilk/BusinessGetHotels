@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CanQuoteTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *imgView;
+@property (weak, nonatomic) IBOutlet UIImageView *canQuoteImgView;
 @property (weak, nonatomic) IBOutlet UILabel *datesLbl;//起飞时间
 @property (weak, nonatomic) IBOutlet UILabel *cityLbl;//城市to城市
 @property (weak, nonatomic) IBOutlet UILabel *ticketLbl;//机票

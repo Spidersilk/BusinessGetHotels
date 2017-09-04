@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ExpireTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *imgView;
+@property (weak, nonatomic) IBOutlet UIImageView *expireImgView;
 @property (weak, nonatomic) IBOutlet UILabel *datesLbl;//过期起飞时间
 @property (weak, nonatomic) IBOutlet UILabel *cityLbl;//城市to城市
 @property (weak, nonatomic) IBOutlet UILabel *ticketLbl;//机票

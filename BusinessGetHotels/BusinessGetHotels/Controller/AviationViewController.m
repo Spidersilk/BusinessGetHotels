@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *expireTableView;//过期
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (strong, nonatomic)HMSegmentedControl *segmentedControl;
+@property (strong, nonatomic) UIActivityIndicatorView *avi;
 @end
 
 @implementation AviationViewController
@@ -41,6 +42,7 @@
     _expireTableView.tableFooterView = [UIView new];
     //菜单栏
     [self setSegment];
+    [self request];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -114,6 +116,38 @@
     }
     return page;
 }
+#pragma mark - request网络请求
+//登录
+- (void) request {
+    //创建菊花膜（点击按钮的时候，并显示在当前页面）
+    _avi = [Utilities getCoverOnView:self.view];
+    //参数
+    NSDictionary *para = @{@"Id" : @(1)};
+    //网络请求
+    [RequestAPI requestURL:@"/findemandById" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+        NSLog(@"哈哈:%@",responseObject);
+        //当网络请求成功时停止动画
+        [_avi stopAnimating];
+        if ([responseObject[@"result"] integerValue] == 1) {
+            //NSDictionary *content = responseObject[@"content"];
+            
+            //用model的方式返回上一页
+            //[self dismissViewControllerAnimated:YES completion:nil];
+        }else{
+            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
+            [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self onCompletion:^{
+            }];
+        }
+        
+    } failure:^(NSInteger statusCode, NSError *error) {
+        [_avi stopAnimating];
+        [Utilities popUpAlertViewWithMsg:@"网络似乎不太给力,请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
+        }];
+        
+        
+    }];
+    
+}
 #pragma mark - tableViewCell
 //每一组多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -131,7 +165,7 @@
         cell.moneyLbl.text = @"￥:500-800";//价格在多少
         cell.timeLbl.text = @"晚上8点左右";//入住时间
         cell.cabinLbl.text = @"好运来头等舱";//机舱
-        cell.imgView.image = [UIImage imageNamed:@""];
+        //cell.canQuoteImgView.image = [UIImage imageNamed:@""];
         
         return cell;
         

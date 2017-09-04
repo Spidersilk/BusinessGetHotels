@@ -151,11 +151,11 @@
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="aircraft" translatesAutoresizingMaskIntoConstraints="NO" id="Sga-Vs-itZ">
-                                                            <rect key="frame" x="313" y="44" width="42" height="60"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3B8B22628BCF4FF193D3CD95E2CF57E0" translatesAutoresizingMaskIntoConstraints="NO" id="Sga-Vs-itZ">
+                                                            <rect key="frame" x="306" y="39" width="49" height="70"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Sga-Vs-itZ" secondAttribute="height" multiplier="7:10" id="mGo-ov-O3n"/>
-                                                                <constraint firstAttribute="height" constant="60" id="zUa-Z8-9z7"/>
+                                                                <constraint firstAttribute="height" constant="70" id="zUa-Z8-9z7"/>
                                                             </constraints>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w9L-LN-d1b">
@@ -200,9 +200,9 @@
                                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <connections>
                                                     <outlet property="cabinLbl" destination="wcM-xJ-mdG" id="hyb-db-7wE"/>
+                                                    <outlet property="canQuoteImgView" destination="Sga-Vs-itZ" id="WuZ-7D-ES6"/>
                                                     <outlet property="cityLbl" destination="Yaa-of-r20" id="3Ng-ci-QWL"/>
                                                     <outlet property="datesLbl" destination="U5w-S5-GpB" id="3M3-iY-Pqv"/>
-                                                    <outlet property="imgView" destination="Sga-Vs-itZ" id="iY4-Ag-YO0"/>
                                                     <outlet property="moneyLbl" destination="wq2-jo-QyW" id="2a6-dB-I8s"/>
                                                     <outlet property="priceLbl" destination="cjS-Pr-yPF" id="LCh-Kc-BZ4"/>
                                                     <outlet property="ticketLbl" destination="w0p-Ku-eAn" id="633-Bb-dg0"/>
@@ -292,11 +292,11 @@
                                                             <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="aviation" translatesAutoresizingMaskIntoConstraints="NO" id="df7-Qm-J84">
-                                                            <rect key="frame" x="313" y="40.5" width="42" height="60"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="79635EDA6B961B67B7C407F4FDA15276" translatesAutoresizingMaskIntoConstraints="NO" id="df7-Qm-J84">
+                                                            <rect key="frame" x="306" y="35.5" width="49" height="70"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="df7-Qm-J84" secondAttribute="height" multiplier="7:10" id="4Tf-uT-o7o"/>
-                                                                <constraint firstAttribute="height" constant="60" id="SDY-kB-eh6"/>
+                                                                <constraint firstAttribute="height" constant="70" id="SDY-kB-eh6"/>
                                                             </constraints>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuA-Fz-Wh7">
@@ -323,7 +323,6 @@
                                                         <constraint firstItem="fRQ-FG-IxI" firstAttribute="leading" secondItem="3yv-tI-gnI" secondAttribute="leading" id="LYz-2c-g1g"/>
                                                         <constraint firstItem="JhG-ha-W3j" firstAttribute="leading" secondItem="hYN-l7-z4m" secondAttribute="leading" id="UwT-Vb-Gaf"/>
                                                         <constraint firstItem="JpP-9d-63Q" firstAttribute="leading" secondItem="GeM-nE-DKA" secondAttribute="trailing" constant="10" id="V0h-ab-dph"/>
-                                                        <constraint firstItem="df7-Qm-J84" firstAttribute="top" secondItem="7QQ-we-nfL" secondAttribute="top" constant="40.5" id="X3U-oG-bER"/>
                                                         <constraint firstItem="zuA-Fz-Wh7" firstAttribute="leading" secondItem="7QQ-we-nfL" secondAttribute="leading" id="YeE-kv-wLz"/>
                                                         <constraint firstItem="vvw-Ix-I02" firstAttribute="top" secondItem="7QQ-we-nfL" secondAttribute="top" constant="15" id="aDc-RB-CBN"/>
                                                         <constraint firstItem="hYN-l7-z4m" firstAttribute="leading" secondItem="1QT-Kw-2Ro" secondAttribute="leading" id="aih-JQ-Rh3"/>
@@ -343,8 +342,8 @@
                                                 <connections>
                                                     <outlet property="cityLbl" destination="GeM-nE-DKA" id="xzl-Yj-1yU"/>
                                                     <outlet property="datesLbl" destination="vvw-Ix-I02" id="PMG-B4-7tQ"/>
+                                                    <outlet property="expireImgView" destination="df7-Qm-J84" id="Nie-tb-Bhe"/>
                                                     <outlet property="expireLbl" destination="JhG-ha-W3j" id="FWB-EM-uMT"/>
-                                                    <outlet property="imgView" destination="df7-Qm-J84" id="ZrJ-gQ-wEI"/>
                                                     <outlet property="moneyLbl" destination="LEB-fm-efL" id="z0a-g5-lNo"/>
                                                     <outlet property="priceLbl" destination="1QT-Kw-2Ro" id="Jtg-uo-vNt"/>
                                                     <outlet property="ticketLbl" destination="JpP-9d-63Q" id="Ume-Om-S8x"/>
@@ -402,7 +401,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="aircraft" width="45" height="45"/>
+        <image name="3B8B22628BCF4FF193D3CD95E2CF57E0" width="45" height="45"/>
+        <image name="79635EDA6B961B67B7C407F4FDA15276" width="82" height="82"/>
         <image name="aviation" width="22" height="22"/>
         <image name="origin" width="9" height="9"/>
     </resources>
