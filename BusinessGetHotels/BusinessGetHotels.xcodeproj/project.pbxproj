@@ -59,6 +59,8 @@
 		846F5C781F5A445E00A093BB /* AviationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F5C771F5A445E00A093BB /* AviationViewController.m */; };
 		846F5C7B1F5A44C700A093BB /* CanQuoteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F5C7A1F5A44C700A093BB /* CanQuoteTableViewCell.m */; };
 		846F5C7E1F5A44F700A093BB /* ExpireTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F5C7D1F5A44F700A093BB /* ExpireTableViewCell.m */; };
+		847BEE9C1F5CE0D7008BD5A3 /* Cities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847BEE9B1F5CE0D7008BD5A3 /* Cities.plist */; };
+		847BEE9F1F5CE293008BD5A3 /* CityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847BEE9E1F5CE293008BD5A3 /* CityTableViewController.m */; };
 		8497AB621F5A816A001B7621 /* ReleaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497AB611F5A816A001B7621 /* ReleaseViewController.m */; };
 		8497AB651F5A82F9001B7621 /* MyHotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497AB641F5A82F9001B7621 /* MyHotelViewController.m */; };
 		8497AB691F5A915B001B7621 /* HotelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497AB681F5A915B001B7621 /* HotelTableViewCell.m */; };
@@ -175,6 +177,9 @@
 		846F5C7A1F5A44C700A093BB /* CanQuoteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanQuoteTableViewCell.m; sourceTree = "<group>"; };
 		846F5C7C1F5A44F700A093BB /* ExpireTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpireTableViewCell.h; sourceTree = "<group>"; };
 		846F5C7D1F5A44F700A093BB /* ExpireTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpireTableViewCell.m; sourceTree = "<group>"; };
+		847BEE9B1F5CE0D7008BD5A3 /* Cities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Cities.plist; sourceTree = "<group>"; };
+		847BEE9D1F5CE293008BD5A3 /* CityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityTableViewController.h; sourceTree = "<group>"; };
+		847BEE9E1F5CE293008BD5A3 /* CityTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityTableViewController.m; sourceTree = "<group>"; };
 		8497AB601F5A816A001B7621 /* ReleaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReleaseViewController.h; sourceTree = "<group>"; };
 		8497AB611F5A816A001B7621 /* ReleaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReleaseViewController.m; sourceTree = "<group>"; };
 		8497AB631F5A82F9001B7621 /* MyHotelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyHotelViewController.h; sourceTree = "<group>"; };
@@ -281,6 +286,7 @@
 				84291FD31F58F20600A0592D /* AppDelegate.m */,
 				84291FD01F58F20600A0592D /* main.m */,
 				84291FE31F58F20700A0592D /* Info.plist */,
+				847BEE9B1F5CE0D7008BD5A3 /* Cities.plist */,
 				842920A31F5934E800A0592D /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
@@ -471,6 +477,8 @@
 			children = (
 				843CAC371F5A63FB00825605 /* QuoteViewController.h */,
 				843CAC381F5A63FB00825605 /* QuoteViewController.m */,
+				847BEE9D1F5CE293008BD5A3 /* CityTableViewController.h */,
+				847BEE9E1F5CE293008BD5A3 /* CityTableViewController.m */,
 			);
 			path = Quote;
 			sourceTree = "<group>";
@@ -631,6 +639,7 @@
 				842920651F59300300A0592D /* LaunchScreen.storyboard in Resources */,
 				8409DE551F5A33E200C4B2A3 /* Aviation.storyboard in Resources */,
 				8409DE571F5A343800C4B2A3 /* HotelIssued.storyboard in Resources */,
+				847BEE9C1F5CE0D7008BD5A3 /* Cities.plist in Resources */,
 				8409DE591F5A347800C4B2A3 /* Quote.storyboard in Resources */,
 				84291FDF1F58F20600A0592D /* Assets.xcassets in Resources */,
 				84291FDA1F58F20600A0592D /* Main.storyboard in Resources */,
@@ -721,6 +730,7 @@
 				843CAC351F5A63F100825605 /* QuoteTableViewCell.m in Sources */,
 				842920821F59300300A0592D /* NSDate+Utility.m in Sources */,
 				8429208B1F5930CD00A0592D /* ViewController.m in Sources */,
+				847BEE9F1F5CE293008BD5A3 /* CityTableViewController.m in Sources */,
 				842920751F59300300A0592D /* GBAlipayManager.m in Sources */,
 				842920771F59300300A0592D /* DataSigner.m in Sources */,
 				842920781F59300300A0592D /* DataVerifier.m in Sources */,

@@ -38,24 +38,24 @@
 @implementation QuoteViewController
 
 - (void)viewDidLoad {
+    flag = 0;
     [super viewDidLoad];
+    [self naviConfing];
+    [self anniu];
     // Do any additional setup after loading the view.
     _confirmBtn.enabled = NO;
     _confirmBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
-    [self naviConfing];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkCityState:) name:@"ResetHome" object:nil];
 }
-//将要来到此页面（隐藏导航栏）
+//将要来到此页面（显示导航栏）
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
-    
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 - (void)naviConfing
 {
     //self.navigationController.navigationBar.backgroundColor = [UIColor blueColor];
@@ -74,11 +74,38 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     self.navigationItem.backBarButtonItem = item;
 }
-////自定的返回按钮的事件
-//- (void)leftButtonAction: (UIButton *)sender{
-//    [self.navigationController popViewControllerAnimated:YES];
-//}
-/*
+- (void) checkCityState:(NSNotification *)note {
+    NSString *cityStr = note.object;
+    if (![cityStr isEqualToString:_startSiteBtn.titleLabel.text] || ![cityStr isEqualToString:_endSiteBtn.titleLabel.text]) {
+        if(flag == 0){
+            //修改城市按钮标题
+            [_startSiteBtn setTitle:cityStr forState:UIControlStateNormal];
+            //修改用户选择的城市
+            [Utilities removeUserDefaults:@"UserCity"];
+            [Utilities setUserDefaults:@"UserCity" content:cityStr];
+            //重新进行网络请求
+            //[self networkRequest];
+        }else{
+            //修改城市按钮标题
+            [_endSiteBtn setTitle:cityStr forState:UIControlStateNormal];
+            //修改用户选择的城市
+            [Utilities removeUserDefaults:@"UserCity"];
+            [Utilities setUserDefaults:@"UserCity" content:cityStr];
+            //重新进行网络请求
+            //[self networkRequest];
+        }
+    }
+}
+- (void)anniu{
+if(_startSiteBtn.titleLabel.text.length != 0 && _endSiteBtn.titleLabel.text.length != 0 && _priceTextField.text.length != 0 && _companyTextField.text.length != 0 && _flightTextField.text.length != 0 && _placeTextField.text.length != 0 && _takeoffBtn.titleLabel.text.length != 0 && _arriveBtn.titleLabel.text.length != 0 && _kgTextField.text.length != 0 ){
+    _confirmBtn.enabled =YES;
+    _confirmBtn.backgroundColor = UIColorFromRGB(74, 135, 238);
+}else{
+    _confirmBtn.enabled =NO;
+    _confirmBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
+}
+}
+    /*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -89,9 +116,11 @@
 */
 //出发地的按钮事件
 - (IBAction)startSiteAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    flag = 0;
 }
 //目的地的按钮事件
 - (IBAction)endSiteAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    flag = 1;
 }
 //起飞时间的按钮事件
 - (IBAction)takeoffTime:(UIButton *)sender forEvent:(UIEvent *)event {
@@ -109,24 +138,15 @@
 }
 //确定按钮事件
 - (IBAction)confirmAction:(UIButton *)sender forEvent:(UIEvent *)event {
-    if(_startSiteBtn.titleLabel.text.length != 0 && _endSiteBtn.titleLabel.text.length != 0 && _priceTextField.text.length != 0 && _companyTextField.text.length != 0 && _flightTextField.text.length != 0 && _placeTextField.text.length != 0 && _takeoffBtn.titleLabel.text.length != 0 && _arriveBtn.titleLabel.text.length != 0 && _kgTextField.text.length != 0 ){
-        _confirmBtn.enabled =YES;
-        _confirmBtn.backgroundColor = UIColorFromRGB(74, 135, 238);
-    }else{
-        _confirmBtn.enabled =NO;
-        _confirmBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
     }
-}
 //toolbar上的取消按钮事件
 - (IBAction)cancel:(UIBarButtonItem *)sender {
     _aviView.hidden = YES;
     _quoteToolbar.hidden = YES;
     _quoteDatePicker.hidden = YES;
-    
 }
 //toolbar上的确定按钮事件
 - (IBAction)sureAction:(UIBarButtonItem *)sender {
-   
     NSDate *date = _quoteDatePicker.date;
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm";
