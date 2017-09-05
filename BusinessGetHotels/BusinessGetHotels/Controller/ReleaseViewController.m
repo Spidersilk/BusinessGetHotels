@@ -8,7 +8,7 @@
 
 #import "ReleaseViewController.h"
 
-@interface ReleaseViewController ()
+@interface ReleaseViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *selectBtn;
 - (IBAction)selectAct:(UIButton *)sender forEvent:(UIEvent *)event;
 @property (weak, nonatomic) IBOutlet UITextField *roomNameLab;
@@ -31,6 +31,7 @@
     // Do any additional setup after loading the view.
     [self naviConfig];
     [self uilayout];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,6 +69,7 @@
     CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 75/255.0, 139/255.0, 246/255.0, 1 });
     [_selectBtn.layer setBorderColor:colorref];
 }
+
 /*
 #pragma mark - Navigation
 
@@ -78,7 +80,46 @@
 }
 */
 - (void)payAction{
-    
+    if(_roomNameLab.text.length == 0){
+        [Utilities popUpAlertViewWithMsg:@"请填写房间名称" andTitle:nil onView:self];
+        return;
+    }
+    if(_breakfastLab.text.length == 0){
+        [Utilities popUpAlertViewWithMsg:@"请填写是否含早" andTitle:nil onView:self onCompletion:^{
+        }];
+        return;
+    }
+    if(_bedLab.text.length == 0){
+        [Utilities popUpAlertViewWithMsg:@"请填写床型" andTitle:nil onView:self onCompletion:^{
+        }];
+        return;
+    }
+    if(_areaLab.text.length == 0){
+        [Utilities popUpAlertViewWithMsg:@"请填写房间面积" andTitle:nil onView:self onCompletion:^{
+        }];
+        return;
+    }
+    if(_priceLab.text.length == 0){
+        [Utilities popUpAlertViewWithMsg:@"请填写价格" andTitle:nil onView:self onCompletion:^{
+        }];
+        return;
+    }
+    if(_premiumLab.text.length == 0){
+        [Utilities popUpAlertViewWithMsg:@"请填写周末节假日加价" andTitle:nil onView:self onCompletion:^{
+        }];
+        return;
+    }
+    /*NSCharacterSet *notDigits = [[NSCharacterSet decimalDigitCharacterSet]invertedSet];
+    if( [_priceLab.text rangeOfCharacterFromSet:notDigits].location != NSNotFound){
+        [Utilities popUpAlertViewWithMsg:@"请设置正确的价格" andTitle:nil onView:self];
+        return;
+    }*/
+    NSLog(@"%@%@%@%@%@",_roomNameLab.text,_breakfastLab.text,_bedLab.text,_areaLab.text,_priceLab.text);
+    [[StorageMgr singletonStorageMgr] addKey:@"roomName" andValue:_roomNameLab.text];
+    [[StorageMgr singletonStorageMgr] addKey:@"breakfast" andValue:_breakfastLab.text];
+    [[StorageMgr singletonStorageMgr] addKey:@"bed" andValue:_bedLab.text];
+    [[StorageMgr singletonStorageMgr] addKey:@"area" andValue:_areaLab.text];
+    [[StorageMgr singletonStorageMgr] addKey:@"price" andValue:_priceLab.text];
 }
 - (IBAction)canceAct:(UIBarButtonItem *)sender {
     _toolBar.hidden = YES;
@@ -92,5 +133,16 @@
 - (IBAction)selectAct:(UIButton *)sender forEvent:(UIEvent *)event {
     _toolBar.hidden = NO;
     _pickerView.hidden = NO;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (textField == _roomNameLab || textField == _breakfastLab || textField == _bedLab|| textField == _areaLab || textField == _priceLab || textField == _premiumLab) {
+        [textField resignFirstResponder];
+        return YES;
+    }
+    return YES;
+}
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES]; //实现该方法是需要注意view需要是继承UIControl而来的
 }
 @end

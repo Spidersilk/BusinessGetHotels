@@ -33,7 +33,7 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hGs-hy-2tQ">
                                         <rect key="frame" x="326" y="44" width="24" height="22"/>
-                                        <state key="normal" image="check_out"/>
+                                        <state key="normal" image="release"/>
                                         <connections>
                                             <action selector="btnAction:forEvent:" destination="Spa-av-Ufm" eventType="touchUpInside" id="aot-Tb-zdc"/>
                                         </connections>
@@ -88,36 +88,69 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hotel" translatesAutoresizingMaskIntoConstraints="NO" id="4CJ-aK-16h">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hotelL" translatesAutoresizingMaskIntoConstraints="NO" id="4CJ-aK-16h">
                                                     <rect key="frame" x="325" y="81.5" width="30" height="35"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="4CJ-aK-16h" secondAttribute="height" multiplier="6:7" id="hKf-0L-eUU"/>
                                                     </constraints>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="含早" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xj6-W8-s8c">
+                                                    <rect key="frame" x="133.5" y="63" width="27" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大床" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RhO-sb-mVK">
+                                                    <rect key="frame" x="165.5" y="63" width="27" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="38" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U2e-S2-J18">
+                                                    <rect key="frame" x="133.5" y="91" width="16.5" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxL-Ya-xpw">
+                                                    <rect key="frame" x="142" y="114" width="25" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="Hoa-Ms-iSW" secondAttribute="bottom" constant="15" id="6Ce-Yi-Z7S"/>
                                                 <constraint firstItem="hOj-PE-Mip" firstAttribute="leading" secondItem="4Vl-x9-y4Q" secondAttribute="leading" constant="15" id="6ou-cf-io2"/>
                                                 <constraint firstItem="0lh-Kk-2ux" firstAttribute="centerY" secondItem="Hoa-Ms-iSW" secondAttribute="centerY" id="AOd-0s-bR8"/>
+                                                <constraint firstItem="U2e-S2-J18" firstAttribute="bottom" secondItem="0lh-Kk-2ux" secondAttribute="bottom" id="BSR-PA-UfW"/>
                                                 <constraint firstItem="hOj-PE-Mip" firstAttribute="top" secondItem="4Vl-x9-y4Q" secondAttribute="top" constant="15" id="Dtt-Ef-7HK"/>
+                                                <constraint firstItem="sxL-Ya-xpw" firstAttribute="bottom" secondItem="zCR-ns-pEM" secondAttribute="bottom" id="F55-tF-5eK"/>
+                                                <constraint firstItem="Xj6-W8-s8c" firstAttribute="bottom" secondItem="naK-KG-TGw" secondAttribute="bottom" id="K0X-Ia-afv"/>
+                                                <constraint firstItem="U2e-S2-J18" firstAttribute="leading" secondItem="0lh-Kk-2ux" secondAttribute="trailing" constant="5" id="N85-fI-cpZ"/>
+                                                <constraint firstItem="sxL-Ya-xpw" firstAttribute="leading" secondItem="zCR-ns-pEM" secondAttribute="trailing" constant="5" id="Oce-Wa-m4g"/>
                                                 <constraint firstItem="zCR-ns-pEM" firstAttribute="centerY" secondItem="Hoa-Ms-iSW" secondAttribute="centerY" constant="23" id="PHK-i2-TKO"/>
                                                 <constraint firstItem="4CJ-aK-16h" firstAttribute="height" secondItem="Hoa-Ms-iSW" secondAttribute="height" multiplier="2:3" id="QRa-Ck-Gix"/>
                                                 <constraint firstAttribute="trailing" secondItem="4CJ-aK-16h" secondAttribute="trailing" constant="20" id="S7f-Kc-mzk"/>
+                                                <constraint firstItem="RhO-sb-mVK" firstAttribute="bottom" secondItem="Xj6-W8-s8c" secondAttribute="bottom" id="T1p-mj-30T"/>
                                                 <constraint firstItem="zCR-ns-pEM" firstAttribute="leading" secondItem="0lh-Kk-2ux" secondAttribute="leading" id="UrE-jt-OyQ"/>
+                                                <constraint firstItem="Xj6-W8-s8c" firstAttribute="leading" secondItem="naK-KG-TGw" secondAttribute="trailing" constant="5" id="Uxg-O2-rlL"/>
                                                 <constraint firstItem="naK-KG-TGw" firstAttribute="centerY" secondItem="Hoa-Ms-iSW" secondAttribute="centerY" constant="-28" id="aHc-zm-ojj"/>
                                                 <constraint firstItem="0lh-Kk-2ux" firstAttribute="leading" secondItem="naK-KG-TGw" secondAttribute="leading" id="cPJ-hD-Bth"/>
                                                 <constraint firstItem="4CJ-aK-16h" firstAttribute="centerY" secondItem="Hoa-Ms-iSW" secondAttribute="centerY" id="cWb-Nl-niK"/>
                                                 <constraint firstItem="naK-KG-TGw" firstAttribute="leading" secondItem="Hoa-Ms-iSW" secondAttribute="trailing" constant="15" id="lAx-h1-NJ1"/>
                                                 <constraint firstItem="Hoa-Ms-iSW" firstAttribute="top" secondItem="hOj-PE-Mip" secondAttribute="bottom" constant="15" id="llf-Lt-TJZ"/>
+                                                <constraint firstItem="RhO-sb-mVK" firstAttribute="leading" secondItem="Xj6-W8-s8c" secondAttribute="trailing" constant="5" id="q8c-Or-ccB"/>
                                                 <constraint firstItem="Hoa-Ms-iSW" firstAttribute="leading" secondItem="hOj-PE-Mip" secondAttribute="leading" id="vuZ-rj-DTL"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="areaLab" destination="0lh-Kk-2ux" id="7oE-12-rWN"/>
-                                            <outlet property="breakfastLab" destination="naK-KG-TGw" id="4jN-Ls-2h1"/>
+                                            <outlet property="areaLab" destination="U2e-S2-J18" id="zkk-hD-CXU"/>
+                                            <outlet property="bedTypeLab" destination="RhO-sb-mVK" id="8uk-14-YRu"/>
+                                            <outlet property="breakfastLab" destination="Xj6-W8-s8c" id="fnL-u5-Gur"/>
                                             <outlet property="hotelImage" destination="Hoa-Ms-iSW" id="uqL-Zi-ZFE"/>
                                             <outlet property="hotelNameLab" destination="hOj-PE-Mip" id="sYF-zK-xjx"/>
-                                            <outlet property="priceLab" destination="zCR-ns-pEM" id="HOz-n5-vbA"/>
+                                            <outlet property="priceLab" destination="sxL-Ya-xpw" id="Ggl-yu-nfd"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -210,6 +243,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="pdW-x3-IOH" id="ZDJ-4s-jD5"/>
+                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxW-jw-M7o">
                                 <rect key="frame" x="30" y="256" width="315" height="1"/>
@@ -223,6 +259,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="pdW-x3-IOH" id="J1f-4z-Eik"/>
+                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9n-JT-pCR">
                                 <rect key="frame" x="30" y="403" width="315" height="1"/>
@@ -236,6 +275,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="pdW-x3-IOH" id="NUJ-P7-a5P"/>
+                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U2Z-5X-Gvf">
                                 <rect key="frame" x="30" y="445" width="315" height="1"/>
@@ -249,6 +291,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="pdW-x3-IOH" id="GbC-jZ-VbJ"/>
+                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rPq-g1-ALv">
                                 <rect key="frame" x="30" y="487" width="315" height="1"/>
@@ -262,6 +307,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="pdW-x3-IOH" id="9QX-uK-Uh9"/>
+                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IKx-FJ-siY">
                                 <rect key="frame" x="30" y="529" width="315" height="1"/>
@@ -275,6 +323,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="pdW-x3-IOH" id="nm9-X9-FjH"/>
+                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aZQ-Ye-1d9">
                                 <rect key="frame" x="30" y="571" width="315" height="1"/>
@@ -400,9 +451,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="check_out" width="24" height="22"/>
         <image name="detail" width="68" height="46"/>
         <image name="hotel" width="22" height="22"/>
+        <image name="hotelL" width="22" height="22"/>
+        <image name="release" width="24" height="22"/>
         <image name="sanjiao" width="11" height="6"/>
     </resources>
 </document>

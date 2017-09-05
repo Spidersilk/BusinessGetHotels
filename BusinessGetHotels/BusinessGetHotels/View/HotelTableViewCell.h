@@ -11,6 +11,7 @@
 @interface HotelTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *hotelNameLab;
 @property (weak, nonatomic) IBOutlet UILabel *breakfastLab;
+@property (weak, nonatomic) IBOutlet UILabel *bedTypeLab;
 @property (weak, nonatomic) IBOutlet UILabel *areaLab;
 @property (weak, nonatomic) IBOutlet UILabel *priceLab;
 @property (weak, nonatomic) IBOutlet UIImageView *hotelImage;
