@@ -13,4 +13,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *breakfastLab;
 @property (weak, nonatomic) IBOutlet UILabel *areaLab;
 @property (weak, nonatomic) IBOutlet UILabel *priceLab;
+@property (weak, nonatomic) IBOutlet UIImageView *hotelImage;
 @end

@@ -12,6 +12,7 @@
 @interface MyHotelViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *myHotelTabelView;
 @property (weak, nonatomic) IBOutlet UIView *naivView;
+@property (strong, nonatomic) NSMutableArray *tableArray;
 - (IBAction)btnAction:(UIButton *)sender forEvent:(UIEvent *)event;
 @end
 
@@ -19,8 +20,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self naviConfig];
     _myHotelTabelView.tableFooterView = [UIView new];
+    _tableArray = [NSMutableArray new];
+    NSDictionary *dict = @{@"name" : @"南京大酒店", @"describe" : @"描述:含早 大床", @"area" : @"48平方", @"price" : @"价格¥:888", @"hotelImage" : @"hotels"};
+    _tableArray = [NSMutableArray arrayWithObjects:dict,dict,dict,dict,dict,nil];
     // Do any additional setup after loading the view.
 }
 
@@ -33,40 +36,60 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
-
-//这个方法专门做导航条的控制
-- (void)naviConfig{
-
-}
 #pragma mark - tableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return _tableArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     HotelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HotelCell" forIndexPath:indexPath];
-    cell.hotelNameLab.text = @"无锡大酒店";
-    cell.breakfastLab.text = @"描述: 含早 大床";
-    cell.areaLab.text = @"108平米";
-    cell.priceLab.text = @"价格¥:888";
+    
+    //[_tableArray addObject:dict];
+    //cell.hotelNameLabel.text = _tableArray[indexPath.row][@"name"];
+    cell.hotelNameLab.text = _tableArray[indexPath.row][@"name"];
+    cell.breakfastLab.text = _tableArray[indexPath.row][@"describe"];
+    cell.areaLab.text = _tableArray[indexPath.row][@"area"];
+    cell.priceLab.text = _tableArray[indexPath.row][@"price"];
+    cell.hotelImage.image = [UIImage imageNamed:_tableArray[indexPath.row][@"hotelImage"]];
     return cell;
 }
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+//先要设Cell可编辑
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
     return YES;
 }
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    //当前的编辑是否属于删除行为
+//编辑类型
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
+//进入编辑模式，按下出现的编辑按钮后
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    [tableView setEditing:NO animated:YES];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        //要删除cell必须先删除表格视图对应的数据中这一行的数据内容
-        //[self deleteDataAtIndexPath:indexPath];
-        //[_tableArray removeObjectAtIndex:indexPath.row];
-        //删除界面上的cell
-        //[tableView deleteSections:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"你确定删除该条发布？" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [_tableArray removeObjectAtIndex:indexPath.row];//删除数据
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];//删除行cell
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
+}
+//修改编辑按钮文字
+//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//  return @"删除";
+//}
+//设置进入编辑状态时，Cell不会缩进
+- (BOOL)tableView: (UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
 }
 /*
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
