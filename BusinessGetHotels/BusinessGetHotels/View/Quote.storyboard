@@ -12,7 +12,7 @@
         <!--Quote View Controller-->
         <scene sceneID="dpX-mI-Qa4">
             <objects>
-                <viewController storyboardIdentifier="Quote1" id="THv-c7-3hR" customClass="QuoteViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Quote1" hidesBottomBarWhenPushed="YES" id="THv-c7-3hR" customClass="QuoteViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="oRb-4T-4mt"/>
                         <viewControllerLayoutGuide type="bottom" id="A9L-F4-HYd"/>
@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="73l-XE-Yk6">
-                                <rect key="frame" x="0.0" y="64" width="375" height="205"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="205"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Agm-Sc-TIP">
                                         <rect key="frame" x="15" y="20" width="67" height="28"/>
@@ -32,7 +32,6 @@
                                         </state>
                                         <connections>
                                             <action selector="startSiteAction:forEvent:" destination="THv-c7-3hR" eventType="touchUpInside" id="IEH-cf-meB"/>
-                                            <segue destination="jt0-vB-TOX" kind="presentation" id="RYW-Fb-8o1"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RcQ-a2-hNH">
@@ -73,7 +72,6 @@
                                         </state>
                                         <connections>
                                             <action selector="endSiteAction:forEvent:" destination="THv-c7-3hR" eventType="touchUpInside" id="QEt-PW-8cB"/>
-                                            <segue destination="jt0-vB-TOX" kind="presentation" id="b50-sE-KPp"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="机票" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGY-QR-BHf">
@@ -318,7 +316,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fRH-Rc-cKp">
-                                <rect key="frame" x="0.0" y="274" width="375" height="393"/>
+                                <rect key="frame" x="0.0" y="230" width="375" height="437"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="quoteCell" rowHeight="139" id="ud2-RX-rCK" customClass="QuoteTableViewCell">
@@ -505,14 +503,22 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="THv-c7-3hR" id="ZK3-nQ-FF1"/>
+                                    <outlet property="delegate" destination="THv-c7-3hR" id="BPp-81-88o"/>
+                                </connections>
                             </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9K7-db-YUq">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59295302013422813" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dTf-yx-FyP">
+                                <rect key="frame" x="0.0" y="451" width="375" height="216"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Qgw-hQ-gIr">
                                 <rect key="frame" x="0.0" y="451" width="375" height="216"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <date key="date" timeIntervalSinceReferenceDate="525857513.72544098">
                                     <!--2017-08-31 07:31:53 +0000-->
                                 </date>
@@ -539,6 +545,7 @@
                         <constraints>
                             <constraint firstItem="ZL1-hp-kwX" firstAttribute="leading" secondItem="Dct-QP-9Mi" secondAttribute="leading" id="A97-dP-Zq8"/>
                             <constraint firstAttribute="trailing" secondItem="9K7-db-YUq" secondAttribute="trailing" id="AOh-nv-gMv"/>
+                            <constraint firstItem="A9L-F4-HYd" firstAttribute="top" secondItem="dTf-yx-FyP" secondAttribute="bottom" id="CjA-38-aN0"/>
                             <constraint firstAttribute="trailing" secondItem="73l-XE-Yk6" secondAttribute="trailing" id="K2J-b5-IVO"/>
                             <constraint firstItem="73l-XE-Yk6" firstAttribute="leading" secondItem="Dct-QP-9Mi" secondAttribute="leading" id="Kgw-ea-fPl"/>
                             <constraint firstItem="Qgw-hQ-gIr" firstAttribute="top" secondItem="ZL1-hp-kwX" secondAttribute="bottom" id="OOK-BC-t1f"/>
@@ -548,16 +555,20 @@
                             <constraint firstItem="9K7-db-YUq" firstAttribute="top" secondItem="oRb-4T-4mt" secondAttribute="bottom" id="WJL-9g-Psr"/>
                             <constraint firstItem="A9L-F4-HYd" firstAttribute="top" secondItem="fRH-Rc-cKp" secondAttribute="bottom" id="Z6Z-ps-Syr"/>
                             <constraint firstAttribute="trailing" secondItem="ZL1-hp-kwX" secondAttribute="trailing" id="bPi-hD-CIT"/>
+                            <constraint firstAttribute="trailing" secondItem="dTf-yx-FyP" secondAttribute="trailing" id="dkG-Dx-bOy"/>
                             <constraint firstItem="A9L-F4-HYd" firstAttribute="top" secondItem="Qgw-hQ-gIr" secondAttribute="bottom" id="gEY-Po-uMF"/>
                             <constraint firstItem="9K7-db-YUq" firstAttribute="leading" secondItem="Dct-QP-9Mi" secondAttribute="leading" id="gfT-IO-0Ib"/>
                             <constraint firstItem="73l-XE-Yk6" firstAttribute="top" secondItem="oRb-4T-4mt" secondAttribute="bottom" id="hey-8D-HUP"/>
                             <constraint firstAttribute="trailing" secondItem="Qgw-hQ-gIr" secondAttribute="trailing" id="iMH-xJ-3sg"/>
                             <constraint firstItem="Qgw-hQ-gIr" firstAttribute="leading" secondItem="Dct-QP-9Mi" secondAttribute="leading" id="lJw-c7-aef"/>
+                            <constraint firstItem="dTf-yx-FyP" firstAttribute="top" secondItem="ZL1-hp-kwX" secondAttribute="bottom" id="mqL-3F-QMQ"/>
                             <constraint firstItem="fRH-Rc-cKp" firstAttribute="top" secondItem="73l-XE-Yk6" secondAttribute="bottom" constant="5" id="pzj-WF-YpT"/>
+                            <constraint firstItem="dTf-yx-FyP" firstAttribute="leading" secondItem="Dct-QP-9Mi" secondAttribute="leading" id="u9U-pK-egi"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Kf5-Nh-Wfi"/>
                     <connections>
+                        <outlet property="DatepickView" destination="dTf-yx-FyP" id="fir-EH-K6p"/>
                         <outlet property="arriveBtn" destination="A3K-ax-DdQ" id="UCu-hK-PsH"/>
                         <outlet property="aviView" destination="9K7-db-YUq" id="WuV-ka-ydK"/>
                         <outlet property="companyTextField" destination="8eZ-yu-OJK" id="uz6-Xn-pbZ"/>
@@ -572,6 +583,7 @@
                         <outlet property="quoteToolbar" destination="ZL1-hp-kwX" id="gIA-LY-StN"/>
                         <outlet property="startSiteBtn" destination="Agm-Sc-TIP" id="uc0-nN-cG8"/>
                         <outlet property="takeoffBtn" destination="WOa-5h-dJS" id="idf-oI-V7P"/>
+                        <segue destination="jt0-vB-TOX" kind="show" identifier="QuoteToCity" id="Faa-AE-bUn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aS1-rw-9Se" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -636,7 +648,4 @@
             <point key="canvasLocation" x="2792.8000000000002" y="190.25487256371815"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="RYW-Fb-8o1"/>
-    </inferredMetricsTieBreakers>
 </document>
