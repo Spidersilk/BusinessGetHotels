@@ -64,6 +64,7 @@
 		8497AB621F5A816A001B7621 /* ReleaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497AB611F5A816A001B7621 /* ReleaseViewController.m */; };
 		8497AB651F5A82F9001B7621 /* MyHotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497AB641F5A82F9001B7621 /* MyHotelViewController.m */; };
 		8497AB691F5A915B001B7621 /* HotelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497AB681F5A915B001B7621 /* HotelTableViewCell.m */; };
+		84FEB4F21F5FBD59004A8B23 /* HotelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEB4F11F5FBD59004A8B23 /* HotelModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +187,8 @@
 		8497AB641F5A82F9001B7621 /* MyHotelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyHotelViewController.m; sourceTree = "<group>"; };
 		8497AB671F5A915B001B7621 /* HotelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelTableViewCell.h; sourceTree = "<group>"; };
 		8497AB681F5A915B001B7621 /* HotelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelTableViewCell.m; sourceTree = "<group>"; };
+		84FEB4F01F5FBD59004A8B23 /* HotelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelModel.h; sourceTree = "<group>"; };
+		84FEB4F11F5FBD59004A8B23 /* HotelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelModel.m; sourceTree = "<group>"; };
 		CC7A89D5CD0C306B69B07EA3 /* libPods-BusinessGetHotels.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BusinessGetHotels.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -379,6 +382,7 @@
 		842920331F59300200A0592D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				84FEB4EF1F5FBD38004A8B23 /* HotelModel */,
 				8429209D1F59340800A0592D /* BusinessGetHotels.xcdatamodeld */,
 				842920A01F59340F00A0592D /* Order.h */,
 				842920A11F59340F00A0592D /* Order.m */,
@@ -514,6 +518,15 @@
 				8497AB681F5A915B001B7621 /* HotelTableViewCell.m */,
 			);
 			name = HotelTabelViewCell;
+			sourceTree = "<group>";
+		};
+		84FEB4EF1F5FBD38004A8B23 /* HotelModel */ = {
+			isa = PBXGroup;
+			children = (
+				84FEB4F01F5FBD59004A8B23 /* HotelModel.h */,
+				84FEB4F11F5FBD59004A8B23 /* HotelModel.m */,
+			);
+			name = HotelModel;
 			sourceTree = "<group>";
 		};
 		9F622398C157CB7FCBA246BD /* Pods */ = {
@@ -744,6 +757,7 @@
 				842920811F59300300A0592D /* NSData+Base64.m in Sources */,
 				842920881F59300300A0592D /* Utilities.m in Sources */,
 				842920631F59300300A0592D /* BasicEncodingRules.m in Sources */,
+				84FEB4F21F5FBD59004A8B23 /* HotelModel.m in Sources */,
 				842920791F59300300A0592D /* MD5DataSigner.m in Sources */,
 				846F5C7B1F5A44C700A093BB /* CanQuoteTableViewCell.m in Sources */,
 				8497AB621F5A816A001B7621 /* ReleaseViewController.m in Sources */,
