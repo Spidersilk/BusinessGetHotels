@@ -43,10 +43,10 @@
     flag = 0;
     [super viewDidLoad];
     [self naviConfing];
-    [self anniu];
+    //[self anniu];
     // Do any additional setup after loading the view.
-    _confirmBtn.enabled = NO;
-    _confirmBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
+//    _confirmBtn.enabled = NO;
+//    _confirmBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkCityState:) name:@"ResetHome" object:nil];
 }
 //将要来到此页面（显示导航栏）
@@ -156,20 +156,20 @@
             //修改用户选择的城市
             [Utilities removeUserDefaults:@"UserCity"];
             [Utilities setUserDefaults:@"UserCity" content:cityStr];
-            //重新进行网络请求
-            //[self networkRequest];
         }
+        //if([_startSiteBtn.titleLabel.text isEqualToString:_endSiteBtn.titleLabel.text])
     }
 }
-- (void)anniu{
-if(_startSiteBtn.titleLabel.text.length != 0 && _endSiteBtn.titleLabel.text.length != 0 && _priceTextField.text.length != 0 && _companyTextField.text.length != 0 && _flightTextField.text.length != 0 && _placeTextField.text.length != 0 && _takeoffBtn.titleLabel.text.length != 0 && _arriveBtn.titleLabel.text.length != 0 && _kgTextField.text.length != 0 ){
-    _confirmBtn.enabled =YES;
-    _confirmBtn.backgroundColor = UIColorFromRGB(74, 135, 238);
-}else{
-    _confirmBtn.enabled =NO;
-    _confirmBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
-}
-}
+
+//- (void)anniu{
+//if(_startSiteBtn.titleLabel.text.length != 0 && _endSiteBtn.titleLabel.text.length != 0 && _priceTextField.text.length != 0 && _companyTextField.text.length != 0 && _flightTextField.text.length != 0 && _placeTextField.text.length != 0 && _takeoffBtn.titleLabel.text.length != 0 && _arriveBtn.titleLabel.text.length != 0 && _kgTextField.text.length != 0 ){
+//    _confirmBtn.enabled =YES;
+//    _confirmBtn.backgroundColor = UIColorFromRGB(74, 135, 238);
+//}else{
+//    _confirmBtn.enabled =NO;
+//    _confirmBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
+//}
+//}
 /*#pragma mark - Navigation
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -177,6 +177,33 @@ if(_startSiteBtn.titleLabel.text.length != 0 && _endSiteBtn.titleLabel.text.leng
     // Pass the selected object to the new view controller.
 }
 */
+//执行网络请求
+- (void)networkRequest {
+    NSInteger price = [[NSString stringWithFormat:@"%@",_priceTextField.text] integerValue];
+    NSInteger weight = [[NSString stringWithFormat:@"%@",_kgTextField.text] integerValue];
+    //设置接口入参
+    NSDictionary *prarmeter = @{@"business_id" : @2,@"aviation_demand_id" : @1, @"final_price" : @(price), @"weight":@(weight), @"aviation_company" : _companyTextField.text, @"aviation_cabin" : _placeTextField.text, @"in_time_str" : _takeoffBtn.titleLabel.text, @"out_time_str" : _arriveBtn.titleLabel.text,@"departure" : _startSiteBtn.titleLabel.text, @"destination" : _endSiteBtn.titleLabel.text, @"flight_no" : _flightTextField.text};
+        //开始请求
+        [RequestAPI requestURL:@"/offer_edu" withParameters:prarmeter andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+            //成功以后要做的事情
+            NSLog(@"responseObject = %@",responseObject);
+            //[self endAnimation];
+            if ([responseObject[@"result"] integerValue] == 1) {
+               
+            }else{
+                //业务逻辑失败的情况下
+                NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
+                [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];
+            }
+                 } failure:^(NSInteger statusCode, NSError *error) {
+            //失败以后要做的事情
+            //NSLog(@"statusCode = %ld",(long)statusCode);
+            //[self endAnimation];
+            [Utilities popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
+        }];
+    }
+         
+
 //出发地的按钮事件
 - (IBAction)startSiteAction:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 0;
@@ -205,10 +232,12 @@ if(_startSiteBtn.titleLabel.text.length != 0 && _endSiteBtn.titleLabel.text.leng
 }
 //确定按钮事件
 - (IBAction)confirmAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    [self networkRequest];
     }
 //toolbar上的取消按钮事件
 - (IBAction)cancel:(UIBarButtonItem *)sender {
     _aviView.hidden = YES;
+    _DatepickView.hidden = YES;
     _quoteToolbar.hidden = YES;
     _quoteDatePicker.hidden = YES;
 }
@@ -224,7 +253,22 @@ if(_startSiteBtn.titleLabel.text.length != 0 && _endSiteBtn.titleLabel.text.leng
          [_arriveBtn setTitle:theDate forState:UIControlStateNormal];
     }
     _aviView.hidden = YES;
+    _DatepickView.hidden = YES;
     _quoteToolbar.hidden = YES;
     _quoteDatePicker.hidden = YES;
 }
+#pragma mark - 键盘收起
+//按键盘上的Return键收起键盘
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if(textField == _priceTextField || textField == _companyTextField || textField == _flightTextField || textField == _placeTextField || textField == _kgTextField){
+        [textField resignFirstResponder];
+    }
+    return YES;
+}
+//键盘收回
+- (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    //让根视图结束编辑状态达到收起键盘的目的
+    [self.view endEditing:YES];
+}
+
 @end
