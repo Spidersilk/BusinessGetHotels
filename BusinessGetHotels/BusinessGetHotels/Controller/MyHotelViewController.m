@@ -11,6 +11,9 @@
 #import "ReleaseViewController.h"
 #import "HotelModel.h"
 @interface MyHotelViewController ()<UITableViewDataSource,UITableViewDelegate>
+{
+    NSInteger i;
+}
 @property (weak, nonatomic) IBOutlet UITableView *myHotelTabelView;
 @property (weak, nonatomic) IBOutlet UIView *naivView;
 @property (strong, nonatomic) NSMutableArray *tableArray;
@@ -25,14 +28,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self netRequest];
+    i = 1;
+    [self initializeData];
+    [self setRefreshControl];
     _myHotelTabelView.tableFooterView = [UIView new];
     _tableArray = [NSMutableArray new];
    _nsmArr = [NSMutableArray new];
     _nsmArrType = [NSMutableArray new];
     _arr = [NSMutableArray new];
-    
-    // Do any additional setup after loading the view.
+        // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,16 +51,35 @@
     _tableArray = [NSMutableArray arrayWithObjects:dict,dict,dict,dict,dict,nil];*/
     
 }
-- (void)netRequest{
+//下拉刷新
+- (void)setRefreshControl{
+     UIRefreshControl *acquireRef = [UIRefreshControl new];
+    [acquireRef addTarget:self action:@selector(acquireRef) forControlEvents:UIControlEventValueChanged];
+    acquireRef.tag = 10001;
+    [_myHotelTabelView addSubview:acquireRef];
+}
+- (void)acquireRef{
+    i = 1;
+    [self netRequest];
+}
+- (void)initializeData{
     _avi = [Utilities getCoverOnView:self.view];
-    NSDictionary *para = @{@"business_id" : @1};
+    [self netRequest];
+}
+- (void)netRequest{
+    NSDictionary *para = @{@"business_id" : @(i)};
     [RequestAPI requestURL:@"/findHotelBySelf" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         NSLog(@"responseObject = %@",responseObject);
-        
+        UIRefreshControl *ref = (UIRefreshControl *)[_myHotelTabelView viewWithTag:10001];
+        [ref endRefreshing];
         if([responseObject[@"result"] integerValue] == 1)
         {
             [_avi stopAnimating];
             NSArray *arr = responseObject[@"content"];
+            //NSLog(@"%@",arr);
+            if (i == 1) {
+                [_nsmArr removeAllObjects];
+            }
             for(NSDictionary *dict in arr){
                 //NSLog(@"dict = %@",dict);
                 HotelModel *hotelModel = [[HotelModel alloc]initWhitDictionary:dict];
@@ -67,16 +90,26 @@
             }
              [_myHotelTabelView reloadData];
         }else{
-            
+            [_avi stopAnimating];
+            [Utilities popUpAlertViewWithMsg:@"请求发生了错误，请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
+            }];
         }
     } failure:^(NSInteger statusCode, NSError *error) {
-        
+        [_avi stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_myHotelTabelView viewWithTag:10004];
+        [ref endRefreshing];
+        [Utilities forceLogoutCheck:statusCode fromViewController:self];
+
     }];
 }
 #pragma mark - tableView
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+//    return _nsmArr.count;
+//}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return _nsmArr.count;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *userAgent = @"";
     userAgent = [NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f)", [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleExecutableKey] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleIdentifierKey], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleVersionKey], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion], [[UIScreen mainScreen] scale]];
@@ -95,8 +128,8 @@
     
     HotelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HotelCell" forIndexPath:indexPath];
     HotelModel *hoteModel = _nsmArr[indexPath.row];
-    for(NSInteger i = 0; i < _nsmArrType.count; i++){
-        _arr = _nsmArrType[i];
+    for(NSInteger y = 0; y < _nsmArrType.count; y++){
+        _arr = _nsmArrType[y];
         cell.breakfastLab.text = _arr[1];
         cell.bedTypeLab.text = _arr[2];
         cell.areaLab.text = _arr[3];
@@ -108,6 +141,14 @@
      [cell.hotelImage sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"hotelImage"]];
     //cell.hotelImage.image = [UIImage imageNamed:_tableArray[indexPath.row][@"hotelImage"]];
     return cell;
+}
+//细胞将要出现时调用
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+//     if(indexPath.row == _nsmArr.count - 1)
+//     {
+//       i ++;
+//     [self netRequest];
+//     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

@@ -79,6 +79,26 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (void)netRequest{
+    UIActivityIndicatorView *avi = [Utilities getCoverOnView:self.view];
+    NSDictionary *para = @{@"business_id" : @1,@"hotel_name" : @"",@"hotel_type" : @"",@"room_imgs" : @""};
+    [RequestAPI requestURL:@"/addHotel" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+        NSLog(@"responseObject = %@",responseObject);
+        if([responseObject[@"result"] integerValue] == 1)
+        {
+            
+        }else{
+            [avi stopAnimating];
+            [Utilities popUpAlertViewWithMsg:@"请求发生了错误，请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
+            }];
+        }
+    } failure:^(NSInteger statusCode, NSError *error) {
+        [avi stopAnimating];
+        [Utilities forceLogoutCheck:statusCode fromViewController:self];
+        
+    }];
+
+}
 - (void)payAction{
     if(_roomNameLab.text.length == 0){
         [Utilities popUpAlertViewWithMsg:@"请填写房间名称" andTitle:nil onView:self];
