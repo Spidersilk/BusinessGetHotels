@@ -110,7 +110,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥:700-1000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wq2-jo-QyW">
-                                                            <rect key="frame" x="97.5" y="48" width="87.5" height="18"/>
+                                                            <rect key="frame" x="92.5" y="48" width="87.5" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -194,7 +194,7 @@
                                                         <constraint firstItem="w0p-Ku-eAn" firstAttribute="top" secondItem="U5w-S5-GpB" secondAttribute="top" id="oaf-kJ-TgO"/>
                                                         <constraint firstItem="qpH-mE-fBM" firstAttribute="leading" secondItem="cjS-Pr-yPF" secondAttribute="leading" id="obc-mr-deg"/>
                                                         <constraint firstAttribute="bottom" secondItem="w9L-LN-d1b" secondAttribute="bottom" id="th8-Ln-cP4"/>
-                                                        <constraint firstItem="wq2-jo-QyW" firstAttribute="leading" secondItem="cjS-Pr-yPF" secondAttribute="trailing" constant="5" id="z6R-9z-HRa"/>
+                                                        <constraint firstItem="wq2-jo-QyW" firstAttribute="leading" secondItem="cjS-Pr-yPF" secondAttribute="trailing" id="z6R-9z-HRa"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -223,7 +223,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="141"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BOf-Pu-P4E" id="7QQ-we-nfL">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="141"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="140.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8-07" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vvw-Ix-I02">
@@ -263,7 +263,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥:700-1000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LEB-fm-efL">
-                                                            <rect key="frame" x="97.5" y="47.5" width="87.5" height="18"/>
+                                                            <rect key="frame" x="92.5" y="47.5" width="87.5" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -316,7 +316,7 @@
                                                         <constraint firstItem="1QT-Kw-2Ro" firstAttribute="leading" secondItem="3yv-tI-gnI" secondAttribute="trailing" constant="8" id="CeR-D0-eEo"/>
                                                         <constraint firstItem="3yv-tI-gnI" firstAttribute="leading" secondItem="vvw-Ix-I02" secondAttribute="leading" id="Dru-5y-TLp"/>
                                                         <constraint firstItem="GeM-nE-DKA" firstAttribute="leading" secondItem="vvw-Ix-I02" secondAttribute="trailing" constant="10" id="HB2-xA-jdy"/>
-                                                        <constraint firstItem="LEB-fm-efL" firstAttribute="leading" secondItem="1QT-Kw-2Ro" secondAttribute="trailing" constant="5" id="HZX-ZC-rSq"/>
+                                                        <constraint firstItem="LEB-fm-efL" firstAttribute="leading" secondItem="1QT-Kw-2Ro" secondAttribute="trailing" id="HZX-ZC-rSq"/>
                                                         <constraint firstItem="1QT-Kw-2Ro" firstAttribute="centerY" secondItem="3yv-tI-gnI" secondAttribute="centerY" id="I3R-5N-E7Q"/>
                                                         <constraint firstItem="3yv-tI-gnI" firstAttribute="top" secondItem="vvw-Ix-I02" secondAttribute="bottom" constant="17" id="JOA-IT-ITp"/>
                                                         <constraint firstItem="fRQ-FG-IxI" firstAttribute="width" secondItem="fRQ-FG-IxI" secondAttribute="height" multiplier="1:1" id="Ko4-nq-BzK"/>
@@ -339,6 +339,7 @@
                                                         <constraint firstItem="LEB-fm-efL" firstAttribute="centerY" secondItem="3yv-tI-gnI" secondAttribute="centerY" id="xUJ-u4-ZeD"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <connections>
                                                     <outlet property="cityLbl" destination="GeM-nE-DKA" id="xzl-Yj-1yU"/>
                                                     <outlet property="datesLbl" destination="vvw-Ix-I02" id="PMG-B4-7tQ"/>

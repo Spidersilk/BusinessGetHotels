@@ -72,6 +72,7 @@
     [self canQuoteInitializeData];
     
     
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -159,12 +160,12 @@
         //NSLog(@"%ld",(long)page);
     }
 }
-////scrollView已经结束滑动的动画（实现点击标题_titleNumLabel里面的内容会更改）
-//- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
-//    if (scrollView == _scrollView) {
-//        [self scrollCheck:scrollView];
-//    }
-//}
+//scrollView已经结束滑动的动画(具有点击菜单栏会刷新)
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
+    if (scrollView == _scrollView) {
+        [self scrollCheck:scrollView];
+    }
+}
 //判断scroolView滑到哪里了
 - (NSInteger)scrollCheck: (UIScrollView *)scrollView{
     NSInteger page = scrollView.contentOffset.x / (scrollView.frame.size.width);
@@ -258,7 +259,7 @@
                 [_expireArr removeAllObjects];
             }
             for(NSDictionary *dict in list){
-                AviationModel *model = [[AviationModel alloc] initWiihDetailDictionary:dict];
+                AviationModel *model = [[AviationModel alloc] initWithDetailDictionary:dict];
                 [_expireArr addObject:model];
                 
             }
@@ -306,14 +307,23 @@
     
     if (tableView == _canQuoteTableView) {
         CanQuoteTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CanQuoteCell" forIndexPath:indexPath];
-        AviationModel * aviationmodel = _canQuoteArr[indexPath.row];
+        AviationModel * aviationmodel = _canQuoteArr[indexPath.section];
+        //cell.timeLabel.text = [Utilities dateStrFromCstampTime:callBack.callTime withDateFormat:@"yyyy-MM-dd HH:mm"];
+        NSString *endTimeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"MM-dd"];
         
-        cell.datesLbl.text = @"8-27";//起飞时间
+        cell.datesLbl.text = [NSString stringWithFormat:@"%@",endTimeStr];//起飞时间
         cell.cityLbl.text = [NSString stringWithFormat:@"%@——%@",aviationmodel.departure,aviationmodel.destination];//城市to城市
         //cell.ticketLbl.text = @"机票";//机票
         //cell.priceLbl.text = @"价格区间";//价格区间
         cell.moneyLbl.text = [NSString stringWithFormat:@"￥:%@—%@",aviationmodel.low_price,aviationmodel.high_price];//价格在多少low_price,high_price
-        cell.timeLbl.text = @"晚上8点左右";//入住时间
+        
+        NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:aviationmodel.start_time/1000];
+        
+        //NSString *timeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"aah"];
+        //cell.timeLbl.text = [NSString stringWithFormat:@"%@点左右",timeStr];//入住时间
+        
+        cell.timeLbl.text = [NSString stringWithFormat:@"%@点左右",[detaildate formattedTime]];//调用NSDate+Utility的方法
+        
         cell.cabinLbl.text = aviationmodel.aviation_demand_detail;//机舱
         //cell.canQuoteImgView.image = [UIImage imageNamed:@""];
         
@@ -321,20 +331,16 @@
         
     } else {
         ExpireTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"expireCell" forIndexPath:indexPath];
-        AviationModel * aviationmodel = _expireArr[indexPath.row];
-//        datesLbl;//过期起飞时间
-//        cityLbl;//城市to城市
-//        ticketLbl;//机票
-//        priceLbl;//价格区间
-//        moneyLbl;//价格在多少
-//        timeLbl;//入住时间
-//        expireLbl;//过期
-        cell.datesLbl.text = @"8-27";//起飞时间
+        AviationModel * aviationmodel = _expireArr[indexPath.section];
+        NSString *endTimeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"MM-dd"];
+        cell.datesLbl.text = [NSString stringWithFormat:@"%@",endTimeStr];//起飞时间
         cell.cityLbl.text = [NSString stringWithFormat:@"%@——%@",aviationmodel.departure,aviationmodel.destination];//城市to城市
-        //cell.ticketLbl.text = @"机票";//机票
-        //cell.priceLbl.text = @"价格区间";//价格区间
         cell.moneyLbl.text = [NSString stringWithFormat:@"￥:%@—%@",aviationmodel.low_price,aviationmodel.high_price];//价格在多少low_price,high_price
-        cell.timeLbl.text = @"晚上8点左右";//入住时间
+        
+        NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:aviationmodel.start_time/1000];
+        //NSString *timeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"ah"];
+        cell.timeLbl.text = [NSString stringWithFormat:@"%@点左右",[detaildate formattedTime]];//调用NSDate+Utility的方法
+        //上面比较重要
         //cell.cabinLbl.text = aviationmodel.aviation_demand_title;//机舱
         return cell;
     }

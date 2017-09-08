@@ -95,13 +95,16 @@
         }
     }else {
         if (hour >= 0 && hour <= 6) {
-            dateFormatter = [NSDateFormatter dateFormatterWithFormat:@"凌晨hh:mm"];
-        }else if (hour > 6 && hour <=11 ) {
-            dateFormatter = [NSDateFormatter dateFormatterWithFormat:@"上午hh:mm"];
-        }else if (hour > 11 && hour <= 17) {
-            dateFormatter = [NSDateFormatter dateFormatterWithFormat:@"下午hh:mm"];
+            dateFormatter = [NSDateFormatter dateFormatterWithFormat:@"凌晨hh"];
+        }else if (hour > 6 && hour <12 ) {
+            dateFormatter = [NSDateFormatter dateFormatterWithFormat:@"上午hh"];
+        }else if (hour >= 12 && hour < 13) {
+            dateFormatter = [NSDateFormatter dateFormatterWithFormat:@"中午hh"];
+            
+        }else if (hour >= 13 && hour <= 17) {
+            dateFormatter = [NSDateFormatter dateFormatterWithFormat:@"下午hh"];
         }else if (hour > 17 && hour <= 24) {
-            dateFormatter = [NSDateFormatter dateFormatterWithFormat:@"晚上hh:mm"];
+            dateFormatter = [NSDateFormatter dateFormatterWithFormat:@"晚上hh"];
         }else if (hour < 0 && hour >= -24){
             dateFormatter = [NSDateFormatter dateFormatterWithFormat:@"昨天HH:mm"];
         }else  {
