@@ -47,16 +47,13 @@
     _Arr = [NSMutableArray new];
     [super viewDidLoad];
     [self naviConfing];
+    [self initializeData];
     //创建刷新指示器
     UIRefreshControl *ref = [UIRefreshControl new];
     [ref addTarget:self action:@selector(refreshPage) forControlEvents:UIControlEventValueChanged];
     ref.tag = 10005;
     [_quoteTableView addSubview:ref];
     [self checkNetworkRequest];
-    //[self anniu];
-    // Do any additional setup after loading the view.
-//    _confirmBtn.enabled = NO;
-//    _confirmBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkCityState:) name:@"ResetHome" object:nil];
 }
 //将要来到此页面（显示导航栏）
@@ -144,9 +141,10 @@
                 
                 /** 1. 更新数据源(数组): 根据indexPaht.row作为数组下标, 从数组中删除数据. */
                 [self.Arr removeObjectAtIndex:indexPath.row];
-                
+                [self DeleteNetworkRequest];
+                //[_quoteTableView reloadData];
                 /** 2. TableView中 删除一个cell. */
-                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+                //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
             }
             // [tableView deleteRowsAtIndexPaths:@[indexPath]  MessageModel *model = weakself.dataArray[indexPath.row];
             //[weakself singleDelet:model.mid];
@@ -182,15 +180,6 @@
     }
 }
 
-//- (void)anniu{
-//if(_startSiteBtn.titleLabel.text.length != 0 && _endSiteBtn.titleLabel.text.length != 0 && _priceTextField.text.length != 0 && _companyTextField.text.length != 0 && _flightTextField.text.length != 0 && _placeTextField.text.length != 0 && _takeoffBtn.titleLabel.text.length != 0 && _arriveBtn.titleLabel.text.length != 0 && _kgTextField.text.length != 0 ){
-//    _confirmBtn.enabled =YES;
-//    _confirmBtn.backgroundColor = UIColorFromRGB(74, 135, 238);
-//}else{
-//    _confirmBtn.enabled =NO;
-//    _confirmBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
-//}
-//}
 /*#pragma mark - Navigation
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -198,6 +187,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+#pragma mark - 网络请求
 - (void)initializeData{
     _avi = [Utilities getCoverOnView:self.view];
     [self refreshPage];
@@ -215,7 +205,8 @@
         //开始请求
         [RequestAPI requestURL:@"/offer_edu" withParameters:prarmeter andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
             //成功以后要做的事情
-            NSLog(@"responseObject = %@",responseObject);
+            [_avi stopAnimating];
+            //NSLog(@"responseObject = %@",responseObject);
             //[self endAnimation];
             if ([responseObject[@"result"] integerValue] == 1) {
                
@@ -228,6 +219,7 @@
             //失败以后要做的事情
             //NSLog(@"statusCode = %ld",(long)statusCode);
             //[self endAnimation];
+            [_avi stopAnimating];
             [Utilities popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
         }];
     }
@@ -241,7 +233,7 @@
         [_avi stopAnimating];
         UIRefreshControl *ref = (UIRefreshControl *)[_quoteTableView viewWithTag:10005];
         [ref endRefreshing];
-        NSLog(@"haha = %@",responseObject);
+        //NSLog(@"haha = %@",responseObject);
         //[self endAnimation];
         if ([responseObject[@"result"] integerValue] == 1) {
             NSDictionary *content = responseObject[@"content"];
@@ -263,8 +255,29 @@
         [Utilities popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
     }];
 }
+//删除报价接口
+- (void)DeleteNetworkRequest {
+    //设置接口入参
+    NSDictionary *prarmeter = @{@"Id" : @(_quotemodel.Id)};
+    //开始请求
+    [RequestAPI requestURL: @"/deleteOfferById_edu" withParameters:prarmeter andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+        //成功以后要做的事情
+        NSLog(@"1231 = %@",responseObject);
+        //[self endAnimation];
+        if ([responseObject[@"result"] integerValue] == 1) {
+            
+        }else{
+            //业务逻辑失败的情况下
+            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
+            [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];
+        }
+    } failure:^(NSInteger statusCode, NSError *error) {
+        //失败以后要做的事情
+        [Utilities popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
+    }];
+}
 
-
+#pragma mark - 按钮事件
 //出发地的按钮事件
 - (IBAction)startSiteAction:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 0;

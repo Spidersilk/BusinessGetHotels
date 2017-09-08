@@ -23,7 +23,7 @@
         _weight = [[Utilities nullAndNilCheck:dict[@"weight"] replaceBy:0] integerValue];
         _in_time_str = [Utilities nullAndNilCheck:dict[@"in_time_str"] replaceBy:@""];
         _out_time_str = [Utilities nullAndNilCheck:dict[@"out_time_str"] replaceBy:@""];
-        
+        _Id = [[Utilities nullAndNilCheck:dict[@"avition_demand_id"] replaceBy:0] integerValue];
     }
     return self;
 }@end

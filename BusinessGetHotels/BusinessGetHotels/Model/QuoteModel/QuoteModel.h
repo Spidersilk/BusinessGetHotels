@@ -20,5 +20,6 @@
 @property (nonatomic) NSInteger weight;//重量
 @property (strong, nonatomic) NSString *in_time_str;//出发时间
 @property (strong, nonatomic) NSString *out_time_str;//到达时间
+@property (nonatomic) NSInteger Id;//删除报价ID
 - (id) initWhitDictionary: (NSDictionary *)dict;
 @end
