@@ -12,6 +12,7 @@
 @property (strong, nonatomic) NSString *hotel_name;
 @property (nonatomic) NSInteger price;
 @property (nonatomic) NSInteger business_id;
+@property (nonatomic) NSInteger hotelId;
 @property (strong, nonatomic) NSString *hotel_type;
 @property (strong, nonatomic) NSString *imgUrl;
 - (id) initWhitDictionary: (NSDictionary *)dict;

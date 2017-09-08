@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSMutableArray *nsmArrType;
 @property (strong, nonatomic) NSMutableArray *arr;
 @property (strong, nonatomic) UIActivityIndicatorView *avi;
+@property (strong, nonatomic) HotelModel *hotelModel;
 - (IBAction)btnAction:(UIButton *)sender forEvent:(UIEvent *)event;
 @end
 
@@ -31,6 +32,7 @@
     i = 1;
     [self initializeData];
     [self setRefreshControl];
+    //[self deleteRequest];
     _myHotelTabelView.tableFooterView = [UIView new];
     _tableArray = [NSMutableArray new];
    _nsmArr = [NSMutableArray new];
@@ -67,7 +69,7 @@
     [self netRequest];
 }
 - (void)netRequest{
-    NSDictionary *para = @{@"business_id" : @(i)};
+    NSDictionary *para = @{@"business_id" : @1};
     [RequestAPI requestURL:@"/findHotelBySelf" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         NSLog(@"responseObject = %@",responseObject);
         UIRefreshControl *ref = (UIRefreshControl *)[_myHotelTabelView viewWithTag:10001];
@@ -102,6 +104,20 @@
 
     }];
 }
+- (void)deleteRequest{
+    //_avi = [Utilities getCoverOnView:self.view];
+    NSDictionary *dict = @{@"id" : @(_hotelModel.hotelId)};
+    [RequestAPI requestURL:@"/deleteHotel" withParameters:dict andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+        NSLog(@"responseObject = %@",responseObject);
+        if([responseObject[@"result"] integerValue] == 1){
+          
+        }else{
+         
+       }
+    } failure:^(NSInteger statusCode, NSError *error) {
+        [Utilities forceLogoutCheck:statusCode fromViewController:self];
+    }];
+}
 #pragma mark - tableView
 //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 //    return _nsmArr.count;
@@ -127,17 +143,19 @@
 
     
     HotelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HotelCell" forIndexPath:indexPath];
-    HotelModel *hoteModel = _nsmArr[indexPath.row];
+    _hotelModel = _nsmArr[indexPath.row];
+    if(_nsmArrType.count == 4){
     for(NSInteger y = 0; y < _nsmArrType.count; y++){
         _arr = _nsmArrType[y];
         cell.breakfastLab.text = _arr[1];
         cell.bedTypeLab.text = _arr[2];
         cell.areaLab.text = _arr[3];
+        }
     }
-    NSURL *URL = [NSURL URLWithString:hoteModel.imgUrl];
+    NSURL *URL = [NSURL URLWithString:_hotelModel.imgUrl];
     NSLog(@"URL = %@", URL);
-    cell.hotelNameLab.text = hoteModel.hotel_name;
-    cell.priceLab.text =  [NSString stringWithFormat:@"¥%ld",(long)hoteModel.price];
+    cell.hotelNameLab.text = _hotelModel.hotel_name;
+    cell.priceLab.text =  [NSString stringWithFormat:@"¥%ld",(long)_hotelModel.price];
      [cell.hotelImage sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"hotelImage"]];
     //cell.hotelImage.image = [UIImage imageNamed:_tableArray[indexPath.row][@"hotelImage"]];
     return cell;
@@ -172,8 +190,9 @@
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"你确定删除该条发布？" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [_nsmArr removeObjectAtIndex:indexPath.row];//删除数据
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];//删除行cell
+            [self deleteRequest];
+            //[_nsmArr removeObjectAtIndex:indexPath.row];//删除数据
+            //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];//删除行cell
         }]];
         [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];

@@ -8,7 +8,10 @@
 
 #import "ReleaseViewController.h"
 
-@interface ReleaseViewController ()<UITextFieldDelegate>
+@interface ReleaseViewController ()<UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+{
+    NSInteger i;
+}
 @property (weak, nonatomic) IBOutlet UIButton *selectBtn;
 - (IBAction)selectAct:(UIButton *)sender forEvent:(UIEvent *)event;
 @property (weak, nonatomic) IBOutlet UITextField *roomNameLab;
@@ -19,19 +22,28 @@
 @property (weak, nonatomic) IBOutlet UITextField *premiumLab;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
+@property (strong, nonatomic) NSArray *pickArr;
+@property (strong, nonatomic) NSMutableArray *hotelMuArr;
 - (IBAction)canceAct:(UIBarButtonItem *)sender;
 - (IBAction)determineAct:(UIBarButtonItem *)sender;
-
+@property (strong, nonatomic) UIActivityIndicatorView *avi;
 @end
 
 @implementation ReleaseViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _pickerView.dataSource = self;
+    _pickerView.delegate = self;
+
+    _hotelMuArr = [NSMutableArray new];
     // Do any additional setup after loading the view.
     [self naviConfig];
     [self uilayout];
-    
+    i = 1;
+    [self selectnetRequest];
+    //刷新第1列
+    [_pickerView reloadComponent:0];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,6 +53,21 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+}
+//设置有多少列
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+//一列设置多少行
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    NSLog(@"_pickArr = %lu", (unsigned long)_pickArr.count);
+    return _hotelMuArr.count;
+}
+//每行的标题
+- (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    NSLog(@"_pickArr = %lu", (unsigned long)_pickArr.count);
+  //  i = 1;
+    return _hotelMuArr[row];
 }
 - (void)naviConfig{
     //设置导航栏标题文字
@@ -79,21 +106,55 @@
     // Pass the selected object to the new view controller.
 }
 */
-- (void)netRequest{
-    UIActivityIndicatorView *avi = [Utilities getCoverOnView:self.view];
-    NSDictionary *para = @{@"business_id" : @1,@"hotel_name" : @"",@"hotel_type" : @"",@"room_imgs" : @""};
-    [RequestAPI requestURL:@"/addHotel" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
-        NSLog(@"responseObject = %@",responseObject);
+//选择酒店网络接口
+- (void)selectnetRequest{
+    _avi = [Utilities getCoverOnView:self.view];
+            [RequestAPI requestURL:@"/searchHotelName" withParameters:nil andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+        NSLog(@"sleectresponseObject = %@",responseObject);
+                [_avi stopAnimating];
         if([responseObject[@"result"] integerValue] == 1)
         {
-            
+            _pickArr = responseObject[@"content"];
+            NSLog(@"_pickArr = %lu", (unsigned long)_pickArr.count);
+            for(NSDictionary *dict in _pickArr){
+                NSString *str = dict[@"hotel_name"];
+                [_hotelMuArr addObject:str];
+            }
+            [_pickerView reloadAllComponents];
+
         }else{
-            [avi stopAnimating];
+            [_avi stopAnimating];
             [Utilities popUpAlertViewWithMsg:@"请求发生了错误，请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
             }];
         }
     } failure:^(NSInteger statusCode, NSError *error) {
-        [avi stopAnimating];
+        [_avi stopAnimating];
+        [Utilities forceLogoutCheck:statusCode fromViewController:self];
+        
+    }];
+//    i ++;
+}
+
+- (void)netRequest{
+     NSURL *URL = [NSURL URLWithString:@"http://img5.imgtn.bdimg.com/it/u=1934652595,421345666&fm=23&gp=0.jpg"];
+    NSString *str = [NSString stringWithFormat:@"%@", URL];
+    _avi = [Utilities getCoverOnView:self.view];
+    NSDictionary *para = @{@"business_id" : @1,@"hotel_name" : _selectBtn.titleLabel.text,@"hotel_type" : [NSString stringWithFormat:@"%@,%@,%@", _breakfastLab.text,_bedLab.text,_areaLab.text],@"room_imgs" : str};
+    [RequestAPI requestURL:@"/addHotel" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+        NSLog(@"responseObject = %@",responseObject);
+        if([responseObject[@"result"] integerValue] == 1)
+        {
+            [_avi stopAnimating];
+            [Utilities popUpAlertViewWithMsg:@"恭喜发布成功" andTitle:nil onView:self onCompletion:^{
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }];
+        }else{
+            [_avi stopAnimating];
+            [Utilities popUpAlertViewWithMsg:@"请求发生了错误，请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
+            }];
+        }
+    } failure:^(NSInteger statusCode, NSError *error) {
+        [_avi stopAnimating];
         [Utilities forceLogoutCheck:statusCode fromViewController:self];
         
     }];
@@ -140,6 +201,7 @@
     [[StorageMgr singletonStorageMgr] addKey:@"bed" andValue:_bedLab.text];
     [[StorageMgr singletonStorageMgr] addKey:@"area" andValue:_areaLab.text];
     [[StorageMgr singletonStorageMgr] addKey:@"price" andValue:_priceLab.text];
+    [self netRequest];
 }
 - (IBAction)canceAct:(UIBarButtonItem *)sender {
     _toolBar.hidden = YES;
@@ -147,12 +209,21 @@
 }
 
 - (IBAction)determineAct:(UIBarButtonItem *)sender {
+    //拿到某一列选中的行号
+    NSInteger row = [_pickerView selectedRowInComponent:0];
+    //根据上面拿到的行号,找到对应得数据（选中行的标题）
+    NSString *title = _hotelMuArr[row];
+    //NSInteger rowSecond = [_pickerView selectedRowInComponent:1];
+    //NSString *str = [NSString initWithFormat:@"%@%@",title,titleSecond];
+    [_selectBtn setTitle:title forState:UIControlStateNormal];
+    _selectBtn.titleLabel.text = title;
     _toolBar.hidden = YES;
     _pickerView.hidden = YES;
 }
 - (IBAction)selectAct:(UIButton *)sender forEvent:(UIEvent *)event {
     _toolBar.hidden = NO;
     _pickerView.hidden = NO;
+    
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
