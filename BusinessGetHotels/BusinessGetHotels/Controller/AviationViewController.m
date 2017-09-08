@@ -198,6 +198,7 @@
         if ([responseObject[@"result"] integerValue] == 1) {
             NSDictionary *Aviation_demand = responseObject[@"content"][@"Aviation_demand"];
             NSArray *list = Aviation_demand[@"list"];
+            canQuoteLast = [Aviation_demand[@"isLastPage"] boolValue];
             //下拉刷新的时候不但要把页码变为1，而且还要将数组中原有的数据清空
             if (canQuotePageNum == 1) {
                 [_canQuoteArr removeAllObjects];
@@ -219,6 +220,9 @@
         
     } failure:^(NSInteger statusCode, NSError *error) {
         [_avi stopAnimating];
+        //结束刷新
+        UIRefreshControl *ref = (UIRefreshControl *)[_canQuoteTableView viewWithTag:10001];
+        [ref endRefreshing];
         //加载失败之后可以使用这个
         //[self.activityHUD dismissWithText:nil delay:0.7 success:NO];
         [Utilities popUpAlertViewWithMsg:@"网络似乎不太给力,请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
@@ -248,6 +252,7 @@
         if ([responseObject[@"result"] integerValue] == 1) {
             NSDictionary *Aviation_demand = responseObject[@"content"][@"Aviation_demand"];
             NSArray *list = Aviation_demand[@"list"];
+            expireLast = [Aviation_demand[@"isLastPage"] boolValue];
             //下拉刷新的时候不但要把页码变为1，而且还要将数组中原有的数据清空
             if (expirePageNum == 1) {
                 [_expireArr removeAllObjects];
@@ -269,6 +274,9 @@
         
     } failure:^(NSInteger statusCode, NSError *error) {
         [_avi stopAnimating];
+        //结束刷新
+        UIRefreshControl *ref = (UIRefreshControl *)[_expireTableView viewWithTag:10002];
+        [ref endRefreshing];
         //加载失败之后可以使用这个
         //[self.activityHUD dismissWithText:nil delay:0.7 success:NO];
         [Utilities popUpAlertViewWithMsg:@"网络似乎不太给力,请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
@@ -279,15 +287,20 @@
     
 }
 #pragma mark - tableViewCell
-//每一组多少行
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+//多少组
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     if (tableView == _canQuoteTableView) {
-       return _canQuoteArr.count;
+        return _canQuoteArr.count;
     } else {
         return _expireArr.count;
     }
     
 }
+//每一组多少行
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 1;
+}
+
 //每行细胞长什么样
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -344,7 +357,32 @@
         [self.navigationController pushViewController:purchaseVC animated:NO];
     }
 }
-
+//设置一个细胞将要出现的时候要做的事情
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == _canQuoteTableView) {
+        //判断是不是最后一行细胞将要出现
+        if (indexPath.section == _canQuoteArr.count - 1) {
+            //判断还有没有下一页存在
+            if (!canQuoteLast) {
+                //在这里执行上拉翻页的数据操作
+                canQuotePageNum++;
+                [self canQuoteRequest];
+                //NSLog(@"呵呵呵呵呵");
+            }
+        }
+    }else{
+        //判断是不是最后一行细胞将要出现
+        if (indexPath.section == _expireArr.count - 1) {
+            //判断还有没有下一页存在
+            if (!expireLast) {
+                //在这里执行上拉翻页的数据操作
+                expirePageNum++;
+                [self expireRequest];
+                //NSLog(@"呵呵呵呵呵");
+            }
+        }
+    }
+}
 /*
 #pragma mark - Navigation
 

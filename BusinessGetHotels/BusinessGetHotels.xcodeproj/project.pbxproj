@@ -65,6 +65,12 @@
 		8497AB621F5A816A001B7621 /* ReleaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497AB611F5A816A001B7621 /* ReleaseViewController.m */; };
 		8497AB651F5A82F9001B7621 /* MyHotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497AB641F5A82F9001B7621 /* MyHotelViewController.m */; };
 		8497AB691F5A915B001B7621 /* HotelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497AB681F5A915B001B7621 /* HotelTableViewCell.m */; };
+		84A6FEEC1F6257770080CC0A /* CCActivityHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A6FEE51F6257770080CC0A /* CCActivityHUD.m */; };
+		84A6FEED1F6257770080CC0A /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A6FEE61F6257770080CC0A /* cross.png */; };
+		84A6FEEE1F6257770080CC0A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84A6FEE71F6257770080CC0A /* Info.plist */; };
+		84A6FEEF1F6257770080CC0A /* tick.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A6FEE91F6257770080CC0A /* tick.png */; };
+		84A6FEF01F6257770080CC0A /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A6FEEB1F6257770080CC0A /* UIImage+animatedGIF.m */; };
+		84A6FEF41F6257A60080CC0A /* AviationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A6FEF31F6257A60080CC0A /* AviationModel.m */; };
 		84FEB4F21F5FBD59004A8B23 /* HotelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEB4F11F5FBD59004A8B23 /* HotelModel.m */; };
 /* End PBXBuildFile section */
 
@@ -190,6 +196,16 @@
 		8497AB641F5A82F9001B7621 /* MyHotelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyHotelViewController.m; sourceTree = "<group>"; };
 		8497AB671F5A915B001B7621 /* HotelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelTableViewCell.h; sourceTree = "<group>"; };
 		8497AB681F5A915B001B7621 /* HotelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelTableViewCell.m; sourceTree = "<group>"; };
+		84A6FEE41F6257770080CC0A /* CCActivityHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActivityHUD.h; sourceTree = "<group>"; };
+		84A6FEE51F6257770080CC0A /* CCActivityHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActivityHUD.m; sourceTree = "<group>"; };
+		84A6FEE61F6257770080CC0A /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
+		84A6FEE71F6257770080CC0A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84A6FEE81F6257770080CC0A /* Size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Size.h; sourceTree = "<group>"; };
+		84A6FEE91F6257770080CC0A /* tick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tick.png; sourceTree = "<group>"; };
+		84A6FEEA1F6257770080CC0A /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		84A6FEEB1F6257770080CC0A /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		84A6FEF21F6257A60080CC0A /* AviationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AviationModel.h; sourceTree = "<group>"; };
+		84A6FEF31F6257A60080CC0A /* AviationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AviationModel.m; sourceTree = "<group>"; };
 		84FEB4F01F5FBD59004A8B23 /* HotelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelModel.h; sourceTree = "<group>"; };
 		84FEB4F11F5FBD59004A8B23 /* HotelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelModel.m; sourceTree = "<group>"; };
 		CC7A89D5CD0C306B69B07EA3 /* libPods-BusinessGetHotels.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BusinessGetHotels.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -328,6 +344,7 @@
 		842920051F59300200A0592D /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				84A6FEE31F6257770080CC0A /* CCActivityHUD */,
 				842920061F59300200A0592D /* HMSegmentedControl */,
 				842920091F59300200A0592D /* SCZ-BasicEncodingRules */,
 				8429200C1F59300200A0592D /* ZLImageViewDisplay */,
@@ -394,6 +411,7 @@
 		842920331F59300200A0592D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				84A6FEF11F62579A0080CC0A /* AviationModel */,
 				84200D351F6224BE00D80D2D /* QuoteModel */,
 				84FEB4EF1F5FBD38004A8B23 /* HotelModel */,
 				8429209D1F59340800A0592D /* BusinessGetHotels.xcdatamodeld */,
@@ -533,6 +551,30 @@
 			name = HotelTabelViewCell;
 			sourceTree = "<group>";
 		};
+		84A6FEE31F6257770080CC0A /* CCActivityHUD */ = {
+			isa = PBXGroup;
+			children = (
+				84A6FEE41F6257770080CC0A /* CCActivityHUD.h */,
+				84A6FEE51F6257770080CC0A /* CCActivityHUD.m */,
+				84A6FEE61F6257770080CC0A /* cross.png */,
+				84A6FEE71F6257770080CC0A /* Info.plist */,
+				84A6FEE81F6257770080CC0A /* Size.h */,
+				84A6FEE91F6257770080CC0A /* tick.png */,
+				84A6FEEA1F6257770080CC0A /* UIImage+animatedGIF.h */,
+				84A6FEEB1F6257770080CC0A /* UIImage+animatedGIF.m */,
+			);
+			path = CCActivityHUD;
+			sourceTree = "<group>";
+		};
+		84A6FEF11F62579A0080CC0A /* AviationModel */ = {
+			isa = PBXGroup;
+			children = (
+				84A6FEF21F6257A60080CC0A /* AviationModel.h */,
+				84A6FEF31F6257A60080CC0A /* AviationModel.m */,
+			);
+			name = AviationModel;
+			sourceTree = "<group>";
+		};
 		84FEB4EF1F5FBD38004A8B23 /* HotelModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -660,13 +702,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A6FEED1F6257770080CC0A /* cross.png in Resources */,
 				84291FE21F58F20700A0592D /* LaunchScreen.storyboard in Resources */,
+				84A6FEEF1F6257770080CC0A /* tick.png in Resources */,
 				842920661F59300300A0592D /* Main.storyboard in Resources */,
 				842920651F59300300A0592D /* LaunchScreen.storyboard in Resources */,
 				8409DE551F5A33E200C4B2A3 /* Aviation.storyboard in Resources */,
 				8409DE571F5A343800C4B2A3 /* HotelIssued.storyboard in Resources */,
 				847BEE9C1F5CE0D7008BD5A3 /* Cities.plist in Resources */,
 				8409DE591F5A347800C4B2A3 /* Quote.storyboard in Resources */,
+				84A6FEEE1F6257770080CC0A /* Info.plist in Resources */,
 				84291FDF1F58F20600A0592D /* Assets.xcassets in Resources */,
 				84291FDA1F58F20600A0592D /* Main.storyboard in Resources */,
 			);
@@ -757,6 +802,7 @@
 				843CAC351F5A63F100825605 /* QuoteTableViewCell.m in Sources */,
 				842920821F59300300A0592D /* NSDate+Utility.m in Sources */,
 				8429208B1F5930CD00A0592D /* ViewController.m in Sources */,
+				84A6FEF01F6257770080CC0A /* UIImage+animatedGIF.m in Sources */,
 				847BEE9F1F5CE293008BD5A3 /* CityTableViewController.m in Sources */,
 				842920751F59300300A0592D /* GBAlipayManager.m in Sources */,
 				842920771F59300300A0592D /* DataSigner.m in Sources */,
@@ -773,8 +819,10 @@
 				842920631F59300300A0592D /* BasicEncodingRules.m in Sources */,
 				84FEB4F21F5FBD59004A8B23 /* HotelModel.m in Sources */,
 				842920791F59300300A0592D /* MD5DataSigner.m in Sources */,
+				84A6FEF41F6257A60080CC0A /* AviationModel.m in Sources */,
 				846F5C7B1F5A44C700A093BB /* CanQuoteTableViewCell.m in Sources */,
 				8497AB621F5A816A001B7621 /* ReleaseViewController.m in Sources */,
+				84A6FEEC1F6257770080CC0A /* CCActivityHUD.m in Sources */,
 				8429207A1F59300300A0592D /* NSDataEx.m in Sources */,
 				842920641F59300300A0592D /* ZLImageViewDisplayView.m in Sources */,
 				84291FD11F58F20600A0592D /* main.m in Sources */,
