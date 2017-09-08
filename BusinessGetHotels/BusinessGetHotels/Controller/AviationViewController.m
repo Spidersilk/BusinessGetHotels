@@ -11,10 +11,20 @@
 #import "ExpireTableViewCell.h"
 #import "HMSegmentedControl.h"
 #import "QuoteViewController.h"
+#import "CCActivityHUD.h"
+#import "AviationModel.h"
 
 @interface AviationViewController ()<UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate> {
-    NSInteger notAcquireFlag;
-    NSInteger followFlag;
+    NSInteger expireFlag;
+    
+    
+    NSInteger canQuotePageNum;
+    BOOL canQuoteLast;
+    
+    NSInteger expirePageNum;
+    BOOL expireLast;
+    
+    NSInteger pageSize;
     
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -23,6 +33,9 @@
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (strong, nonatomic)HMSegmentedControl *segmentedControl;
 @property (strong, nonatomic) UIActivityIndicatorView *avi;
+//@property (strong, nonatomic) CCActivityHUD *activityHUD;
+@property (strong, nonatomic) NSMutableArray *canQuoteArr;
+@property (strong, nonatomic) NSMutableArray *expireArr;
 @end
 
 @implementation AviationViewController
@@ -33,16 +46,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _canQuoteArr = [NSMutableArray new];
+    _expireArr = [NSMutableArray new];
     // Do any additional setup after loading the view.
-    notAcquireFlag = 1;
-    followFlag = 1;
+    
+    expireFlag = 1;
+    
+    canQuotePageNum = 1;
+    expirePageNum = 1;
+    pageSize = 10;
+    
+    //self.activityHUD = [CCActivityHUD new];
+    //self.activityHUD.isTheOnlyActiveView = NO;
+    //透明的，具有全覆盖效果
+    //self.activityHUD.overlayType = CCActivityHUDOverlayTypeTransparent;
+    
     
     //去除底部多余的线
     _canQuoteTableView.tableFooterView = [UIView new];
     _expireTableView.tableFooterView = [UIView new];
     //菜单栏
     [self setSegment];
-    [self request];
+    //刷新指示器
+    [self setRefreshControl];
+    [self canQuoteInitializeData];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -83,6 +112,43 @@
     
     [self.view addSubview:_segmentedControl];
 }
+#pragma mark - setRefreshControl刷新
+//创建刷新指示器的方法
+- (void) setRefreshControl {
+    //可报价列表的刷新指示器
+    UIRefreshControl *canQuoteRef = [UIRefreshControl new];
+    [canQuoteRef addTarget:self action:@selector(canQuoteRef) forControlEvents:UIControlEventValueChanged];
+    canQuoteRef.tag = 10001;
+    [_canQuoteTableView addSubview:canQuoteRef];
+    //已过期列表的刷新指示器
+    UIRefreshControl *expireRef = [UIRefreshControl new];
+    [expireRef addTarget:self action:@selector(expireRef) forControlEvents:UIControlEventValueChanged];
+    expireRef.tag = 10002;
+    [_expireTableView addSubview:expireRef];
+}
+//已获取列表下拉刷新事件
+- (void) canQuoteRef {
+    canQuotePageNum = 1;
+    [self canQuoteRequest];
+}
+//未获取列表下拉刷新事件
+- (void) expireRef {
+    expirePageNum = 1;
+    [self expireRequest];
+    
+}
+//第一次进行网络请求的时候需要覆盖上蒙层，而下拉刷新的时候不需要这个蒙层，所有我们把第一次网络请求和下拉刷新分开
+- (void) canQuoteInitializeData {
+    //菊花膜（刷新器）
+    _avi = [Utilities getCoverOnView:self.view];
+    [self canQuoteRequest];
+}
+//第一次进行网络请求的时候需要覆盖上蒙层，而下拉刷新的时候不需要这个蒙层，所有我们把第一次网络请求和下拉刷新分开
+- (void) expireInitializeData {
+    //菊花膜（刷新器）
+    _avi = [Utilities getCoverOnView:self.view];
+    [self expireRequest];
+}
 #pragma mark - scrollView
 //scrollView已经停止减速
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
@@ -103,33 +169,95 @@
 - (NSInteger)scrollCheck: (UIScrollView *)scrollView{
     NSInteger page = scrollView.contentOffset.x / (scrollView.frame.size.width);
     //判断第一次来到这个页面
-    if (notAcquireFlag == 1 && page == 1) {
-        notAcquireFlag = 0;
+    if (expireFlag == 1 && page == 1) {
+        expireFlag = 0;
+        [self expireInitializeData];
         NSLog(@"第一次来到这个未获取页面");
         //[self notAcquireInitializeData];
-    }
-    //判断第一次来到这个页面
-    if (followFlag == 1 && page == 2) {
-        followFlag = 0;
-        NSLog(@"第一次来到这个跟进页面");
-        //[self followInitializeData];
     }
     return page;
 }
 #pragma mark - request网络请求
-//登录
-- (void) request {
+//已报价接口
+- (void) canQuoteRequest {
     //创建菊花膜（点击按钮的时候，并显示在当前页面）
-    _avi = [Utilities getCoverOnView:self.view];
+    //_avi = [Utilities getCoverOnView:self.view];
+    //[self.activityHUD showWithText:@"加载中..." shimmering:YES];
     //参数
-    NSDictionary *para = @{@"Id" : @(1)};
+    NSDictionary *para = @{@"type" : @(1),@"pageNum":@(canQuotePageNum),@"pageSize":@(pageSize)};
     //网络请求
-    [RequestAPI requestURL:@"/findemandById" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+    [RequestAPI requestURL:@"/findAlldemandByType_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         NSLog(@"哈哈:%@",responseObject);
         //当网络请求成功时停止动画
         [_avi stopAnimating];
+        //结束刷新
+        UIRefreshControl *ref = (UIRefreshControl *)[_canQuoteTableView viewWithTag:10001];
+        [ref endRefreshing];
+        //加载成功可以使用这个
+        //[self.activityHUD dismiss];
         if ([responseObject[@"result"] integerValue] == 1) {
-            //NSDictionary *content = responseObject[@"content"];
+            NSDictionary *Aviation_demand = responseObject[@"content"][@"Aviation_demand"];
+            NSArray *list = Aviation_demand[@"list"];
+            //下拉刷新的时候不但要把页码变为1，而且还要将数组中原有的数据清空
+            if (canQuotePageNum == 1) {
+                [_canQuoteArr removeAllObjects];
+            }
+            for(NSDictionary *dict in list){
+                AviationModel *model = [[AviationModel alloc] initWiihDetailDictionary:dict];
+                [_canQuoteArr addObject:model];
+            
+            }
+            [_canQuoteTableView reloadData];
+            
+                        //用model的方式返回上一页
+            //[self dismissViewControllerAnimated:YES completion:nil];
+        }else{
+            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
+            [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self onCompletion:^{
+            }];
+        }
+        
+    } failure:^(NSInteger statusCode, NSError *error) {
+        [_avi stopAnimating];
+        //加载失败之后可以使用这个
+        //[self.activityHUD dismissWithText:nil delay:0.7 success:NO];
+        [Utilities popUpAlertViewWithMsg:@"网络似乎不太给力,请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
+        }];
+        
+        
+    }];
+    
+}
+//已过期接口
+- (void) expireRequest {
+    //创建菊花膜（点击按钮的时候，并显示在当前页面）
+    //_avi = [Utilities getCoverOnView:self.view];
+    //[self.activityHUD showWithText:@"加载中..." shimmering:YES];
+    //参数
+    NSDictionary *para = @{@"type" : @(0),@"pageNum":@(expirePageNum),@"pageSize":@(pageSize)};
+    //网络请求
+    [RequestAPI requestURL:@"/findAlldemandByType_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+        NSLog(@"哈哈:%@",responseObject);
+        //当网络请求成功时停止动画
+        [_avi stopAnimating];
+        //结束刷新
+        UIRefreshControl *ref = (UIRefreshControl *)[_expireTableView viewWithTag:10002];
+        [ref endRefreshing];
+        //加载成功可以使用这个
+        //[self.activityHUD dismiss];
+        if ([responseObject[@"result"] integerValue] == 1) {
+            NSDictionary *Aviation_demand = responseObject[@"content"][@"Aviation_demand"];
+            NSArray *list = Aviation_demand[@"list"];
+            //下拉刷新的时候不但要把页码变为1，而且还要将数组中原有的数据清空
+            if (expirePageNum == 1) {
+                [_expireArr removeAllObjects];
+            }
+            for(NSDictionary *dict in list){
+                AviationModel *model = [[AviationModel alloc] initWiihDetailDictionary:dict];
+                [_expireArr addObject:model];
+                
+            }
+            [_expireTableView reloadData];
             
             //用model的方式返回上一页
             //[self dismissViewControllerAnimated:YES completion:nil];
@@ -141,6 +269,8 @@
         
     } failure:^(NSInteger statusCode, NSError *error) {
         [_avi stopAnimating];
+        //加载失败之后可以使用这个
+        //[self.activityHUD dismissWithText:nil delay:0.7 success:NO];
         [Utilities popUpAlertViewWithMsg:@"网络似乎不太给力,请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
         }];
         
@@ -151,26 +281,48 @@
 #pragma mark - tableViewCell
 //每一组多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    if (tableView == _canQuoteTableView) {
+       return _canQuoteArr.count;
+    } else {
+        return _expireArr.count;
+    }
+    
 }
 //每行细胞长什么样
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (tableView == _canQuoteTableView) {
         CanQuoteTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CanQuoteCell" forIndexPath:indexPath];
+        AviationModel * aviationmodel = _canQuoteArr[indexPath.row];
+        
         cell.datesLbl.text = @"8-27";//起飞时间
-        cell.cityLbl.text = @"无锡——北京";//城市to城市
-        cell.ticketLbl.text = @"机票";//机票
-        cell.priceLbl.text = @"价格区间";//价格区间
-        cell.moneyLbl.text = @"￥:500-800";//价格在多少
+        cell.cityLbl.text = [NSString stringWithFormat:@"%@——%@",aviationmodel.departure,aviationmodel.destination];//城市to城市
+        //cell.ticketLbl.text = @"机票";//机票
+        //cell.priceLbl.text = @"价格区间";//价格区间
+        cell.moneyLbl.text = [NSString stringWithFormat:@"￥:%@—%@",aviationmodel.low_price,aviationmodel.high_price];//价格在多少low_price,high_price
         cell.timeLbl.text = @"晚上8点左右";//入住时间
-        cell.cabinLbl.text = @"好运来头等舱";//机舱
+        cell.cabinLbl.text = aviationmodel.aviation_demand_detail;//机舱
         //cell.canQuoteImgView.image = [UIImage imageNamed:@""];
         
         return cell;
         
     } else {
         ExpireTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"expireCell" forIndexPath:indexPath];
+        AviationModel * aviationmodel = _expireArr[indexPath.row];
+//        datesLbl;//过期起飞时间
+//        cityLbl;//城市to城市
+//        ticketLbl;//机票
+//        priceLbl;//价格区间
+//        moneyLbl;//价格在多少
+//        timeLbl;//入住时间
+//        expireLbl;//过期
+        cell.datesLbl.text = @"8-27";//起飞时间
+        cell.cityLbl.text = [NSString stringWithFormat:@"%@——%@",aviationmodel.departure,aviationmodel.destination];//城市to城市
+        //cell.ticketLbl.text = @"机票";//机票
+        //cell.priceLbl.text = @"价格区间";//价格区间
+        cell.moneyLbl.text = [NSString stringWithFormat:@"￥:%@—%@",aviationmodel.low_price,aviationmodel.high_price];//价格在多少low_price,high_price
+        cell.timeLbl.text = @"晚上8点左右";//入住时间
+        //cell.cabinLbl.text = aviationmodel.aviation_demand_title;//机舱
         return cell;
     }
     
