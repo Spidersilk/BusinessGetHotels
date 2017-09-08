@@ -11,6 +11,7 @@
 		8409DE551F5A33E200C4B2A3 /* Aviation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8409DE541F5A33E200C4B2A3 /* Aviation.storyboard */; };
 		8409DE571F5A343800C4B2A3 /* HotelIssued.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8409DE561F5A343800C4B2A3 /* HotelIssued.storyboard */; };
 		8409DE591F5A347800C4B2A3 /* Quote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8409DE581F5A347800C4B2A3 /* Quote.storyboard */; };
+		84200D3B1F62250600D80D2D /* QuoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84200D3A1F62250600D80D2D /* QuoteModel.m */; };
 		84291FD11F58F20600A0592D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84291FD01F58F20600A0592D /* main.m */; };
 		84291FD41F58F20600A0592D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84291FD31F58F20600A0592D /* AppDelegate.m */; };
 		84291FDA1F58F20600A0592D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84291FD81F58F20600A0592D /* Main.storyboard */; };
@@ -90,6 +91,8 @@
 		8409DE541F5A33E200C4B2A3 /* Aviation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Aviation.storyboard; sourceTree = "<group>"; };
 		8409DE561F5A343800C4B2A3 /* HotelIssued.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HotelIssued.storyboard; sourceTree = "<group>"; };
 		8409DE581F5A347800C4B2A3 /* Quote.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Quote.storyboard; sourceTree = "<group>"; };
+		84200D391F62250600D80D2D /* QuoteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuoteModel.h; sourceTree = "<group>"; };
+		84200D3A1F62250600D80D2D /* QuoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuoteModel.m; sourceTree = "<group>"; };
 		84291FCC1F58F20500A0592D /* BusinessGetHotels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusinessGetHotels.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84291FD01F58F20600A0592D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		84291FD21F58F20600A0592D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -244,6 +247,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		84200D351F6224BE00D80D2D /* QuoteModel */ = {
+			isa = PBXGroup;
+			children = (
+				84200D391F62250600D80D2D /* QuoteModel.h */,
+				84200D3A1F62250600D80D2D /* QuoteModel.m */,
+			);
+			path = QuoteModel;
+			sourceTree = "<group>";
+		};
 		84291FC31F58F20500A0592D = {
 			isa = PBXGroup;
 			children = (
@@ -382,6 +394,7 @@
 		842920331F59300200A0592D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				84200D351F6224BE00D80D2D /* QuoteModel */,
 				84FEB4EF1F5FBD38004A8B23 /* HotelModel */,
 				8429209D1F59340800A0592D /* BusinessGetHotels.xcdatamodeld */,
 				842920A01F59340F00A0592D /* Order.h */,
@@ -731,6 +744,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84200D3B1F62250600D80D2D /* QuoteModel.m in Sources */,
 				842920831F59300300A0592D /* NSDateFormatter+Category.m in Sources */,
 				8497AB651F5A82F9001B7621 /* MyHotelViewController.m in Sources */,
 				8429207C1F59300300A0592D /* RSADataSigner.m in Sources */,

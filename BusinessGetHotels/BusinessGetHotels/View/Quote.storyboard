@@ -485,6 +485,7 @@
                                             <outlet property="companyLabel" destination="XGt-DP-neF" id="F6B-il-HSD"/>
                                             <outlet property="endSiteLabel" destination="y0S-KA-Bpf" id="53X-sk-e1G"/>
                                             <outlet property="flightLabel" destination="Oq2-GK-C8z" id="tiF-Fw-tuS"/>
+                                            <outlet property="kgLabel" destination="clR-kd-42v" id="wrc-0X-rwP"/>
                                             <outlet property="placeLabel" destination="rJi-vL-JMw" id="Xog-Rn-Ubp"/>
                                             <outlet property="priceLabel" destination="kpU-Em-EHu" id="2SZ-7K-ZSp"/>
                                             <outlet property="startSiteLabel" destination="TVG-9I-APZ" id="jvj-vb-UBs"/>

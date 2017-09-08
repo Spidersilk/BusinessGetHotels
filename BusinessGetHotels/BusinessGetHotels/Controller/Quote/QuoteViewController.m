@@ -8,9 +8,12 @@
 
 #import "QuoteViewController.h"
 #import "QuoteTableViewCell.h"
+#import "QuoteModel.h"
 @interface QuoteViewController ()<UITableViewDataSource,UITableViewDelegate>{
     NSInteger flag;
 }
+@property (strong, nonatomic) QuoteModel *quotemodel;
+@property (strong, nonatomic) UIActivityIndicatorView *avi;
 @property (weak, nonatomic) IBOutlet UIView *DatepickView;
 @property (strong, nonatomic) NSMutableArray *Arr;
 @property (weak, nonatomic) IBOutlet UIView *aviView;
@@ -41,8 +44,15 @@
 
 - (void)viewDidLoad {
     flag = 0;
+    _Arr = [NSMutableArray new];
     [super viewDidLoad];
     [self naviConfing];
+    //创建刷新指示器
+    UIRefreshControl *ref = [UIRefreshControl new];
+    [ref addTarget:self action:@selector(refreshPage) forControlEvents:UIControlEventValueChanged];
+    ref.tag = 10005;
+    [_quoteTableView addSubview:ref];
+    [self checkNetworkRequest];
     //[self anniu];
     // Do any additional setup after loading the view.
 //    _confirmBtn.enabled = NO;
@@ -79,13 +89,24 @@
 #pragma mark - tableview
 //每组多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return _Arr.count;
 }
 //细胞长什么样
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     QuoteTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"quoteCell" forIndexPath:indexPath];
     //根据行号拿到数组中对应的数据
-    //NSDictionary *dict = _Arr[indexPath.row];
+    _quotemodel = _Arr[indexPath.row];
+    cell.companyLabel.text = _quotemodel.avition_company;
+    cell.flightLabel.text = _quotemodel.flight_no;
+    cell.placeLabel.text = _quotemodel.avition_cabin;
+    cell.startSiteLabel.text = _quotemodel.departure;
+    cell.endSiteLabel.text = _quotemodel.destination;
+    cell.kgLabel.text = [NSString stringWithFormat:@"%ld",(long)_quotemodel.weight];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    cell.takeoffLabel.text = _quotemodel.in_time_str;
+    cell.arriveLabel.text = _quotemodel.out_time_str;
+    cell.priceLabel.text = [NSString stringWithFormat:@"%ld",(long)_quotemodel.final_price];
     
     return cell;
 }
@@ -177,6 +198,14 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (void)initializeData{
+    _avi = [Utilities getCoverOnView:self.view];
+    [self refreshPage];
+}
+//刷新指示器的事件
+- (void)refreshPage{
+    [self checkNetworkRequest];
+}
 //执行网络请求
 - (void)networkRequest {
     NSInteger price = [[NSString stringWithFormat:@"%@",_priceTextField.text] integerValue];
@@ -202,7 +231,39 @@
             [Utilities popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
         }];
     }
-         
+- (void)checkNetworkRequest {
+    
+    //设置接口入参
+    NSDictionary *prarmeter = @{@"Id" : @2};
+    //开始请求
+    [RequestAPI requestURL: @"/selectOffer_edu" withParameters:prarmeter andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+        //成功以后要做的事情
+        [_avi stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_quoteTableView viewWithTag:10005];
+        [ref endRefreshing];
+        NSLog(@"haha = %@",responseObject);
+        //[self endAnimation];
+        if ([responseObject[@"result"] integerValue] == 1) {
+            NSDictionary *content = responseObject[@"content"];
+            for(NSDictionary *dict in content){
+                _quotemodel = [[QuoteModel alloc]initWhitDictionary:dict];
+                [_Arr addObject:_quotemodel];
+            }
+            [_quoteTableView reloadData];
+        }else{
+            //业务逻辑失败的情况下
+            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
+            [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];
+        }
+    } failure:^(NSInteger statusCode, NSError *error) {
+        //失败以后要做的事情
+        [_avi stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_quoteTableView viewWithTag:10005];
+        [ref endRefreshing];
+        [Utilities popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
+    }];
+}
+
 
 //出发地的按钮事件
 - (IBAction)startSiteAction:(UIButton *)sender forEvent:(UIEvent *)event {
@@ -233,7 +294,8 @@
 //确定按钮事件
 - (IBAction)confirmAction:(UIButton *)sender forEvent:(UIEvent *)event {
     [self networkRequest];
-    }
+    [self checkNetworkRequest];
+}
 //toolbar上的取消按钮事件
 - (IBAction)cancel:(UIBarButtonItem *)sender {
     _aviView.hidden = YES;

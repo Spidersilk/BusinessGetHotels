@@ -17,5 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *placeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *takeoffLabel;
 @property (weak, nonatomic) IBOutlet UILabel *arriveLabel;
+@property (weak, nonatomic) IBOutlet UILabel *kgLabel;
 
 @end
