@@ -10,6 +10,7 @@
 #import "HotelTableViewCell.h"
 #import "ReleaseViewController.h"
 #import "HotelModel.h"
+#import <sqlite3.h>
 @interface MyHotelViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     NSInteger i;
@@ -49,9 +50,6 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-   /* NSDictionary *dict = @{@"name" :[Utilities nullAndNilCheck:[[StorageMgr singletonStorageMgr] objectForKey:@"roomName"] replaceBy:@"无锡大酒店"] ,@"breakfast" :[Utilities nullAndNilCheck:[[StorageMgr singletonStorageMgr] objectForKey:@"breakfast"] replaceBy:@"含早"] , @"describe" : [Utilities nullAndNilCheck:[[StorageMgr singletonStorageMgr] objectForKey:@"bed"] replaceBy:@"大床房"], @"area" : [Utilities nullAndNilCheck:[[StorageMgr singletonStorageMgr] objectForKey:@"area"] replaceBy:@"平方:108平米"], @"price" : [Utilities nullAndNilCheck:[[StorageMgr singletonStorageMgr] objectForKey:@"price"] replaceBy:@"¥888"], @"hotelImage" : @"hotels"};
-    _tableArray = [NSMutableArray arrayWithObjects:dict,dict,dict,dict,dict,nil];*/
-    
 }
 //下拉刷新
 - (void)setRefreshControl{
@@ -107,8 +105,9 @@
 - (void)deleteRequest{
     //_avi = [Utilities getCoverOnView:self.view];
     NSDictionary *dict = @{@"id" : @(_hotelModel.hotelId)};
+    NSLog(@"%ld",(long)_hotelModel.hotelId);
     [RequestAPI requestURL:@"/deleteHotel" withParameters:dict andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
-        NSLog(@"responseObject = %@",responseObject);
+        NSLog(@"delete responseObject = %@",responseObject);
         if([responseObject[@"result"] integerValue] == 1){
            [_myHotelTabelView reloadData];
         }else{
@@ -183,7 +182,6 @@
 //进入编辑模式，按下出现的编辑按钮后
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     [tableView setEditing:NO animated:YES];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"你确定删除该条发布？" preferredStyle:UIAlertControllerStyleAlert];

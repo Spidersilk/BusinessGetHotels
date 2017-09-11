@@ -145,9 +145,12 @@
         if([responseObject[@"result"] integerValue] == 1)
         {
             [_avi stopAnimating];
-            [Utilities popUpAlertViewWithMsg:@"恭喜发布成功" andTitle:nil onView:self onCompletion:^{
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"你确定删除该条发布？" preferredStyle:UIAlertControllerStyleAlert];
+            
+            [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self.navigationController popViewControllerAnimated:NO];
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
         }else{
             [_avi stopAnimating];
             [Utilities popUpAlertViewWithMsg:@"请求发生了错误，请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
@@ -161,7 +164,7 @@
 
 }
 - (void)payAction{
-    if(_roomNameLab.text.length == 0){
+   /* if(_roomNameLab.text.length == 0){
         [Utilities popUpAlertViewWithMsg:@"请填写房间名称" andTitle:nil onView:self];
         return;
     }
@@ -194,7 +197,7 @@
     if( [_priceLab.text rangeOfCharacterFromSet:notDigits].location != NSNotFound){
         [Utilities popUpAlertViewWithMsg:@"请设置正确的价格" andTitle:nil onView:self];
         return;
-    }
+    }*/
     [self netRequest];
 }
 - (IBAction)canceAct:(UIBarButtonItem *)sender {
