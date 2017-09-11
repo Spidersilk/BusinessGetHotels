@@ -139,7 +139,7 @@
      NSURL *URL = [NSURL URLWithString:@"http://img5.imgtn.bdimg.com/it/u=1934652595,421345666&fm=23&gp=0.jpg"];
     NSString *str = [NSString stringWithFormat:@"%@", URL];
     _avi = [Utilities getCoverOnView:self.view];
-    NSDictionary *para = @{@"business_id" : @1,@"hotel_name" : _selectBtn.titleLabel.text,@"hotel_type" : [NSString stringWithFormat:@"%@,%@,%@", _breakfastLab.text,_bedLab.text,_areaLab.text],@"room_imgs" : str};
+    NSDictionary *para = @{@"business_id" : @1,@"hotel_name" : _selectBtn.titleLabel.text,@"hotel_type" : [NSString stringWithFormat:@"%@,%@,%@", _breakfastLab.text,_bedLab.text,_areaLab.text],@"room_imgs" : str,@"price" : _priceLab.text};
     [RequestAPI requestURL:@"/addHotel" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         NSLog(@"responseObject = %@",responseObject);
         if([responseObject[@"result"] integerValue] == 1)
@@ -190,17 +190,11 @@
         }];
         return;
     }
-    /*NSCharacterSet *notDigits = [[NSCharacterSet decimalDigitCharacterSet]invertedSet];
+    NSCharacterSet *notDigits = [[NSCharacterSet decimalDigitCharacterSet]invertedSet];
     if( [_priceLab.text rangeOfCharacterFromSet:notDigits].location != NSNotFound){
         [Utilities popUpAlertViewWithMsg:@"请设置正确的价格" andTitle:nil onView:self];
         return;
-    }*/
-    NSLog(@"%@%@%@%@%@",_roomNameLab.text,_breakfastLab.text,_bedLab.text,_areaLab.text,_priceLab.text);
-    [[StorageMgr singletonStorageMgr] addKey:@"roomName" andValue:_roomNameLab.text];
-    [[StorageMgr singletonStorageMgr] addKey:@"breakfast" andValue:_breakfastLab.text];
-    [[StorageMgr singletonStorageMgr] addKey:@"bed" andValue:_bedLab.text];
-    [[StorageMgr singletonStorageMgr] addKey:@"area" andValue:_areaLab.text];
-    [[StorageMgr singletonStorageMgr] addKey:@"price" andValue:_priceLab.text];
+    }
     [self netRequest];
 }
 - (IBAction)canceAct:(UIBarButtonItem *)sender {

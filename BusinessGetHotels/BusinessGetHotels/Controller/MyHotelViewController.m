@@ -110,7 +110,7 @@
     [RequestAPI requestURL:@"/deleteHotel" withParameters:dict andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         NSLog(@"responseObject = %@",responseObject);
         if([responseObject[@"result"] integerValue] == 1){
-          
+           [_myHotelTabelView reloadData];
         }else{
          
        }
@@ -153,7 +153,6 @@
         }
     }
     NSURL *URL = [NSURL URLWithString:_hotelModel.imgUrl];
-    NSLog(@"URL = %@", URL);
     cell.hotelNameLab.text = _hotelModel.hotel_name;
     cell.priceLab.text =  [NSString stringWithFormat:@"¥%ld",(long)_hotelModel.price];
      [cell.hotelImage sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"hotelImage"]];
@@ -191,8 +190,9 @@
         
         [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self deleteRequest];
-            //[_nsmArr removeObjectAtIndex:indexPath.row];//删除数据
-            //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];//删除行cell
+            [_nsmArr removeObjectAtIndex:indexPath.row];//删除数据
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];//删除行cell
+            //[self netRequest];
         }]];
         [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
