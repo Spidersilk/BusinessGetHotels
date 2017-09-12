@@ -8,10 +8,11 @@
 
 #import "ReleaseViewController.h"
 
-@interface ReleaseViewController ()<UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+@interface ReleaseViewController ()<UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     NSInteger i;
 }
+@property (weak, nonatomic) IBOutlet UIButton *imgButton;
 @property (weak, nonatomic) IBOutlet UIButton *selectBtn;
 - (IBAction)selectAct:(UIButton *)sender forEvent:(UIEvent *)event;
 @property (weak, nonatomic) IBOutlet UITextField *roomNameLab;
@@ -24,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (strong, nonatomic) NSArray *pickArr;
 @property (strong, nonatomic) NSMutableArray *hotelMuArr;
+@property (strong, nonatomic) UIImagePickerController *imagePC;//UIImagePickerController是系统提供的用来获取图片和视频的接口
 - (IBAction)canceAct:(UIBarButtonItem *)sender;
 - (IBAction)determineAct:(UIBarButtonItem *)sender;
 @property (strong, nonatomic) UIActivityIndicatorView *avi;
@@ -44,6 +46,7 @@
     [self selectnetRequest];
     //刷新第1列
     [_pickerView reloadComponent:0];
+    [_imgButton addTarget:self action:@selector(avatarAction:forEvent:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,6 +56,60 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+}
+//当选择完媒体文件后调用
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    //根据UIImagePickerControllerEditedImage这个键去拿到我们选中的已经编辑过的图片
+    UIImage *image = info[UIImagePickerControllerEditedImage];
+    //将上面拿到的图片设置为按钮的背景图片
+    [_imgButton setBackgroundImage:image forState:UIControlStateNormal];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+//当进入到媒体文件取消选择后调用
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    //用model的方式返回上一页
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)pickImage:(UIImagePickerControllerSourceType)sourceType {
+    NSLog(@"按钮被按了");
+    //判断当前选择的图片选择器控制器类型是否可用
+    if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
+        //神奇的nil
+        _imagePC = nil;
+        //初始化一个图片选择器控制器对象
+        _imagePC = [[UIImagePickerController alloc] init];
+        //签协议
+        _imagePC.delegate = self;
+        //设置图片选择器控制器类型
+        _imagePC.sourceType = sourceType;
+        //设置选中的媒体文件是否可以被编辑
+        _imagePC.allowsEditing = YES;
+        //设置可以被选择的媒体文件的类型
+        _imagePC.mediaTypes = @[(NSString *)kUTTypeImage];
+        [self presentViewController:_imagePC animated:YES completion:nil];
+    } else {
+        UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"提示" message:sourceType == UIImagePickerControllerSourceTypeCamera ? @"您当前的设备没有照相功能" : @"您当前的设备无法打开相册" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+        [alertView addAction:confirmAction];
+        [self presentViewController:alertView animated:YES completion:nil];
+    }
+}
+
+- (void)avatarAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    NSLog(@"可以开始选取头像了");
+    //设置弹话框的样式
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *takePhoto = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self pickImage:UIImagePickerControllerSourceTypeCamera];//调用摄像头
+    }];
+    UIAlertAction *choosePhoto = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self pickImage:UIImagePickerControllerSourceTypePhotoLibrary];//调用图片库UIImagePickerControllerSourceTypeSavedPhotosAlbum 则调用iOS设备中的胶卷相机的图片.
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [actionSheet addAction:takePhoto];
+    [actionSheet addAction:choosePhoto];
+    [actionSheet addAction:cancelAction];
+    [self presentViewController:actionSheet animated:YES completion:nil];
 }
 //设置有多少列
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
@@ -145,7 +202,7 @@
         if([responseObject[@"result"] integerValue] == 1)
         {
             [_avi stopAnimating];
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"你确定删除该条发布？" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"恭喜你发布成功!" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [self.navigationController popViewControllerAnimated:NO];
@@ -164,7 +221,7 @@
 
 }
 - (void)payAction{
-   /* if(_roomNameLab.text.length == 0){
+   if(_roomNameLab.text.length == 0){
         [Utilities popUpAlertViewWithMsg:@"请填写房间名称" andTitle:nil onView:self];
         return;
     }
@@ -197,7 +254,7 @@
     if( [_priceLab.text rangeOfCharacterFromSet:notDigits].location != NSNotFound){
         [Utilities popUpAlertViewWithMsg:@"请设置正确的价格" andTitle:nil onView:self];
         return;
-    }*/
+    }
     [self netRequest];
 }
 - (IBAction)canceAct:(UIBarButtonItem *)sender {

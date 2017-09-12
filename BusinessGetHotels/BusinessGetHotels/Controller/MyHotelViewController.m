@@ -17,7 +17,6 @@
 }
 @property (weak, nonatomic) IBOutlet UITableView *myHotelTabelView;
 @property (weak, nonatomic) IBOutlet UIView *naivView;
-@property (strong, nonatomic) NSMutableArray *tableArray;
 @property (strong, nonatomic) NSMutableArray *nsmArr;
 @property (strong, nonatomic) NSMutableArray *nsmArrType;
 @property (strong, nonatomic) NSMutableArray *arr;
@@ -35,7 +34,6 @@
     [self setRefreshControl];
     //[self deleteRequest];
     _myHotelTabelView.tableFooterView = [UIView new];
-    _tableArray = [NSMutableArray new];
    _nsmArr = [NSMutableArray new];
     _nsmArrType = [NSMutableArray new];
     _arr = [NSMutableArray new];
@@ -110,6 +108,7 @@
         NSLog(@"delete responseObject = %@",responseObject);
         if([responseObject[@"result"] integerValue] == 1){
            [_myHotelTabelView reloadData];
+            [self netRequest];
         }else{
          
        }
@@ -122,6 +121,7 @@
 //    return _nsmArr.count;
 //}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    //NSLog(@"_nsmArr.count = %lu",(unsigned long)_nsmArr.count);
     return _nsmArr.count;
 }
 
@@ -188,8 +188,8 @@
         
         [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self deleteRequest];
-            [_nsmArr removeObjectAtIndex:indexPath.row];//删除数据
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];//删除行cell
+            //[_nsmArr removeObjectAtIndex:indexPath.row];//删除数据
+            //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];//删除行cell
             //[self netRequest];
         }]];
         [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];

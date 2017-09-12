@@ -342,6 +342,7 @@
                                     <constraint firstAttribute="width" secondItem="FEy-qC-mAM" secondAttribute="height" multiplier="5:3" id="LYW-Hf-sEh"/>
                                     <constraint firstAttribute="width" constant="150" id="yCP-dT-y6W"/>
                                 </constraints>
+                                <state key="normal" backgroundImage="detail-1"/>
                             </button>
                             <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zfE-Ln-yuh">
                                 <rect key="frame" x="0.0" y="451" width="375" height="216"/>
@@ -438,6 +439,7 @@
                         <outlet property="areaLab" destination="RBF-BE-auE" id="KS5-fY-xi1"/>
                         <outlet property="bedLab" destination="9Of-81-gad" id="YQK-xC-Fxi"/>
                         <outlet property="breakfastLab" destination="ncP-Ki-NBm" id="Bm6-Fw-RgJ"/>
+                        <outlet property="imgButton" destination="FEy-qC-mAM" id="bVO-1h-h9p"/>
                         <outlet property="pickerView" destination="zfE-Ln-yuh" id="ah5-P1-OXe"/>
                         <outlet property="premiumLab" destination="mys-VV-OjV" id="WwV-uV-pJw"/>
                         <outlet property="priceLab" destination="ehb-YN-SWZ" id="VMk-fl-9Ql"/>
@@ -453,6 +455,7 @@
     </scenes>
     <resources>
         <image name="detail" width="68" height="46"/>
+        <image name="detail-1" width="68" height="46"/>
         <image name="hotel" width="22" height="22"/>
         <image name="hotelL" width="22" height="22"/>
         <image name="release" width="24" height="22"/>
