@@ -21,7 +21,6 @@
 @property (strong, nonatomic) NSMutableArray *nsmArrType;
 @property (strong, nonatomic) NSMutableArray *arr;
 @property (strong, nonatomic) UIActivityIndicatorView *avi;
-@property (strong, nonatomic) HotelModel *hotelModel;
 - (IBAction)btnAction:(UIButton *)sender forEvent:(UIEvent *)event;
 @end
 
@@ -100,19 +99,22 @@
 
     }];
 }
-- (void)deleteRequest{
-    //_avi = [Utilities getCoverOnView:self.view];
-    NSDictionary *dict = @{@"id" : @(_hotelModel.hotelId)};
-    NSLog(@"%ld",(long)_hotelModel.hotelId);
+- (void)deleteRequest:(NSIndexPath *)indexPath {
+    _avi = [Utilities getCoverOnView:self.view];
+    HotelModel *hotelModel = _nsmArr[indexPath.row];
+    NSDictionary *dict = @{@"id" : @(hotelModel.hotelId)};
+    NSLog(@"%ld",(long)hotelModel.hotelId);
     [RequestAPI requestURL:@"/deleteHotel" withParameters:dict andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         NSLog(@"delete responseObject = %@",responseObject);
         if([responseObject[@"result"] integerValue] == 1){
+            [_avi stopAnimating];
            [_myHotelTabelView reloadData];
             [self netRequest];
         }else{
-         
+            [_avi stopAnimating];
        }
     } failure:^(NSInteger statusCode, NSError *error) {
+        [_avi stopAnimating];
         [Utilities forceLogoutCheck:statusCode fromViewController:self];
     }];
 }
@@ -142,7 +144,8 @@
 
     
     HotelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HotelCell" forIndexPath:indexPath];
-    _hotelModel = _nsmArr[indexPath.row];
+    HotelModel *hotelModel = _nsmArr[indexPath.row];
+    hotelModel = _nsmArr[indexPath.row];
     if(_nsmArrType.count == 4){
     for(NSInteger y = 0; y < _nsmArrType.count; y++){
         _arr = _nsmArrType[y];
@@ -151,9 +154,9 @@
         cell.areaLab.text = _arr[3];
         }
     }
-    NSURL *URL = [NSURL URLWithString:_hotelModel.imgUrl];
-    cell.hotelNameLab.text = _hotelModel.hotel_name;
-    cell.priceLab.text =  [NSString stringWithFormat:@"¥%ld",(long)_hotelModel.price];
+    NSURL *URL = [NSURL URLWithString:hotelModel.imgUrl];
+    cell.hotelNameLab.text = hotelModel.hotel_name;
+    cell.priceLab.text =  [NSString stringWithFormat:@"¥%ld",(long)hotelModel.price];
      [cell.hotelImage sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"hotelImage"]];
     //cell.hotelImage.image = [UIImage imageNamed:_tableArray[indexPath.row][@"hotelImage"]];
     return cell;
@@ -187,7 +190,7 @@
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"你确定删除该条发布？" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [self deleteRequest];
+            [self deleteRequest:indexPath];
             //[_nsmArr removeObjectAtIndex:indexPath.row];//删除数据
             //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];//删除行cell
             //[self netRequest];
