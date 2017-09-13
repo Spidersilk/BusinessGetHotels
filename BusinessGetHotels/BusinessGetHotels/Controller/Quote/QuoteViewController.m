@@ -12,6 +12,9 @@
 @interface QuoteViewController ()<UITableViewDataSource,UITableViewDelegate>{
     NSInteger flag;
 }
+
+@property (strong, nonatomic) NSString *thatdate;
+@property (strong, nonatomic) NSString *City;
 @property (strong, nonatomic) QuoteModel *quotemodel;
 @property (strong, nonatomic) UIActivityIndicatorView *avi;
 @property (weak, nonatomic) IBOutlet UIView *DatepickView;
@@ -37,7 +40,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *quoteToolbar;
 - (IBAction)cancel:(UIBarButtonItem *)sender;
 - (IBAction)sureAction:(UIBarButtonItem *)sender;
-
+#define WeakSelf __weak typeof(self) weakSelf = self;
 @end
 
 @implementation QuoteViewController
@@ -45,6 +48,7 @@
 - (void)viewDidLoad {
     flag = 0;
     _Arr = [NSMutableArray new];
+    _quoteDatePicker.minimumDate = [NSDate date];
     [super viewDidLoad];
     [self naviConfing];
     [self initializeData];
@@ -53,13 +57,13 @@
     [ref addTarget:self action:@selector(refreshPage) forControlEvents:UIControlEventValueChanged];
     ref.tag = 10005;
     [_quoteTableView addSubview:ref];
-    [self checkNetworkRequest];
+    [self networkRequest];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkCityState:) name:@"ResetHome" object:nil];
 }
 //将要来到此页面（显示导航栏）
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [self.navigationController setNavigationBarHidden:0 animated:NO];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -83,6 +87,7 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     self.navigationItem.backBarButtonItem = item;
 }
+
 #pragma mark - tableview
 //每组多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -128,7 +133,6 @@
 //进入编辑模式，按下出现的编辑按钮后
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //WS(weakself);
     [tableView setEditing:NO animated:YES];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
@@ -140,14 +144,13 @@
             if (editingStyle == UITableViewCellEditingStyleDelete) { /**< 判断编辑状态是删除时. */
                 
                 /** 1. 更新数据源(数组): 根据indexPaht.row作为数组下标, 从数组中删除数据. */
-                [self.Arr removeObjectAtIndex:indexPath.row];
+                //[self.Arr removeObjectAtIndex:indexPath.row];
                 [self DeleteNetworkRequest];
-                //[_quoteTableView reloadData];
+                [_quoteTableView reloadData];
                 /** 2. TableView中 删除一个cell. */
                 //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
             }
-            // [tableView deleteRowsAtIndexPaths:@[indexPath]  MessageModel *model = weakself.dataArray[indexPath.row];
-            //[weakself singleDelet:model.mid];
+            
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
     }
@@ -160,26 +163,20 @@
 
 - (void) checkCityState:(NSNotification *)note {
     NSString *cityStr = note.object;
-    if (![cityStr isEqualToString:_startSiteBtn.titleLabel.text] || ![cityStr isEqualToString:_endSiteBtn.titleLabel.text]) {
         if(flag == 0){
-            //修改城市按钮标题
-            [_startSiteBtn setTitle:cityStr forState:UIControlStateNormal];
-            //修改用户选择的城市
-            [Utilities removeUserDefaults:@"UserCity"];
-            [Utilities setUserDefaults:@"UserCity" content:cityStr];
-            //重新进行网络请求
-            //[self networkRequest];
+                //修改城市按钮标题
+                [_startSiteBtn setTitle:cityStr forState:UIControlStateNormal];
+                _City = cityStr;
         }else{
-            //修改城市按钮标题
-            [_endSiteBtn setTitle:cityStr forState:UIControlStateNormal];
-            //修改用户选择的城市
-            [Utilities removeUserDefaults:@"UserCity"];
-            [Utilities setUserDefaults:@"UserCity" content:cityStr];
+            if(![_City isEqualToString:cityStr]){
+                //修改城市按钮标题
+                [_endSiteBtn setTitle:cityStr forState:UIControlStateNormal];
+            }else{
+                [Utilities popUpAlertViewWithMsg:@"sd" andTitle:nil onView:self];
+                
+            }
         }
-        //if([_startSiteBtn.titleLabel.text isEqualToString:_endSiteBtn.titleLabel.text])
-    }
 }
-
 /*#pragma mark - Navigation
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -187,6 +184,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 #pragma mark - 网络请求
 - (void)initializeData{
     _avi = [Utilities getCoverOnView:self.view];
@@ -198,11 +196,13 @@
 }
 //执行网络请求
 - (void)networkRequest {
+    
     NSInteger price = [[NSString stringWithFormat:@"%@",_priceTextField.text] integerValue];
     NSInteger weight = [[NSString stringWithFormat:@"%@",_kgTextField.text] integerValue];
     //设置接口入参
     NSDictionary *prarmeter = @{@"business_id" : @2,@"aviation_demand_id" : @1, @"final_price" : @(price), @"weight":@(weight), @"aviation_company" : _companyTextField.text, @"aviation_cabin" : _placeTextField.text, @"in_time_str" : _takeoffBtn.titleLabel.text, @"out_time_str" : _arriveBtn.titleLabel.text,@"departure" : _startSiteBtn.titleLabel.text, @"destination" : _endSiteBtn.titleLabel.text, @"flight_no" : _flightTextField.text};
         //开始请求
+    
         [RequestAPI requestURL:@"/offer_edu" withParameters:prarmeter andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
             //成功以后要做的事情
             [_avi stopAnimating];
@@ -223,6 +223,7 @@
             [Utilities popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
         }];
     }
+
 - (void)checkNetworkRequest {
     
     //设置接口入参
@@ -259,13 +260,15 @@
 - (void)DeleteNetworkRequest {
     //设置接口入参
     NSDictionary *prarmeter = @{@"Id" : @(_quotemodel.Id)};
+    NSLog(@"id = %ld",(long)_quotemodel.Id);
     //开始请求
     [RequestAPI requestURL: @"/deleteOfferById_edu" withParameters:prarmeter andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         //成功以后要做的事情
         NSLog(@"1231 = %@",responseObject);
         //[self endAnimation];
         if ([responseObject[@"result"] integerValue] == 1) {
-            
+            [self checkNetworkRequest];
+            //[_quoteTableView reloadData];
         }else{
             //业务逻辑失败的情况下
             NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
@@ -287,7 +290,7 @@
 - (IBAction)endSiteAction:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 1;
     [self performSegueWithIdentifier:@"QuoteToCity" sender:self];
-}
+       }
 //起飞时间的按钮事件
 - (IBAction)takeoffTime:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 0;
@@ -306,8 +309,46 @@
 }
 //确定按钮事件
 - (IBAction)confirmAction:(UIButton *)sender forEvent:(UIEvent *)event {
-    [self networkRequest];
+    //判断某个字符串中是否每个字符都是数字(invertedSet:反向设置，Digits：数字)
+    NSCharacterSet *notDigits = [[NSCharacterSet decimalDigitCharacterSet]invertedSet];
+    if([_startSiteBtn.titleLabel.text isEqualToString:@"选择出发地"]){
+       [Utilities popUpAlertViewWithMsg:@"请选择出发地" andTitle:nil onView:self];
+        return;
+    }
+    if([_endSiteBtn.titleLabel.text isEqualToString:@"选择目的地"]){
+        [Utilities popUpAlertViewWithMsg:@"请选择目的地" andTitle:nil onView:self];
+        return;
+    }
+    if(_priceTextField.text.length == 0 || [_priceTextField.text rangeOfCharacterFromSet:notDigits].location != NSNotFound){
+        [Utilities popUpAlertViewWithMsg:@"请正确填写报价" andTitle:nil onView:self];
+        return;
+    }
+    if(_companyTextField.text.length == 0){
+        [Utilities popUpAlertViewWithMsg:@"请填写航空公司" andTitle:nil onView:self];
+        return;
+    }
+    if(_flightTextField.text.length == 0){
+        [Utilities popUpAlertViewWithMsg:@"请填写航班" andTitle:nil onView:self];
+        return;
+    }
+    if(_placeTextField.text.length == 0){
+        [Utilities popUpAlertViewWithMsg:@"请填写舱位" andTitle:nil onView:self];
+        return;
+    }
+    if(_takeoffBtn.titleLabel.text.length == 0){
+        [Utilities popUpAlertViewWithMsg:@"请选择起飞日期" andTitle:nil onView:self];
+        return;
+    }
+    if(_arriveBtn.titleLabel.text.length == 0){
+        [Utilities popUpAlertViewWithMsg:@"请选择到达日期" andTitle:nil onView:self];
+        return;
+    }
+    if(_kgTextField.text.length == 0 || [_kgTextField.text rangeOfCharacterFromSet:notDigits].location != NSNotFound){
+        [Utilities popUpAlertViewWithMsg:@"请正确填写行李重量" andTitle:nil onView:self];
+        return;
+    }
     [self checkNetworkRequest];
+    
 }
 //toolbar上的取消按钮事件
 - (IBAction)cancel:(UIBarButtonItem *)sender {
@@ -319,19 +360,29 @@
 //toolbar上的确定按钮事件
 - (IBAction)sureAction:(UIBarButtonItem *)sender {
     NSDate *date = _quoteDatePicker.date;
+    NSDate *dateTom = [NSDate dateTomorrow];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm";
     NSString *theDate = [formatter stringFromDate:date];
+    NSTimeInterval startTime = [date timeIntervalSince1970]*1000;
+    NSTimeInterval endTime = [dateTom timeIntervalSince1970]*1000;
+    
     if(flag == 0){
         [_takeoffBtn setTitle:theDate forState:UIControlStateNormal];
+        _thatdate = theDate;
     }else{
-         [_arriveBtn setTitle:theDate forState:UIControlStateNormal];
+        if([_thatdate isEqualToString:theDate] || startTime >= endTime){
+            [Utilities popUpAlertViewWithMsg:@"请重新选择时间" andTitle:nil onView:self];
+        }else{
+            [_arriveBtn setTitle:theDate forState:UIControlStateNormal];
+        }
     }
     _aviView.hidden = YES;
     _DatepickView.hidden = YES;
     _quoteToolbar.hidden = YES;
     _quoteDatePicker.hidden = YES;
 }
+
 #pragma mark - 键盘收起
 //按键盘上的Return键收起键盘
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

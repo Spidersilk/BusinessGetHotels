@@ -11,7 +11,6 @@
 @interface CityTableViewController ()
 @property (strong, nonatomic) NSDictionary *cities;
 @property (strong, nonatomic) NSArray *keys;
-- (IBAction)CityAction:(UIButton *)sender forEvent:(UIEvent *)event;
 @end
 
 @implementation CityTableViewController
@@ -121,7 +120,7 @@
     NSArray *sectionCities = _cities[key];
     NSDictionary *city = sectionCities[indexPath.row];
     [[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:@"ResetHome" object:city[@"name"]] waitUntilDone:YES];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 //设置右侧快捷键的栏
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
@@ -194,13 +193,13 @@
 }
 */
 
-- (IBAction)CityAction:(UIButton *)sender forEvent:(UIEvent *)event {
-    NSNotificationCenter *noteCenter = [NSNotificationCenter defaultCenter];
-    NSNotification *note = [NSNotification notificationWithName:@"ResetHome" object:[[StorageMgr singletonStorageMgr] objectForKey:@"LocCity"]];
+//- (IBAction)CityAction:(UIButton *)sender forEvent:(UIEvent *)event {
+   // NSNotificationCenter *noteCenter = [NSNotificationCenter defaultCenter];
+    //NSNotification *note = [NSNotification notificationWithName:@"ResetHome" object:[[StorageMgr singletonStorageMgr] objectForKey:@"LocCity"]];
     //[noteCenter postNotification:note];
     //结合线程的通知，表示先让通知接收者完成它收到通知要做的事以后再执行别的任务
-    [noteCenter performSelectorOnMainThread:@selector(postNotification:) withObject:note waitUntilDone:YES];
+    //[noteCenter performSelectorOnMainThread:@selector(postNotification:) withObject:note waitUntilDone:YES];
     //返回上一页
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+   // [self dismissViewControllerAnimated:YES completion:nil];
+//}
 @end

@@ -76,7 +76,7 @@
                                         <rect key="frame" x="295" y="27" width="58" height="16"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         <connections>
                                             <outlet property="delegate" destination="THv-c7-3hR" id="g4Q-Ov-E7n"/>
                                         </connections>
@@ -204,7 +204,7 @@
                                         <rect key="frame" x="28" y="163" width="107.5" height="16"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         <connections>
                                             <outlet property="delegate" destination="THv-c7-3hR" id="H8l-di-r0V"/>
                                         </connections>
