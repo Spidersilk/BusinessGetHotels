@@ -70,7 +70,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="148"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bPm-ob-8xv" id="dP6-JW-iHh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="148"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="147.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8-27" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5w-S5-GpB">
@@ -287,7 +287,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已过期" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JhG-ha-W3j">
-                                                            <rect key="frame" x="31" y="105.5" width="52" height="21"/>
+                                                            <rect key="frame" x="31" y="100.5" width="52" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -311,7 +311,7 @@
                                                     <constraints>
                                                         <constraint firstItem="fRQ-FG-IxI" firstAttribute="top" secondItem="3yv-tI-gnI" secondAttribute="bottom" constant="17" id="0av-Dr-fBN"/>
                                                         <constraint firstItem="3yv-tI-gnI" firstAttribute="width" secondItem="3yv-tI-gnI" secondAttribute="height" multiplier="1:1" id="5bI-HD-fi6"/>
-                                                        <constraint firstItem="JhG-ha-W3j" firstAttribute="top" secondItem="hYN-l7-z4m" secondAttribute="bottom" constant="15" id="6Ih-ZO-FV0"/>
+                                                        <constraint firstItem="JhG-ha-W3j" firstAttribute="top" secondItem="hYN-l7-z4m" secondAttribute="bottom" constant="10" id="6Ih-ZO-FV0"/>
                                                         <constraint firstAttribute="trailing" secondItem="df7-Qm-J84" secondAttribute="trailing" constant="20" id="8o0-yk-e6m"/>
                                                         <constraint firstItem="1QT-Kw-2Ro" firstAttribute="leading" secondItem="3yv-tI-gnI" secondAttribute="trailing" constant="8" id="CeR-D0-eEo"/>
                                                         <constraint firstItem="3yv-tI-gnI" firstAttribute="leading" secondItem="vvw-Ix-I02" secondAttribute="leading" id="Dru-5y-TLp"/>
@@ -388,7 +388,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="航空报价" image="aviation" id="rD6-0z-vz2"/>
                     <navigationItem key="navigationItem" id="f4B-Jd-bEL"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="canQuoteTableView" destination="5F6-Mm-qs5" id="62L-HA-Dex"/>
                         <outlet property="expireTableView" destination="cYd-yZ-Xxk" id="yfI-65-K7W"/>

@@ -17,7 +17,7 @@
 @property (strong, nonatomic) NSString *aviation_demand_detail;//航空需求细节
 @property (strong, nonatomic) NSString *start_time_str;//2017-05-08 13:07:52
 @property (nonatomic) NSTimeInterval start_time; //开始时间
-
+@property (nonatomic) NSInteger aviation_demand_id;//航空需求id
 
 - (instancetype) initWiihDetailDictionary: (NSDictionary *)dict;
 - (instancetype) initWithDetailDictionary: (NSDictionary *)dict;

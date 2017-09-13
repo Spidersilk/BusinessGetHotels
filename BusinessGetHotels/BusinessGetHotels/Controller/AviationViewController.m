@@ -36,12 +36,17 @@
 //@property (strong, nonatomic) CCActivityHUD *activityHUD;
 @property (strong, nonatomic) NSMutableArray *canQuoteArr;
 @property (strong, nonatomic) NSMutableArray *expireArr;
+@property (strong, nonatomic) AviationModel *model;
+
 @end
 
 @implementation AviationViewController
 
 //导航栏的返回按钮只保留那个箭头，去掉后边的文字
+//UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
 //[[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+//[[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+//self.navigationItem.backBarButtonItem = item;
 //[self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
 
 - (void)viewDidLoad {
@@ -205,10 +210,11 @@
                 [_canQuoteArr removeAllObjects];
             }
             for(NSDictionary *dict in list){
-                AviationModel *model = [[AviationModel alloc] initWiihDetailDictionary:dict];
-                [_canQuoteArr addObject:model];
+                _model = [[AviationModel alloc] initWiihDetailDictionary:dict];
+                [_canQuoteArr addObject:_model];
             
             }
+        
             [_canQuoteTableView reloadData];
             
                         //用model的方式返回上一页
@@ -242,7 +248,7 @@
     NSDictionary *para = @{@"type" : @(0),@"pageNum":@(expirePageNum),@"pageSize":@(pageSize)};
     //网络请求
     [RequestAPI requestURL:@"/findAlldemandByType_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
-        NSLog(@"哈哈:%@",responseObject);
+        //NSLog(@"哈哈:%@",responseObject);
         //当网络请求成功时停止动画
         [_avi stopAnimating];
         //结束刷新
@@ -259,8 +265,8 @@
                 [_expireArr removeAllObjects];
             }
             for(NSDictionary *dict in list){
-                AviationModel *model = [[AviationModel alloc] initWithDetailDictionary:dict];
-                [_expireArr addObject:model];
+                _model = [[AviationModel alloc] initWithDetailDictionary:dict];
+                [_expireArr addObject:_model];
                 
             }
             [_expireTableView reloadData];
@@ -307,6 +313,12 @@
     
     if (tableView == _canQuoteTableView) {
         CanQuoteTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CanQuoteCell" forIndexPath:indexPath];
+        
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        
+        format.AMSymbol = @"上午";
+        format.PMSymbol = @"下午";
+        format.dateFormat = @"yyyy-MM-dd aaa";
         AviationModel * aviationmodel = _canQuoteArr[indexPath.section];
         //cell.timeLabel.text = [Utilities dateStrFromCstampTime:callBack.callTime withDateFormat:@"yyyy-MM-dd HH:mm"];
         NSString *endTimeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"MM-dd"];
@@ -317,12 +329,11 @@
         //cell.priceLbl.text = @"价格区间";//价格区间
         cell.moneyLbl.text = [NSString stringWithFormat:@"￥:%@—%@",aviationmodel.low_price,aviationmodel.high_price];//价格在多少low_price,high_price
         
-        NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:aviationmodel.start_time/1000];
+        //NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:aviationmodel.start_time/1000];
         
-        //NSString *timeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"aah"];
-        //cell.timeLbl.text = [NSString stringWithFormat:@"%@点左右",timeStr];//入住时间
+        NSString *timeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"aaah"];
+        cell.timeLbl.text = [NSString stringWithFormat:@"%@点左右",timeStr];//入住时间
         
-        cell.timeLbl.text = [NSString stringWithFormat:@"%@点左右",[detaildate formattedTime]];//调用NSDate+Utility的方法
         
         cell.cabinLbl.text = aviationmodel.aviation_demand_detail;//机舱
         //cell.canQuoteImgView.image = [UIImage imageNamed:@""];
@@ -337,9 +348,28 @@
         cell.cityLbl.text = [NSString stringWithFormat:@"%@——%@",aviationmodel.departure,aviationmodel.destination];//城市to城市
         cell.moneyLbl.text = [NSString stringWithFormat:@"￥:%@—%@",aviationmodel.low_price,aviationmodel.high_price];//价格在多少low_price,high_price
         
-        NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:aviationmodel.start_time/1000];
-        //NSString *timeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"ah"];
-        cell.timeLbl.text = [NSString stringWithFormat:@"%@点左右",[detaildate formattedTime]];//调用NSDate+Utility的方法
+        //NSString *timeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"aaah"];
+        //cell.timeLbl.text = [NSString stringWithFormat:@"%@点左右",timeStr];//入住时间
+        
+        NSString *timeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"HH"];
+        NSInteger time = [timeStr intValue];
+        if (time >= 0 && time <= 6) {
+            cell.timeLbl.text = [NSString stringWithFormat:@"凌晨%ld点左右",(long)time];//入住时间
+        }else if (time > 6 && time <12 ) {
+            cell.timeLbl.text = [NSString stringWithFormat:@"上午%ld点左右",(long)time];//入住时间
+        }else if (time >= 12 && time < 13) {
+            cell.timeLbl.text = [NSString stringWithFormat:@"中午%@点左右",timeStr];//入住时间
+            
+        }else if (time >= 13 && time <= 17) {
+            cell.timeLbl.text = [NSString stringWithFormat:@"下午%ld点左右",time - 12];//入住时间
+        }else {
+            cell.timeLbl.text = [NSString stringWithFormat:@"晚上%ld点左右",time - 12];//入住时间
+        }
+        
+        
+        
+        //NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:aviationmodel.start_time/1000];
+        //cell.timeLbl.text = [NSString stringWithFormat:@"%@点左右",[detaildate formattedTime]];//调用NSDate+Utility的方法
         //上面比较重要
         //cell.cabinLbl.text = aviationmodel.aviation_demand_title;//机舱
         return cell;
@@ -348,7 +378,7 @@
 }
 //设置细胞高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 140.f;
+    return 130.f;
 }
 //细胞选中后调用
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -358,9 +388,11 @@
 //        UINavigationController *signNavi = [Utilities getStoryboardInstance:@"Quote" byIdentity:@"Quote"];
 //        //执行跳转
 //        [self presentViewController:signNavi animated:YES completion:nil];
-        QuoteViewController *purchaseVC = [Utilities getStoryboardInstance:@"Quote" byIdentity:@"Quote1"];
-        //purchaseVC.activity = _activity;
-        [self.navigationController pushViewController:purchaseVC animated:NO];
+        QuoteViewController *quoteVC = [Utilities getStoryboardInstance:@"Quote" byIdentity:@"Quote1"];
+        //将每组的数据给model，传入下一页
+        _model = _canQuoteArr[indexPath.section];
+        quoteVC.aviationmodel = _model;
+        [self.navigationController pushViewController:quoteVC animated:NO];
     }
 }
 //设置一个细胞将要出现的时候要做的事情
@@ -389,6 +421,7 @@
         }
     }
 }
+
 /*
 #pragma mark - Navigation
 

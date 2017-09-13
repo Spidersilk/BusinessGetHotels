@@ -21,6 +21,7 @@
         _aviation_demand_detail = [Utilities nullAndNilCheck:dict[@"aviation_demand_detail"] replaceBy:@""];//航空需求
         _start_time_str = [Utilities nullAndNilCheck:dict[@"start_time_str"] replaceBy:@""];////2017-05-08 13:07:52
         _start_time = [dict[@"start_time"] isKindOfClass:[NSNull class]] ? (NSTimeInterval)0 :(NSTimeInterval)[dict[@"start_time"] integerValue];
+        _aviation_demand_id = [[Utilities nullAndNilCheck:dict[@"id"] replaceBy:@""] integerValue];
     }
     return self;
 }
