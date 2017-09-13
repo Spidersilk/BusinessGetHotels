@@ -13,6 +13,7 @@
     NSInteger flag;
 }
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *YPosition;
 @property (strong, nonatomic) NSString *thatdate;
 @property (strong, nonatomic) NSString *City;
 @property (strong, nonatomic) QuoteModel *quotemodel;
@@ -57,7 +58,7 @@
     [ref addTarget:self action:@selector(refreshPage) forControlEvents:UIControlEventValueChanged];
     ref.tag = 10005;
     [_quoteTableView addSubview:ref];
-    [self networkRequest];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkCityState:) name:@"ResetHome" object:nil];
 }
 //将要来到此页面（显示导航栏）
@@ -206,7 +207,7 @@
         [RequestAPI requestURL:@"/offer_edu" withParameters:prarmeter andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
             //成功以后要做的事情
             [_avi stopAnimating];
-            //NSLog(@"responseObject = %@",responseObject);
+            NSLog(@"responseObject = %@",responseObject);
             //[self endAnimation];
             if ([responseObject[@"result"] integerValue] == 1) {
                
@@ -227,14 +228,14 @@
 - (void)checkNetworkRequest {
     
     //设置接口入参
-    NSDictionary *prarmeter = @{@"Id" : @2};
+    NSDictionary *prarmeter = @{@"Id" : @(_aviationmodel.aviation_demand_id)};
     //开始请求
     [RequestAPI requestURL: @"/selectOffer_edu" withParameters:prarmeter andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         //成功以后要做的事情
         [_avi stopAnimating];
         UIRefreshControl *ref = (UIRefreshControl *)[_quoteTableView viewWithTag:10005];
         [ref endRefreshing];
-        //NSLog(@"haha = %@",responseObject);
+        NSLog(@"haha = %@",responseObject);
         //[self endAnimation];
         if ([responseObject[@"result"] integerValue] == 1) {
             NSDictionary *content = responseObject[@"content"];
@@ -347,6 +348,7 @@
         [Utilities popUpAlertViewWithMsg:@"请正确填写行李重量" andTitle:nil onView:self];
         return;
     }
+    [self networkRequest];
     [self checkNetworkRequest];
     
 }
@@ -381,6 +383,7 @@
     _DatepickView.hidden = YES;
     _quoteToolbar.hidden = YES;
     _quoteDatePicker.hidden = YES;
+    
 }
 
 #pragma mark - 键盘收起

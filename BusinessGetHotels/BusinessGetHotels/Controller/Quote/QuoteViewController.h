@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "AviationModel.h"
 @interface QuoteViewController : UIViewController
-
+@property (strong ,nonatomic) AviationModel *aviationmodel;
 @end
