@@ -7,11 +7,11 @@
 //
 
 #import "ReleaseViewController.h"
-
 @interface ReleaseViewController ()<UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     NSInteger i;
 }
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *imgButton;
 @property (weak, nonatomic) IBOutlet UIButton *selectBtn;
 - (IBAction)selectAct:(UIButton *)sender forEvent:(UIEvent *)event;
@@ -28,6 +28,7 @@
 @property (strong, nonatomic) UIImagePickerController *imagePC;//UIImagePickerController是系统提供的用来获取图片和视频的接口
 - (IBAction)canceAct:(UIBarButtonItem *)sender;
 - (IBAction)determineAct:(UIBarButtonItem *)sender;
+- (IBAction)tapAction:(UITapGestureRecognizer *)sender;
 @property (strong, nonatomic) UIActivityIndicatorView *avi;
 @end
 
@@ -47,6 +48,7 @@
     //刷新第1列
     [_pickerView reloadComponent:0];
     [_imgButton addTarget:self action:@selector(avatarAction:forEvent:) forControlEvents:UIControlEventTouchUpInside];
+    
     //注册观察键盘的变化
    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(transformView:) name:UIKeyboardWillChangeFrameNotification object:nil];
 }
@@ -60,6 +62,30 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
+/*//当文本框开始编辑的时候调用
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    CGFloat offset = self.view.frame.size.height - (textField.frame.origin.y + textField.frame.size.height + 216 + 50);
+    if (offset <= 0) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect frame = self.view.frame;
+            frame.origin.y = offset;
+            self.view.frame = frame;
+        }];
+    }
+    return YES;
+}
+
+//当文本框开始结束编辑的时候调用
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect frame = self.view.frame;
+        frame.origin.y = 0.0;
+        self.view.frame = frame;
+    }];
+    return YES;
+}*/
 //移动UIView
 - (void)transformView:(NSNotification *)aNSNotification{
     //获取键盘弹出前的Rect
@@ -76,6 +102,22 @@
         [self.view setFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y+deltaY, self.view.frame.size.width, self.view.frame.size.height)];
     }];
 }
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (textField == _roomNameLab || textField == _breakfastLab || textField == _bedLab|| textField == _areaLab || textField == _priceLab || textField == _premiumLab) {
+        [textField resignFirstResponder];
+        return YES;
+    }
+    return YES;
+}
+//手势的事件，手势添加在根视图上，响应手势后结束根视图编辑状态达到收起键盘的目的
+- (IBAction)tapAction:(UITapGestureRecognizer *)sender {
+    [self.view endEditing:YES];
+}
+//键盘收回
+/*- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    //让根视图结束编辑状态达到收起键盘的目的
+    [_scrollView endEditing:YES];
+}*/
 //当选择完媒体文件后调用
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     //根据UIImagePickerControllerEditedImage这个键去拿到我们选中的已经编辑过的图片
@@ -299,14 +341,5 @@
     
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    if (textField == _roomNameLab || textField == _breakfastLab || textField == _bedLab|| textField == _areaLab || textField == _priceLab || textField == _premiumLab) {
-        [textField resignFirstResponder];
-        return YES;
-    }
-    return YES;
-}
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [self.view endEditing:YES]; //实现该方法是需要注意view需要是继承UIControl而来的
-}
+
 @end
