@@ -66,7 +66,7 @@
 - (void)netRequest{
     NSDictionary *para = @{@"business_id" : @1};
     [RequestAPI requestURL:@"/findHotelBySelf" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
-        NSLog(@"responseObject = %@",responseObject);
+        //NSLog(@"responseObject = %@",responseObject);
         UIRefreshControl *ref = (UIRefreshControl *)[_myHotelTabelView viewWithTag:10001];
         [ref endRefreshing];
         if([responseObject[@"result"] integerValue] == 1)
@@ -103,9 +103,9 @@
     _avi = [Utilities getCoverOnView:self.view];
     HotelModel *hotelModel = _nsmArr[indexPath.row];
     NSDictionary *dict = @{@"id" : @(hotelModel.hotelId)};
-    NSLog(@"%ld",(long)hotelModel.hotelId);
+    //NSLog(@"%ld",(long)hotelModel.hotelId);
     [RequestAPI requestURL:@"/deleteHotel" withParameters:dict andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
-        NSLog(@"delete responseObject = %@",responseObject);
+        //NSLog(@"delete responseObject = %@",responseObject);
         if([responseObject[@"result"] integerValue] == 1){
             [_avi stopAnimating];
            [_myHotelTabelView reloadData];

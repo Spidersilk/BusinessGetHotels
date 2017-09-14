@@ -47,6 +47,8 @@
     //刷新第1列
     [_pickerView reloadComponent:0];
     [_imgButton addTarget:self action:@selector(avatarAction:forEvent:) forControlEvents:UIControlEventTouchUpInside];
+    //注册观察键盘的变化
+   [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(transformView:) name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,6 +58,23 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+}
+
+//移动UIView
+- (void)transformView:(NSNotification *)aNSNotification{
+    //获取键盘弹出前的Rect
+    NSValue *keyBoardBeginBounds = [[aNSNotification userInfo]objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGRect beginRect = [keyBoardBeginBounds CGRectValue];
+    //获取键盘弹出后的Rect
+    NSValue *keyBoardEndBounds = [[aNSNotification userInfo]objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect  endRect = [keyBoardEndBounds CGRectValue];
+    //获取键盘位置变化前后纵坐标Y的变化值
+    CGFloat deltaY=(endRect.origin.y-beginRect.origin.y)/1.65;
+    //NSLog(@"看看这个变化的Y值:%f",deltaY);
+    //在0.25s内完成self.view的Frame的变化，等于是给self.view添加一个向上移动deltaY的动画
+    [UIView animateWithDuration:0.25f animations:^{
+        [self.view setFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y+deltaY, self.view.frame.size.width, self.view.frame.size.height)];
+    }];
 }
 //当选择完媒体文件后调用
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -117,12 +136,12 @@
 }
 //一列设置多少行
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    NSLog(@"_pickArr = %lu", (unsigned long)_pickArr.count);
+    //NSLog(@"_pickArr = %lu", (unsigned long)_pickArr.count);
     return _hotelMuArr.count;
 }
 //每行的标题
 - (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    NSLog(@"_pickArr = %lu", (unsigned long)_pickArr.count);
+    //NSLog(@"_pickArr = %lu", (unsigned long)_pickArr.count);
   //  i = 1;
     return _hotelMuArr[row];
 }
@@ -167,12 +186,12 @@
 - (void)selectnetRequest{
     _avi = [Utilities getCoverOnView:self.view];
             [RequestAPI requestURL:@"/searchHotelName" withParameters:nil andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
-        NSLog(@"sleectresponseObject = %@",responseObject);
+        //NSLog(@"sleectresponseObject = %@",responseObject);
                 [_avi stopAnimating];
         if([responseObject[@"result"] integerValue] == 1)
         {
             _pickArr = responseObject[@"content"];
-            NSLog(@"_pickArr = %lu", (unsigned long)_pickArr.count);
+            //NSLog(@"_pickArr = %lu", (unsigned long)_pickArr.count);
             for(NSDictionary *dict in _pickArr){
                 NSString *str = dict[@"hotel_name"];
                 [_hotelMuArr addObject:str];
@@ -198,7 +217,7 @@
     _avi = [Utilities getCoverOnView:self.view];
     NSDictionary *para = @{@"business_id" : @1,@"hotel_name" : _selectBtn.titleLabel.text,@"hotel_type" : [NSString stringWithFormat:@"%@,%@,%@", _breakfastLab.text,_bedLab.text,_areaLab.text],@"room_imgs" : str,@"price" : _priceLab.text};
     [RequestAPI requestURL:@"/addHotel" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
-        NSLog(@"responseObject = %@",responseObject);
+        //NSLog(@"responseObject = %@",responseObject);
         if([responseObject[@"result"] integerValue] == 1)
         {
             [_avi stopAnimating];
