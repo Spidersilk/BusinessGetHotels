@@ -38,6 +38,8 @@
 @property (strong, nonatomic) NSMutableArray *expireArr;
 @property (strong, nonatomic) AviationModel *model;
 
+@property (strong, nonatomic) UIImageView *canQuoteNothingImg;
+@property (strong, nonatomic) UIImageView *expireNothingImg;
 @end
 
 @implementation AviationViewController
@@ -74,7 +76,13 @@
     [self setSegment];
     //刷新指示器
     [self setRefreshControl];
+    if (_canQuoteArr.count == 0) {
+        [self nothingForTableView];
+    } else {
+        [self nothingForTableView];
+    }
     [self canQuoteInitializeData];
+    //调用tableview没数据是显示图片的方法
     
     
     
@@ -183,6 +191,17 @@
     }
     return page;
 }
+//当TableView没有东西的时候，添加一个图片给它
+- (void) nothingForTableView {
+    _canQuoteNothingImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"no_things"]];
+    _canQuoteNothingImg.frame = CGRectMake((UI_SCREEN_W - 100)/2, 50, 100, 100);
+    
+    _expireNothingImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"no_things"]];
+    _expireNothingImg.frame = CGRectMake((UI_SCREEN_W - 100)/2 + UI_SCREEN_W, 50, 100, 100);
+    
+    [_scrollView addSubview:_canQuoteNothingImg];
+    [_scrollView addSubview:_expireNothingImg];
+}
 #pragma mark - request网络请求
 //已报价接口
 - (void) canQuoteRequest {
@@ -214,7 +233,12 @@
                 [_canQuoteArr addObject:_model];
             
             }
-        
+            //当数组有数据时将图片隐藏，反之隐藏
+            if (_canQuoteArr.count == 0) {
+                _canQuoteNothingImg.hidden = NO;
+            }else{
+                _canQuoteNothingImg.hidden = YES;
+            }
             [_canQuoteTableView reloadData];
             
                         //用model的方式返回上一页
@@ -268,6 +292,12 @@
                 _model = [[AviationModel alloc] initWithDetailDictionary:dict];
                 [_expireArr addObject:_model];
                 
+            }
+            //当数组有数据时将图片隐藏，反之隐藏
+            if (_expireArr.count == 0) {
+                _expireNothingImg.hidden = NO;
+            }else{
+                _expireNothingImg.hidden = YES;
             }
             [_expireTableView reloadData];
             
