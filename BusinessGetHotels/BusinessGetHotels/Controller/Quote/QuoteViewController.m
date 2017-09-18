@@ -15,12 +15,12 @@
 }
 @property (readonly) NSTimeInterval startTime;
 @property (readonly) NSTimeInterval endTime;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *YPosition;
+
+@property (weak, nonatomic) IBOutlet UIView *datePickerView;
 @property (strong, nonatomic) NSString *thatDate;
 @property (strong, nonatomic) NSString *City;
 @property (strong, nonatomic) QuoteModel *quotemodel;
 @property (strong, nonatomic) UIActivityIndicatorView *avi;
-@property (weak, nonatomic) IBOutlet UIView *DatepickView;
 @property (strong, nonatomic) NSMutableArray *Arr;
 @property (weak, nonatomic) IBOutlet UIView *aviView;
 @property (weak, nonatomic) IBOutlet UIButton *confirmBtn;
@@ -43,6 +43,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *quoteToolbar;
 - (IBAction)cancel:(UIBarButtonItem *)sender;
 - (IBAction)sureAction:(UIBarButtonItem *)sender;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *yPosition;
 
 
 
@@ -293,17 +294,19 @@
 - (IBAction)takeoffTime:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 0;
     _aviView.hidden = NO;
-    _DatepickView.hidden = NO;
-    _quoteToolbar.hidden = NO;
-    _quoteDatePicker.hidden = NO;
+//    _DatepickView.hidden = NO;
+//    _quoteToolbar.hidden = NO;
+//    _quoteDatePicker.hidden = NO;
+    [self layoutConstraints:0];
 }
 //到达时间的按钮事件
 - (IBAction)arriveTime:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 1;
     _aviView.hidden = NO;
-    _DatepickView.hidden = NO;
-    _quoteToolbar.hidden = NO;
-    _quoteDatePicker.hidden = NO;
+//    _DatepickView.hidden = NO;
+//    _quoteToolbar.hidden = NO;
+//    _quoteDatePicker.hidden = NO;
+    [self layoutConstraints:0];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm";
     NSDate *moDate = [formatter dateFromString:_thatDate];
@@ -356,16 +359,15 @@
     _companyTextField.text = @"";
     _flightTextField.text = @"";
     _placeTextField.text = @"";
-    _takeoffBtn.titleLabel.text = @"";
-    _arriveBtn.titleLabel.text = @"";
     _kgTextField.text = @"";
 }
 //toolbar上的取消按钮事件
 - (IBAction)cancel:(UIBarButtonItem *)sender {
     _aviView.hidden = YES;
-    _DatepickView.hidden = YES;
-    _quoteToolbar.hidden = YES;
-    _quoteDatePicker.hidden = YES;
+//    _DatepickView.hidden = YES;
+//    _quoteToolbar.hidden = YES;
+//    _quoteDatePicker.hidden = YES;
+    [self layoutConstraints:-260];
 }
 //toolbar上的确定按钮事件
 - (IBAction)sureAction:(UIBarButtonItem *)sender {
@@ -387,11 +389,27 @@
         [_arriveBtn setTitle:theDate forState:UIControlStateNormal];
     }
     _aviView.hidden = YES;
-    _DatepickView.hidden = YES;
-    _quoteToolbar.hidden = YES;
-    _quoteDatePicker.hidden = YES;
+//    _DatepickView.hidden = YES;
+//    _quoteToolbar.hidden = YES;
+//    _quoteDatePicker.hidden = YES;
+    [self layoutConstraints:-260];
 }
-
+//Datepicker动画
+- (void)layoutConstraints:(CGFloat)space {
+    CGFloat distance = 0;
+    if (space == 0) {
+        distance = _yPosition.constant;
+    } else {
+        distance = 260 - _yPosition.constant;
+    }
+    //CGFloat percentage = distance / 200.f;
+    [UIView animateWithDuration:0.3 animations:^{
+        _yPosition.constant = space;
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        
+    }];
+}
 #pragma mark - 键盘收起
 //按键盘上的Return键收起键盘
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
