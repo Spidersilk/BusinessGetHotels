@@ -6,15 +6,17 @@
 //  Copyright © 2017年 Phoenix. All rights reserved.
 //
 
+
 #import "QuoteViewController.h"
 #import "QuoteTableViewCell.h"
 #import "QuoteModel.h"
 @interface QuoteViewController ()<UITableViewDataSource,UITableViewDelegate>{
     NSInteger flag;
 }
-
+@property (readonly) NSTimeInterval startTime;
+@property (readonly) NSTimeInterval endTime;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *YPosition;
-@property (strong, nonatomic) NSString *thatdate;
+@property (strong, nonatomic) NSString *thatDate;
 @property (strong, nonatomic) NSString *City;
 @property (strong, nonatomic) QuoteModel *quotemodel;
 @property (strong, nonatomic) UIActivityIndicatorView *avi;
@@ -41,12 +43,15 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *quoteToolbar;
 - (IBAction)cancel:(UIBarButtonItem *)sender;
 - (IBAction)sureAction:(UIBarButtonItem *)sender;
-#define WeakSelf __weak typeof(self) weakSelf = self;
+
+
+
 @end
 
 @implementation QuoteViewController
 
 - (void)viewDidLoad {
+    _endTime = 6505549517000;
     flag = 0;
     _Arr = [NSMutableArray new];
     _quoteDatePicker.minimumDate = [NSDate date];
@@ -98,17 +103,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     QuoteTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"quoteCell" forIndexPath:indexPath];
     //根据行号拿到数组中对应的数据
-    _quotemodel = _Arr[indexPath.row];
+    //_quotemodel = _Arr[indexPath.row];
     cell.companyLabel.text = _quotemodel.avition_company;
     cell.flightLabel.text = _quotemodel.flight_no;
     cell.placeLabel.text = _quotemodel.avition_cabin;
-    cell.startSiteLabel.text = _quotemodel.departure;
-    cell.endSiteLabel.text = _quotemodel.destination;
+    cell.startSiteLabel.text = _aviationmodel.departure;
+    cell.endSiteLabel.text = _aviationmodel.destination;
     cell.kgLabel.text = [NSString stringWithFormat:@"%ld",(long)_quotemodel.weight];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    formatter.dateFormat = @"yyyy-MM-dd HH:mm";
-    cell.takeoffLabel.text = _quotemodel.in_time_str;
-    cell.arriveLabel.text = _quotemodel.out_time_str;
+    cell.takeoffLabel.text = _takeoffBtn.titleLabel.text;
+    cell.arriveLabel.text = _arriveBtn.titleLabel.text;
     cell.priceLabel.text = [NSString stringWithFormat:@"%ld",(long)_quotemodel.final_price];
     
     return cell;
@@ -136,23 +139,19 @@
 {
     [tableView setEditing:NO animated:YES];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"你确定删除该消息？" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
         [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self DeleteNetworkRequest];
+            [_quoteTableView reloadData];
+        }]];
             //[[_quoteTableView deleteRowsAtIndexPaths:@[indexPath]  removeObjectAtIndex:indexPath.row];
             /**   点击 删除 按钮的操作 */
-            if (editingStyle == UITableViewCellEditingStyleDelete) { /**< 判断编辑状态是删除时. */
-                
+            /**< 判断编辑状态是删除时. */                
                 /** 1. 更新数据源(数组): 根据indexPaht.row作为数组下标, 从数组中删除数据. */
-                //[self.Arr removeObjectAtIndex:indexPath.row];
-                [self DeleteNetworkRequest];
-                [_quoteTableView reloadData];
+                [self.Arr removeObjectAtIndex:indexPath.row];
                 /** 2. TableView中 删除一个cell. */
-                //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
-            }
-            
-        }]];
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
         [self presentViewController:alertController animated:YES completion:nil];
     }
 }
@@ -170,7 +169,7 @@
                 _City = cityStr;
         }else{
             if(![_City isEqualToString:cityStr]){
-                //修改城市按钮标题
+               //修改城市按钮标题
                 [_endSiteBtn setTitle:cityStr forState:UIControlStateNormal];
             }else{
                 [Utilities popUpAlertViewWithMsg:@"sd" andTitle:nil onView:self];
@@ -197,20 +196,19 @@
 }
 //执行网络请求
 - (void)networkRequest {
-    
     NSInteger price = [[NSString stringWithFormat:@"%@",_priceTextField.text] integerValue];
     NSInteger weight = [[NSString stringWithFormat:@"%@",_kgTextField.text] integerValue];
     //设置接口入参
-    NSDictionary *prarmeter = @{@"business_id" : @2,@"aviation_demand_id" : @1, @"final_price" : @(price), @"weight":@(weight), @"aviation_company" : _companyTextField.text, @"aviation_cabin" : _placeTextField.text, @"in_time_str" : _takeoffBtn.titleLabel.text, @"out_time_str" : _arriveBtn.titleLabel.text,@"departure" : _startSiteBtn.titleLabel.text, @"destination" : _endSiteBtn.titleLabel.text, @"flight_no" : _flightTextField.text};
+    NSDictionary *prarmeter = @{@"business_id" : @2,@"aviation_demand_id" : @(_aviationmodel.aviation_demand_id), @"final_price" : @(price), @"weight":@(weight), @"aviation_company" : _companyTextField.text, @"aviation_cabin" : _placeTextField.text, @"in_time_str" : _takeoffBtn.titleLabel.text, @"out_time_str" : _arriveBtn.titleLabel.text,@"departure" : _startSiteBtn.titleLabel.text, @"destination" : _endSiteBtn.titleLabel.text, @"flight_no" : _flightTextField.text};
         //开始请求
-    
         [RequestAPI requestURL:@"/offer_edu" withParameters:prarmeter andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
             //成功以后要做的事情
             [_avi stopAnimating];
             NSLog(@"responseObject = %@",responseObject);
             //[self endAnimation];
             if ([responseObject[@"result"] integerValue] == 1) {
-               
+//                [_startSiteBtn setTitle:_aviationmodel.departure forState:UIControlStateNormal];
+//                 [_endSiteBtn setTitle:_aviationmodel.destination forState:UIControlStateNormal];
             }else{
                 //业务逻辑失败的情况下
                 NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
@@ -226,7 +224,6 @@
     }
 
 - (void)checkNetworkRequest {
-    
     //设置接口入参
     NSDictionary *prarmeter = @{@"Id" : @(_aviationmodel.aviation_demand_id)};
     //开始请求
@@ -261,15 +258,15 @@
 - (void)DeleteNetworkRequest {
     //设置接口入参
     NSDictionary *prarmeter = @{@"Id" : @(_quotemodel.Id)};
-    NSLog(@"id = %ld",(long)_quotemodel.Id);
+    //NSLog(@"id = %ld",(long)_quotemodel.Id);
     //开始请求
     [RequestAPI requestURL: @"/deleteOfferById_edu" withParameters:prarmeter andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         //成功以后要做的事情
-        NSLog(@"1231 = %@",responseObject);
+        NSLog(@"delete = %@",responseObject);
         //[self endAnimation];
         if ([responseObject[@"result"] integerValue] == 1) {
             [self checkNetworkRequest];
-            //[_quoteTableView reloadData];
+            [_quoteTableView reloadData];
         }else{
             //业务逻辑失败的情况下
             NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
@@ -307,6 +304,11 @@
     _DatepickView.hidden = NO;
     _quoteToolbar.hidden = NO;
     _quoteDatePicker.hidden = NO;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    NSDate *moDate = [formatter dateFromString:_thatDate];
+    _quoteDatePicker.minimumDate = [NSDate dateWithTimeInterval:60 sinceDate:moDate];
+    
 }
 //确定按钮事件
 - (IBAction)confirmAction:(UIButton *)sender forEvent:(UIEvent *)event {
@@ -336,11 +338,11 @@
         [Utilities popUpAlertViewWithMsg:@"请填写舱位" andTitle:nil onView:self];
         return;
     }
-    if(_takeoffBtn.titleLabel.text.length == 0){
+    if([_takeoffBtn.titleLabel.text isEqualToString:@"选择起飞日期 时间"]){
         [Utilities popUpAlertViewWithMsg:@"请选择起飞日期" andTitle:nil onView:self];
         return;
     }
-    if(_arriveBtn.titleLabel.text.length == 0){
+    if([_arriveBtn.titleLabel.text isEqualToString:@"选择到达日期 时间"]){
         [Utilities popUpAlertViewWithMsg:@"请选择到达日期" andTitle:nil onView:self];
         return;
     }
@@ -350,7 +352,13 @@
     }
     [self networkRequest];
     [self checkNetworkRequest];
-    
+    _priceTextField.text = @"";
+    _companyTextField.text = @"";
+    _flightTextField.text = @"";
+    _placeTextField.text = @"";
+    _takeoffBtn.titleLabel.text = @"";
+    _arriveBtn.titleLabel.text = @"";
+    _kgTextField.text = @"";
 }
 //toolbar上的取消按钮事件
 - (IBAction)cancel:(UIBarButtonItem *)sender {
@@ -362,28 +370,26 @@
 //toolbar上的确定按钮事件
 - (IBAction)sureAction:(UIBarButtonItem *)sender {
     NSDate *date = _quoteDatePicker.date;
-    NSDate *dateTom = [NSDate dateTomorrow];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm";
     NSString *theDate = [formatter stringFromDate:date];
-    NSTimeInterval startTime = [date timeIntervalSince1970]*1000;
-    NSTimeInterval endTime = [dateTom timeIntervalSince1970]*1000;
-    
     if(flag == 0){
+        _startTime = [date timeIntervalSince1970]*1000;
+        _thatDate = theDate;
         [_takeoffBtn setTitle:theDate forState:UIControlStateNormal];
-        _thatdate = theDate;
-    }else{
-        if([_thatdate isEqualToString:theDate] || startTime >= endTime){
-            [Utilities popUpAlertViewWithMsg:@"请重新选择时间" andTitle:nil onView:self];
-        }else{
-            [_arriveBtn setTitle:theDate forState:UIControlStateNormal];
+        if (_startTime >= _endTime) {
+            NSDate *nextDate = [NSDate dateWithTimeInterval:24*60*60 sinceDate:date];
+            NSString *nextdate =[formatter stringFromDate:nextDate];
+            [_arriveBtn setTitle:nextdate forState:UIControlStateNormal];
         }
+    }else{
+        _endTime = [date timeIntervalSince1970]*1000;
+        [_arriveBtn setTitle:theDate forState:UIControlStateNormal];
     }
     _aviView.hidden = YES;
     _DatepickView.hidden = YES;
     _quoteToolbar.hidden = YES;
     _quoteDatePicker.hidden = YES;
-    
 }
 
 #pragma mark - 键盘收起
@@ -399,5 +405,4 @@
     //让根视图结束编辑状态达到收起键盘的目的
     [self.view endEditing:YES];
 }
-
 @end

@@ -12,9 +12,9 @@
 - (id) initWhitDictionary: (NSDictionary *)dict{
     self = [super init];//self调用者本身
     if (self){
-        _avition_cabin = [Utilities nullAndNilCheck:dict[@"avition_cabin"] replaceBy:@""];
-        _avition_company = [Utilities nullAndNilCheck:dict[@"avition_company"] replaceBy:@""];
-        _avition_demand_id = [[Utilities nullAndNilCheck:dict[@"avition_demand_id"] replaceBy:0] integerValue];
+        _avition_cabin = [Utilities nullAndNilCheck:dict[@"aviation_cabin"] replaceBy:@""];
+        _avition_company = [Utilities nullAndNilCheck:dict[@"aviation_company"] replaceBy:@""];
+        _avition_demand_id = [[Utilities nullAndNilCheck:dict[@"aviation_demand_id"] replaceBy:0] integerValue];
         _business_id =[[Utilities nullAndNilCheck:dict[@"business_id"] replaceBy:0] integerValue];
         _departure = [Utilities nullAndNilCheck:dict[@"departure"] replaceBy:@""];
         _destination = [Utilities nullAndNilCheck:dict[@"destination"] replaceBy:@""];
