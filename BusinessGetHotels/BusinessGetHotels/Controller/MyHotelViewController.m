@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSMutableArray *nsmArr;
 @property (strong, nonatomic) NSMutableArray *nsmArrType;
 @property (strong, nonatomic) NSMutableArray *arr;
+@property (strong, nonatomic) NSArray *arrType;
 @property (strong, nonatomic) UIActivityIndicatorView *avi;
 - (IBAction)btnAction:(UIButton *)sender forEvent:(UIEvent *)event;
 @end
@@ -146,14 +147,17 @@
     HotelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HotelCell" forIndexPath:indexPath];
     HotelModel *hotelModel = _nsmArr[indexPath.row];
     hotelModel = _nsmArr[indexPath.row];
-    if(_nsmArrType.count == 4){
-    for(NSInteger y = 0; y < _nsmArrType.count; y++){
-        _arr = _nsmArrType[y];
-        cell.breakfastLab.text = _arr[1];
-        cell.bedTypeLab.text = _arr[2];
-        cell.areaLab.text = _arr[3];
+    NSLog(@"_nsmArrType = %@",_nsmArrType);
+    NSArray *arrType = _nsmArrType[indexPath.row];
+    //for(_arrType in _nsmArrType){
+        NSLog(@"_ArrType = %@",_arrType);
+        if(arrType.count == 4){
+                cell.breakfastLab.text = arrType[1];
+                cell.bedTypeLab.text = arrType[2];
+                cell.areaLab.text = arrType[3];
         }
-    }
+    
+    //}
     NSURL *URL = [NSURL URLWithString:hotelModel.imgUrl];
     cell.hotelNameLab.text = hotelModel.hotel_name;
     cell.priceLab.text =  [NSString stringWithFormat:@"¥%ld",(long)hotelModel.price];

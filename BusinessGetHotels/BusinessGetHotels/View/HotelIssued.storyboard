@@ -321,7 +321,7 @@
                                         <rect key="frame" x="30" y="389" width="315" height="21"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         <connections>
                                             <outlet property="delegate" destination="pdW-x3-IOH" id="GbC-jZ-VbJ"/>
                                         </connections>
@@ -337,7 +337,7 @@
                                         <rect key="frame" x="30" y="431" width="315" height="21"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         <connections>
                                             <outlet property="delegate" destination="pdW-x3-IOH" id="9QX-uK-Uh9"/>
                                         </connections>
@@ -353,7 +353,7 @@
                                         <rect key="frame" x="30" y="473" width="315" height="21"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         <connections>
                                             <outlet property="delegate" destination="pdW-x3-IOH" id="nm9-X9-FjH"/>
                                         </connections>

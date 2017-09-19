@@ -257,7 +257,7 @@
      NSURL *URL = [NSURL URLWithString:@"http://img5.imgtn.bdimg.com/it/u=1934652595,421345666&fm=23&gp=0.jpg"];
     NSString *str = [NSString stringWithFormat:@"%@", URL];
     _avi = [Utilities getCoverOnView:self.view];
-    NSDictionary *para = @{@"business_id" : @1,@"hotel_name" : _selectBtn.titleLabel.text,@"hotel_type" : [NSString stringWithFormat:@"%@,%@,%@", _breakfastLab.text,_bedLab.text,_areaLab.text],@"room_imgs" : str,@"price" : _priceLab.text};
+    NSDictionary *para = @{@"business_id" : @1,@"hotel_name" : _selectBtn.titleLabel.text,@"hotel_type" : [NSString stringWithFormat:@"%@,%@,%@,%@",_roomNameLab.text,_breakfastLab.text,_bedLab.text,_areaLab.text],@"room_imgs" : str,@"price" : _priceLab.text};
     [RequestAPI requestURL:@"/addHotel" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         //NSLog(@"responseObject = %@",responseObject);
         if([responseObject[@"result"] integerValue] == 1)
