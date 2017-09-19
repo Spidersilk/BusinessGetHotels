@@ -450,6 +450,96 @@
             }
         }
     }
+//        NSArray *array =  tableView.indexPathsForVisibleRows;
+//        NSIndexPath *firstIndexPath = array[0];
+//        NSLog(@"fdasf---%ld---%lu",(long)firstIndexPath.row,(unsigned long)array.count);
+//        //设置anchorPoint
+//        cell.layer.anchorPoint = CGPointMake(0, 0.5);
+//        //为了防止cell视图移动，重新把cell放回原来的位置
+//        cell.layer.position = CGPointMake(0, cell.layer.position.y);
+//    
+//        //设置cell 按照z轴旋转90度，注意是弧度
+//        if (firstIndexPath.row < indexPath.row) {
+//            cell.layer.transform = CATransform3DMakeRotation(M_PI_2, 0, 0, 1.0);
+//        }else{
+//            cell.layer.transform = CATransform3DMakeRotation(- M_PI_2, 0, 0, 1.0);
+//        }
+//    
+//        cell.alpha = 0.0;
+//    
+//        [UIView animateWithDuration:1 animations:^{
+//            cell.layer.transform = CATransform3DIdentity;
+//            cell.alpha = 1.0;
+//        }];
+    
+    
+    
+//        cell.alpha = 0.5;
+//    
+//        CGAffineTransform transformScale = CGAffineTransformMakeScale(0.3,0.8);
+//        CGAffineTransform transformTranslate = CGAffineTransformMakeTranslation(0.5, 0.6);
+//    
+//        cell.transform = CGAffineTransformConcat(transformScale, transformTranslate);
+//    
+//        [tableView bringSubviewToFront:cell];
+//        [UIView animateWithDuration:.4f
+//                              delay:0
+//                            options:UIViewAnimationOptionAllowUserInteraction
+//                         animations:^{
+//    
+//                             cell.alpha = 1;
+//                             //清空 transform
+//                             cell.transform = CGAffineTransformIdentity;
+//    
+//                         } completion:nil];
+    
+    
+//        CATransform3D rotation;//3D旋转
+//            rotation = CATransform3DMakeRotation( (90.0*M_PI)/180, 0.0, 0.7, 0.4);
+//            //逆时针旋转
+//            rotation.m34 = 1.0/ -600;
+//    
+//            cell.layer.shadowColor = [[UIColor blackColor]CGColor];
+//            cell.layer.shadowOffset = CGSizeMake(10, 10);
+//            cell.alpha = 0;
+//    
+//            cell.layer.transform = rotation;
+//    
+//            [UIView beginAnimations:@"rotation" context:NULL];
+//            //旋转时间
+//            [UIView setAnimationDuration:0.8];
+//            cell.layer.transform = CATransform3DIdentity;
+//            cell.alpha = 1;
+//            cell.layer.shadowOffset = CGSizeMake(0, 0);
+//            [UIView commitAnimations];
+    
+//    // 从锚点位置出发，逆时针绕 Y 和 Z 坐标轴旋转90度
+//    CATransform3D transform3D = CATransform3DMakeRotation(M_PI_2, 0.0, 1.0, 1.0);
+//    
+//    // 定义 cell 的初始状态
+//    cell.alpha = 0.0;
+//    cell.layer.transform = transform3D;
+//    cell.layer.anchorPoint = CGPointMake(0.0, 0.5); // 设置锚点位置；默认为中心点(0.5, 0.5)
+//    
+//    // 定义 cell 的最终状态，执行动画效果
+//    // 方式一：普通操作设置动画
+//    [UIView beginAnimations:@"transform" context:NULL];
+//    [UIView setAnimationDuration:0.5];
+//    cell.alpha = 1.0;
+//    cell.layer.transform = CATransform3DIdentity;
+//    CGRect rect = cell.frame;
+//    rect.origin.x = 0.0;
+//    cell.frame = rect;
+//    [UIView commitAnimations];
+    
+    
+    //设置Cell的动画效果为3D效果
+    //设置x和y的初始值为0.1；
+    cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1);
+    //x和y的最终值为1
+    [UIView animateWithDuration:1 animations:^{
+        cell.layer.transform = CATransform3DMakeScale(1, 1, 1);
+    }];
 }
 
 /*

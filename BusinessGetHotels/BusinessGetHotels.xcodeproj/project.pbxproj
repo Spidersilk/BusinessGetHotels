@@ -72,6 +72,7 @@
 		84A6FEEF1F6257770080CC0A /* tick.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A6FEE91F6257770080CC0A /* tick.png */; };
 		84A6FEF01F6257770080CC0A /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A6FEEB1F6257770080CC0A /* UIImage+animatedGIF.m */; };
 		84A6FEF41F6257A60080CC0A /* AviationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A6FEF31F6257A60080CC0A /* AviationModel.m */; };
+		84E82B7C1F7125A800255399 /* AirfieldTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E82B7B1F7125A800255399 /* AirfieldTableViewController.m */; };
 		84FEB4F21F5FBD59004A8B23 /* HotelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEB4F11F5FBD59004A8B23 /* HotelModel.m */; };
 /* End PBXBuildFile section */
 
@@ -208,6 +209,8 @@
 		84A6FEEB1F6257770080CC0A /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		84A6FEF21F6257A60080CC0A /* AviationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AviationModel.h; sourceTree = "<group>"; };
 		84A6FEF31F6257A60080CC0A /* AviationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AviationModel.m; sourceTree = "<group>"; };
+		84E82B7A1F7125A800255399 /* AirfieldTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirfieldTableViewController.h; sourceTree = "<group>"; };
+		84E82B7B1F7125A800255399 /* AirfieldTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirfieldTableViewController.m; sourceTree = "<group>"; };
 		84FEB4F01F5FBD59004A8B23 /* HotelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelModel.h; sourceTree = "<group>"; };
 		84FEB4F11F5FBD59004A8B23 /* HotelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelModel.m; sourceTree = "<group>"; };
 		CC7A89D5CD0C306B69B07EA3 /* libPods-BusinessGetHotels.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BusinessGetHotels.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -517,6 +520,8 @@
 				843CAC381F5A63FB00825605 /* QuoteViewController.m */,
 				847BEE9D1F5CE293008BD5A3 /* CityTableViewController.h */,
 				847BEE9E1F5CE293008BD5A3 /* CityTableViewController.m */,
+				84E82B7A1F7125A800255399 /* AirfieldTableViewController.h */,
+				84E82B7B1F7125A800255399 /* AirfieldTableViewController.m */,
 			);
 			path = Quote;
 			sourceTree = "<group>";
@@ -816,6 +821,7 @@
 				84291FD41F58F20600A0592D /* AppDelegate.m in Sources */,
 				8429207F1F59300300A0592D /* ErrorHandler.m in Sources */,
 				842920801F59300300A0592D /* JSONS.m in Sources */,
+				84E82B7C1F7125A800255399 /* AirfieldTableViewController.m in Sources */,
 				842920761F59300300A0592D /* base64.m in Sources */,
 				842920A21F59340F00A0592D /* Order.m in Sources */,
 				842920811F59300300A0592D /* NSData+Base64.m in Sources */,

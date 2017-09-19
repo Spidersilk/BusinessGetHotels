@@ -1,35 +1,33 @@
 //
-//  CityTableViewController.m
+//  AirfieldTableViewController.m
 //  BusinessGetHotels
 //
-//  Created by admin on 2017/9/4.
+//  Created by admin on 2017/9/19.
 //  Copyright © 2017年 Phoenix. All rights reserved.
 //
 
-#import "CityTableViewController.h"
 #import "AirfieldTableViewController.h"
 
-@interface CityTableViewController ()
+@interface AirfieldTableViewController ()
 @property (strong, nonatomic) NSDictionary *cities;
-@property (strong, nonatomic) NSArray *keys;
+@property (strong, nonatomic) NSMutableArray *keys;
 @end
 
-@implementation CityTableViewController
+@implementation AirfieldTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self dataInitialize];
+    _keys = [NSMutableArray new];
+    
     [self naviConfig];
+    [self dataInitialize];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-//将要来到此页面（显示导航栏）
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -37,7 +35,7 @@
 //这个方法专门做导航条的控制
 - (void)naviConfig{
     //设置导航条的标题
-    self.navigationItem.title = @"选择城市";
+    self.navigationItem.title = @"选择机场";
     //设置导航条的颜色（风格颜色）
     self.navigationController.navigationBar.barTintColor = UIColorFromRGB(75, 135, 246);
     //设置导航条标题颜色
@@ -48,8 +46,8 @@
     self.navigationController.navigationBar.translucent = YES;
     //为导航条左上角创建一个按钮
     UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(backAction)];
-   self.navigationItem.leftBarButtonItem = left;
-   
+    self.navigationItem.leftBarButtonItem = left;
+    
 }
 //用model的方式返回上一页
 - (void)backAction{
@@ -65,37 +63,35 @@
     if ([fileMgr fileExistsAtPath:filePath]) {
         //将文件内容读取为对应文件
         NSDictionary *fileContent = [NSDictionary dictionaryWithContentsOfFile:filePath];
-        //判断读取到的内容是否存在（判断文件是否损坏）
-        if (fileContent) {
-            NSLog(@"fileContent:%@",fileContent);
-            _cities = fileContent;
-            //获取字典所有的键
-            NSArray *rawKeys = [fileContent allKeys];
-            //根据拼音首字母进行能够识别多音字的升序排序（localizedStandardCompare很棒的一个方法）
-            _keys = [rawKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
+        //NSString *
+        NSArray *arr = fileContent[_key];
+        for(NSDictionary *dict in arr){
+            [_keys addObject:dict[@"name"]];
+        
         }
+        
     }
 }
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
     return 1;
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"这是数组的长度：%lu",(unsigned long)_keys.count);
+#warning Incomplete implementation, return the number of rows
     return _keys.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CityCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AirCell" forIndexPath:indexPath];
+    
     //获取当前正在渲染的组的名称
     NSString *key = _keys[indexPath.row];
-    cell.textLabel.text =key;
+    cell.textLabel.text = key;
+    
     return cell;
 }
-//设置组的头标题文字
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
- //   return _keys[section];
-//}
 //设置section header的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 20.f;
@@ -110,34 +106,15 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 //    //获取当前正在渲染的组的名称
 //    NSString *key = _keys[indexPath.section];
-//    //根据组的名称作为键，来查询到对应的值（这个值就是这一市数组）
+//    //根据组的名称作为键，来查询到对应的值（这个值就是这一组城市对应城市数组）
 //    NSArray *sectionCities = _cities[key];
 //    NSDictionary *city = sectionCities[indexPath.row];
+    //获取当前正在渲染的组的名称
+    NSString *key = _keys[indexPath.row];
     
-    //[self dismissViewControllerAnimated:NO completion:nil];
-     AirfieldTableViewController *quoteVC = [Utilities getStoryboardInstance:@"Quote" byIdentity:@"Air"];
-    //将每组的数据给model，传入下一页
-    NSString *keys = _keys[indexPath.row];
-    quoteVC.key = keys;
-    [self.navigationController pushViewController:quoteVC animated:NO];
+    [[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:@"ResetHome" object:key] waitUntilDone:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
-////设置右侧快捷键的栏
-//- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-//    return _keys;
-//}
-
-#pragma mark - Table view data source
-
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-////#warning Incomplete implementation, return the number of sections
-//    return 0;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-////#warning Incomplete implementation, return the number of rows
-//    return 0;
-//}
-
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
@@ -192,13 +169,4 @@
 }
 */
 
-//- (IBAction)CityAction:(UIButton *)sender forEvent:(UIEvent *)event {
-   // NSNotificationCenter *noteCenter = [NSNotificationCenter defaultCenter];
-    //NSNotification *note = [NSNotification notificationWithName:@"ResetHome" object:[[StorageMgr singletonStorageMgr] objectForKey:@"LocCity"]];
-    //[noteCenter postNotification:note];
-    //结合线程的通知，表示先让通知接收者完成它收到通知要做的事以后再执行别的任务
-    //[noteCenter performSelectorOnMainThread:@selector(postNotification:) withObject:note waitUntilDone:YES];
-    //返回上一页
-   // [self dismissViewControllerAnimated:YES completion:nil];
-//}
 @end
