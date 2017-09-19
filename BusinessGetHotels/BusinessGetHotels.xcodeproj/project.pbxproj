@@ -11,6 +11,7 @@
 		8409DE551F5A33E200C4B2A3 /* Aviation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8409DE541F5A33E200C4B2A3 /* Aviation.storyboard */; };
 		8409DE571F5A343800C4B2A3 /* HotelIssued.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8409DE561F5A343800C4B2A3 /* HotelIssued.storyboard */; };
 		8409DE591F5A347800C4B2A3 /* Quote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8409DE581F5A347800C4B2A3 /* Quote.storyboard */; };
+		84185BDD1F70BDEB00D70213 /* airfield.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84185BDC1F70BDEB00D70213 /* airfield.plist */; };
 		84200D3B1F62250600D80D2D /* QuoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84200D3A1F62250600D80D2D /* QuoteModel.m */; };
 		84291FD11F58F20600A0592D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84291FD01F58F20600A0592D /* main.m */; };
 		84291FD41F58F20600A0592D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84291FD31F58F20600A0592D /* AppDelegate.m */; };
@@ -97,6 +98,7 @@
 		8409DE541F5A33E200C4B2A3 /* Aviation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Aviation.storyboard; sourceTree = "<group>"; };
 		8409DE561F5A343800C4B2A3 /* HotelIssued.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HotelIssued.storyboard; sourceTree = "<group>"; };
 		8409DE581F5A347800C4B2A3 /* Quote.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Quote.storyboard; sourceTree = "<group>"; };
+		84185BDC1F70BDEB00D70213 /* airfield.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = airfield.plist; sourceTree = "<group>"; };
 		84200D391F62250600D80D2D /* QuoteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuoteModel.h; sourceTree = "<group>"; };
 		84200D3A1F62250600D80D2D /* QuoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuoteModel.m; sourceTree = "<group>"; };
 		84291FCC1F58F20500A0592D /* BusinessGetHotels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusinessGetHotels.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -317,6 +319,7 @@
 				84291FD31F58F20600A0592D /* AppDelegate.m */,
 				84291FD01F58F20600A0592D /* main.m */,
 				84291FE31F58F20700A0592D /* Info.plist */,
+				84185BDC1F70BDEB00D70213 /* airfield.plist */,
 				847BEE9B1F5CE0D7008BD5A3 /* Cities.plist */,
 				842920A31F5934E800A0592D /* PrefixHeader.pch */,
 			);
@@ -704,6 +707,7 @@
 			files = (
 				84A6FEED1F6257770080CC0A /* cross.png in Resources */,
 				84291FE21F58F20700A0592D /* LaunchScreen.storyboard in Resources */,
+				84185BDD1F70BDEB00D70213 /* airfield.plist in Resources */,
 				84A6FEEF1F6257770080CC0A /* tick.png in Resources */,
 				842920661F59300300A0592D /* Main.storyboard in Resources */,
 				842920651F59300300A0592D /* LaunchScreen.storyboard in Resources */,

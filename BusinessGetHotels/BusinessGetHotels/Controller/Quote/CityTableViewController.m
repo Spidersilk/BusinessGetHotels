@@ -59,7 +59,7 @@
     //创建文件管理器
     NSFileManager *fileMgr = [NSFileManager defaultManager];
     //获取要获取的文件路径
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Cities" ofType:@"plist"];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"airfield" ofType:@"plist"];
     //判断路径下是否存在文件
     if ([fileMgr fileExistsAtPath:filePath]) {
         //将文件内容读取为对应文件
