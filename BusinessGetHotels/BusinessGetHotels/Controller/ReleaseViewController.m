@@ -11,11 +11,14 @@
 {
     NSInteger i;
 }
+- (IBAction)roomBtnAct:(UIButton *)sender forEvent:(UIEvent *)event;
+@property (weak, nonatomic) IBOutlet UIButton *roomBtn;
+@property (weak, nonatomic) IBOutlet UIScrollView *showSwitchValue;
+- (IBAction)switchAction:(UISwitch *)sender;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *imgButton;
 @property (weak, nonatomic) IBOutlet UIButton *selectBtn;
 - (IBAction)selectAct:(UIButton *)sender forEvent:(UIEvent *)event;
-@property (weak, nonatomic) IBOutlet UITextField *roomNameLab;
 @property (weak, nonatomic) IBOutlet UITextField *breakfastLab;
 @property (weak, nonatomic) IBOutlet UITextField *bedLab;
 @property (weak, nonatomic) IBOutlet UITextField *areaLab;
@@ -26,6 +29,7 @@
 @property (strong, nonatomic) NSArray *pickArr;
 @property (strong, nonatomic) NSMutableArray *hotelMuArr;
 @property (strong, nonatomic) UIImagePickerController *imagePC;//UIImagePickerController是系统提供的用来获取图片和视频的接口
+@property (strong, nonatomic) NSArray *pickArray;
 - (IBAction)canceAct:(UIBarButtonItem *)sender;
 - (IBAction)determineAct:(UIBarButtonItem *)sender;
 - (IBAction)tapAction:(UITapGestureRecognizer *)sender;
@@ -38,13 +42,12 @@
     [super viewDidLoad];
     _pickerView.dataSource = self;
     _pickerView.delegate = self;
-
     _hotelMuArr = [NSMutableArray new];
     // Do any additional setup after loading the view.
     [self naviConfig];
     [self uilayout];
-    i = 1;
     [self selectnetRequest];
+    _pickArray = @[@"经济房", @"标准房", @"高级房", @"豪华房", @"商务房", @"行政房", @"套房",];
     //刷新第1列
     [_pickerView reloadComponent:0];
     [_imgButton addTarget:self action:@selector(avatarAction:forEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -103,7 +106,7 @@
     }];
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    if (textField == _roomNameLab || textField == _breakfastLab || textField == _bedLab|| textField == _areaLab || textField == _priceLab || textField == _premiumLab) {
+    if (textField == _breakfastLab || textField == _bedLab|| textField == _areaLab || textField == _priceLab || textField == _premiumLab) {
         [textField resignFirstResponder];
         return YES;
     }
@@ -174,18 +177,26 @@
 }
 //设置有多少列
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    return 1;
+    return 2;
 }
 //一列设置多少行
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
     //NSLog(@"_pickArr = %lu", (unsigned long)_pickArr.count);
+    if(component == 0){
     return _hotelMuArr.count;
+    }else{
+        return _pickArray.count;
+    }
 }
 //每行的标题
 - (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
     //NSLog(@"_pickArr = %lu", (unsigned long)_pickArr.count);
   //  i = 1;
+    if(component == 0){
     return _hotelMuArr[row];
+    }else{
+        return _pickArray[row];
+    }
 }
 - (void)naviConfig{
     //设置导航栏标题文字
@@ -213,6 +224,9 @@
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 75/255.0, 139/255.0, 246/255.0, 1 });
     [_selectBtn.layer setBorderColor:colorref];
+    [_roomBtn.layer setMasksToBounds:YES];
+    [_roomBtn.layer setBorderWidth:0.7];
+    [_roomBtn.layer setBorderColor:colorref];
 }
 
 /*
@@ -257,7 +271,7 @@
      NSURL *URL = [NSURL URLWithString:@"http://img5.imgtn.bdimg.com/it/u=1934652595,421345666&fm=23&gp=0.jpg"];
     NSString *str = [NSString stringWithFormat:@"%@", URL];
     _avi = [Utilities getCoverOnView:self.view];
-    NSDictionary *para = @{@"business_id" : @1,@"hotel_name" : _selectBtn.titleLabel.text,@"hotel_type" : [NSString stringWithFormat:@"%@,%@,%@,%@",_roomNameLab.text,_breakfastLab.text,_bedLab.text,_areaLab.text],@"room_imgs" : str,@"price" : _priceLab.text};
+    NSDictionary *para = @{@"business_id" : @1,@"hotel_name" : _selectBtn.titleLabel.text,@"hotel_type" : [NSString stringWithFormat:@"%@,%@,%@,%@",_roomBtn.titleLabel.text,_breakfastLab.text,_bedLab.text,_areaLab.text],@"room_imgs" : str,@"price" : _priceLab.text};
     [RequestAPI requestURL:@"/addHotel" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         //NSLog(@"responseObject = %@",responseObject);
         if([responseObject[@"result"] integerValue] == 1)
@@ -282,8 +296,12 @@
 
 }
 - (void)payAction{
-   if(_roomNameLab.text.length == 0){
-        [Utilities popUpAlertViewWithMsg:@"请填写房间名称" andTitle:nil onView:self];
+    if([_selectBtn.titleLabel.text isEqualToString:@"请选择酒店"]){
+        [Utilities popUpAlertViewWithMsg:@"请选择酒店" andTitle:nil onView:self];
+        return;
+    }
+   if([_roomBtn.titleLabel.text isEqualToString:@"请选择房间名称"]){
+        [Utilities popUpAlertViewWithMsg:@"请选择房间名称" andTitle:nil onView:self];
         return;
     }
     if(_breakfastLab.text.length == 0){
@@ -325,6 +343,7 @@
 
 - (IBAction)determineAct:(UIBarButtonItem *)sender {
     //拿到某一列选中的行号
+    if(i == 1){
     NSInteger row = [_pickerView selectedRowInComponent:0];
     //根据上面拿到的行号,找到对应得数据（选中行的标题）
     NSString *title = _hotelMuArr[row];
@@ -332,14 +351,37 @@
     //NSString *str = [NSString initWithFormat:@"%@%@",title,titleSecond];
     [_selectBtn setTitle:title forState:UIControlStateNormal];
     _selectBtn.titleLabel.text = title;
+    }
+    if(i == 2){
+        //拿到某一列选中的行号
+        NSInteger rowSecond = [_pickerView selectedRowInComponent:1];
+        //根据上面拿到的行号,找到对应得数据（选中行的标题）
+        NSString *titleSecond = _pickArray[rowSecond];
+        //NSInteger rowSecond = [_pickerView selectedRowInComponent:1];
+        //NSString *str = [NSString initWithFormat:@"%@%@",title,titleSecond];
+        [_roomBtn setTitle:titleSecond forState:UIControlStateNormal];
+        _roomBtn.titleLabel.text = titleSecond;
+    }
     _toolBar.hidden = YES;
     _pickerView.hidden = YES;
 }
 - (IBAction)selectAct:(UIButton *)sender forEvent:(UIEvent *)event {
+    i = 1;
     _toolBar.hidden = NO;
     _pickerView.hidden = NO;
-    
 }
-
-
+- (IBAction)switchAction:(UISwitch *)sender {
+    UISwitch *switchButton = (UISwitch*)sender;
+    BOOL isButtonOn = [switchButton isOn];
+    if (isButtonOn) {
+        _breakfastLab.text = @"含早";
+    }else {
+        _breakfastLab.text = @"不含早";
+    }
+}
+- (IBAction)roomBtnAct:(UIButton *)sender forEvent:(UIEvent *)event {
+    i = 2;
+    _toolBar.hidden = NO;
+    _pickerView.hidden = NO;
+}
 @end
