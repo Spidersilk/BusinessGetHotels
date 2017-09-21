@@ -14,6 +14,8 @@
     NSInteger flag;
     NSInteger QuotePageNum;
 }
+
+
 @property (readonly) NSTimeInterval startTime;
 @property (readonly) NSTimeInterval endTime;
 @property (strong, nonatomic) UIImageView *QuoteNothingImg;
@@ -305,7 +307,8 @@
     _aviView.hidden = NO;
     [self layoutConstraints:0];
     [self addTapGestureRecognizer:_aviView];
-    
+    [self.view endEditing:YES];
+    // [_takeoffBtn addTarget: self action:@selector(hideKeyboard) forControlEvents: UIControlEventTouchUpInside];
 }
 //到达时间的按钮事件
 - (IBAction)arriveTime:(UIButton *)sender forEvent:(UIEvent *)event {
@@ -313,11 +316,11 @@
     _aviView.hidden = NO;
     [self layoutConstraints:0];
     [self addTapGestureRecognizer:_aviView];
+    [self.view endEditing:YES];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm";
     NSDate *moDate = [formatter dateFromString:_thatDate];
     _quoteDatePicker.minimumDate = [NSDate dateWithTimeInterval:60*60 sinceDate:moDate];
-    
 }
 
 //确定按钮事件
@@ -473,4 +476,6 @@
     //让根视图结束编辑状态达到收起键盘的目的
     [self.view endEditing:YES];
 }
+
+
 @end
