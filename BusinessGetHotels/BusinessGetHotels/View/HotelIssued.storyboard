@@ -268,8 +268,11 @@
                                         </constraints>
                                         <state key="normal" backgroundImage="detail-1"/>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="是否含早" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ncP-Ki-NBm">
-                                        <rect key="frame" x="15" y="303" width="330" height="21"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="是否含早" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ncP-Ki-NBm">
+                                        <rect key="frame" x="15" y="303" width="330" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="zk4-io-CPv"/>
+                                        </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -278,30 +281,37 @@
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9n-JT-pCR">
-                                        <rect key="frame" x="15" y="329" width="330" height="1"/>
+                                        <rect key="frame" x="15" y="334" width="330" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="rId-sg-RCu"/>
                                         </constraints>
                                     </view>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="填写床型" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Of-81-gad">
-                                        <rect key="frame" x="15" y="345" width="330" height="21"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="填写床型" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Of-81-gad">
+                                        <rect key="frame" x="15" y="350" width="330" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="26" id="F4q-E7-dEl"/>
+                                            <constraint firstAttribute="height" constant="26" id="hrc-lb-Z1t"/>
+                                        </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <outlet property="delegate" destination="pdW-x3-IOH" id="NUJ-P7-a5P"/>
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U2Z-5X-Gvf">
-                                        <rect key="frame" x="15" y="371" width="330" height="1"/>
+                                        <rect key="frame" x="15" y="381" width="330" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="9N4-cC-kDv"/>
                                         </constraints>
                                     </view>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="填写房间面积" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RBF-BE-auE">
-                                        <rect key="frame" x="15" y="387" width="330" height="21"/>
+                                        <rect key="frame" x="15" y="397" width="330" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="lCK-dW-ecb"/>
+                                        </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -310,14 +320,17 @@
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rPq-g1-ALv">
-                                        <rect key="frame" x="15" y="413" width="330" height="1"/>
+                                        <rect key="frame" x="15" y="428" width="330" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="j56-SR-z9B"/>
                                         </constraints>
                                     </view>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="填写价格" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ehb-YN-SWZ">
-                                        <rect key="frame" x="15" y="429" width="330" height="21"/>
+                                        <rect key="frame" x="15" y="444" width="330" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="apY-ba-o9E"/>
+                                        </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -326,14 +339,17 @@
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IKx-FJ-siY">
-                                        <rect key="frame" x="15" y="455" width="330" height="1"/>
+                                        <rect key="frame" x="15" y="475" width="330" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="Pb8-tT-L90"/>
                                         </constraints>
                                     </view>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="填写周末节假日加价" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mys-VV-OjV">
-                                        <rect key="frame" x="15" y="471" width="330" height="21"/>
+                                        <rect key="frame" x="15" y="491" width="330" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="EER-sd-BVU"/>
+                                        </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -342,14 +358,14 @@
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aZQ-Ye-1d9">
-                                        <rect key="frame" x="15" y="497" width="330" height="1"/>
+                                        <rect key="frame" x="15" y="522" width="330" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="oUU-p8-ypT"/>
                                         </constraints>
                                     </view>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" onImage="含早" translatesAutoresizingMaskIntoConstraints="NO" id="Zp0-9w-pNg">
-                                        <rect key="frame" x="296" y="298" width="51" height="31"/>
+                                        <rect key="frame" x="296" y="298" width="51" height="36"/>
                                         <connections>
                                             <action selector="switchAction:" destination="pdW-x3-IOH" eventType="valueChanged" id="49h-0F-Zqd"/>
                                         </connections>

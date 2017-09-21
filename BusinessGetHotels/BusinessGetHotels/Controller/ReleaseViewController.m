@@ -370,6 +370,7 @@
     i = 1;
     _toolBar.hidden = NO;
     _pickerView.hidden = NO;
+    [self.view endEditing:YES];
 }
 - (IBAction)switchAction:(UISwitch *)sender {
     UISwitch *switchButton = (UISwitch*)sender;
@@ -384,5 +385,6 @@
     i = 2;
     _toolBar.hidden = NO;
     _pickerView.hidden = NO;
+    [self.view endEditing:YES];
 }
 @end
