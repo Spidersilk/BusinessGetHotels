@@ -31,13 +31,15 @@
     [super viewDidLoad];
     i = 1;
     [self initializeData];
+    
     [self setRefreshControl];
     //[self deleteRequest];
     _myHotelTabelView.tableFooterView = [UIView new];
    _nsmArr = [NSMutableArray new];
     _nsmArrType = [NSMutableArray new];
     _arr = [NSMutableArray new];
-        // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(acquireRef) name:@"AlipayResult" object:nil];
+            // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,6 +51,10 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
+//- (void)purchaseResultAction{
+//    [_nsmArr removeAllObjects];
+//    [self netRequest];
+//}
 //下拉刷新
 - (void)setRefreshControl{
      UIRefreshControl *acquireRef = [UIRefreshControl new];
@@ -73,12 +79,13 @@
         if([responseObject[@"result"] integerValue] == 1)
         {
             [_avi stopAnimating];
-            NSArray *arr = responseObject[@"content"];
+            _arr = responseObject[@"content"];
             //NSLog(@"%@",arr);
             if (i == 1) {
                 [_nsmArr removeAllObjects];
+                [_nsmArrType removeAllObjects];
             }
-            for(NSDictionary *dict in arr){
+            for(NSDictionary *dict in _arr){
                 //NSLog(@"dict = %@",dict);
                 HotelModel *hotelModel = [[HotelModel alloc]initWhitDictionary:dict];
                 [_nsmArr addObject:hotelModel];
@@ -109,7 +116,7 @@
         //NSLog(@"delete responseObject = %@",responseObject);
         if([responseObject[@"result"] integerValue] == 1){
             [_avi stopAnimating];
-           [_myHotelTabelView reloadData];
+           //[_myHotelTabelView reloadData];
             [self netRequest];
         }else{
             [_avi stopAnimating];
@@ -146,12 +153,13 @@
     
     HotelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HotelCell" forIndexPath:indexPath];
     HotelModel *hotelModel = _nsmArr[indexPath.row];
-    hotelModel = _nsmArr[indexPath.row];
-    NSLog(@"_nsmArrType = %@",_nsmArrType);
+    //hotelModel = _nsmArr[indexPath.row];
+    //NSLog(@"_nsmArrType = %@",_nsmArrType);
     NSArray *arrType = _nsmArrType[indexPath.row];
+    NSLog(@"arrType = %@",arrType);
     //for(_arrType in _nsmArrType){
         NSLog(@"_ArrType = %@",_arrType);
-        if(arrType.count == 4){
+    if(arrType.count == 4){
                 cell.breakfastLab.text = arrType[1];
                 cell.bedTypeLab.text = arrType[2];
                 cell.areaLab.text = arrType[3];

@@ -51,7 +51,6 @@
     //刷新第1列
     [_pickerView reloadComponent:0];
     [_imgButton addTarget:self action:@selector(avatarAction:forEvent:) forControlEvents:UIControlEventTouchUpInside];
-    
     //注册观察键盘的变化
    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(transformView:) name:UIKeyboardWillChangeFrameNotification object:nil];
 }
@@ -280,6 +279,8 @@
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"恭喜你发布成功!" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                //创建一个通知
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"AlipayResult" object:nil];
                 [self.navigationController popViewControllerAnimated:NO];
             }]];
             [self presentViewController:alertController animated:YES completion:nil];
