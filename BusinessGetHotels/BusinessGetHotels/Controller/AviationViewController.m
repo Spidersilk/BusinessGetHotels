@@ -76,13 +76,14 @@
     [self setSegment];
     //刷新指示器
     [self setRefreshControl];
+    //调用tableview没数据是显示图片的方法
     if (_canQuoteArr.count == 0) {
         [self nothingForTableView];
     } else {
         [self nothingForTableView];
     }
     [self canQuoteInitializeData];
-    //调用tableview没数据是显示图片的方法
+    
     
     
     
@@ -95,6 +96,7 @@
 //每次将要来到这个页面（隐藏导航栏）
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self canQuoteRequest];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 #pragma mark -setSegment菜单栏
@@ -535,7 +537,7 @@
     
     //设置Cell的动画效果为3D效果
     //设置x和y的初始值为0.1；
-    cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1);
+    cell.layer.transform = CATransform3DMakeScale(0.8, 0.8, 1);
     //x和y的最终值为1
     [UIView animateWithDuration:1 animations:^{
         cell.layer.transform = CATransform3DMakeScale(1, 1, 1);
