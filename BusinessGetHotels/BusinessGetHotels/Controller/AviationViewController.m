@@ -16,6 +16,7 @@
 
 @interface AviationViewController ()<UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate> {
     NSInteger expireFlag;
+    NSInteger viewWillFlag;
     
     
     NSInteger canQuotePageNum;
@@ -58,6 +59,7 @@
     // Do any additional setup after loading the view.
     
     expireFlag = 1;
+    viewWillFlag = 1;
     
     canQuotePageNum = 1;
     expirePageNum = 1;
@@ -84,9 +86,6 @@
     }
     [self canQuoteInitializeData];
     
-    
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -96,7 +95,14 @@
 //每次将要来到这个页面（隐藏导航栏）
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self canQuoteRequest];
+    //判断第一次来到这个页面
+    if (viewWillFlag == 1) {
+        viewWillFlag = 0;
+    } else {
+        [self canQuoteRequest];
+        NSLog(@"不是第一次来到这个页面");
+    }
+   
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 #pragma mark -setSegment菜单栏
@@ -214,7 +220,7 @@
     NSDictionary *para = @{@"type" : @(1),@"pageNum":@(canQuotePageNum),@"pageSize":@(pageSize)};
     //网络请求
     [RequestAPI requestURL:@"/findAlldemandByType_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
-        NSLog(@"哈哈:%@",responseObject);
+        //NSLog(@"哈哈:%@",responseObject);
         //当网络请求成功时停止动画
         [_avi stopAnimating];
         //结束刷新
@@ -537,11 +543,11 @@
     
     //设置Cell的动画效果为3D效果
     //设置x和y的初始值为0.1；
-    cell.layer.transform = CATransform3DMakeScale(0.8, 0.8, 1);
+    //cell.layer.transform = CATransform3DMakeScale(0.8, 0.8, 1);
     //x和y的最终值为1
-    [UIView animateWithDuration:1 animations:^{
-        cell.layer.transform = CATransform3DMakeScale(1, 1, 1);
-    }];
+    //[UIView animateWithDuration:1 animations:^{
+        //cell.layer.transform = CATransform3DMakeScale(1, 1, 1);
+    //}];
 }
 
 /*
