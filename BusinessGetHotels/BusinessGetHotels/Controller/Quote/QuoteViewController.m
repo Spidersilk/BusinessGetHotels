@@ -187,6 +187,8 @@
     [self refreshPage];
     if (_Arr.count == 0) {
         [self nothingForTableView];
+    }else{
+        [self refreshPage];
     }
 }
 //刷新指示器的事件
@@ -240,6 +242,12 @@
             for(NSDictionary *dict in content){
                 _quotemodel = [[QuoteModel alloc]initWhitDictionary:dict];
                 [_Arr addObject:_quotemodel];
+            }
+            //当数组有数据时将图片隐藏，反之隐藏
+            if (_Arr.count == 0) {
+                _QuoteNothingImg.hidden = NO;
+            }else{
+                _QuoteNothingImg.hidden = YES;
             }
             [_quoteTableView reloadData];
         }else{
@@ -297,17 +305,19 @@
     _aviView.hidden = NO;
     [self layoutConstraints:0];
     [self addTapGestureRecognizer:_aviView];
-    }
+    
+}
 //到达时间的按钮事件
 - (IBAction)arriveTime:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 1;
     _aviView.hidden = NO;
     [self layoutConstraints:0];
+    [self addTapGestureRecognizer:_aviView];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm";
     NSDate *moDate = [formatter dateFromString:_thatDate];
     _quoteDatePicker.minimumDate = [NSDate dateWithTimeInterval:60*60 sinceDate:moDate];
-    [self addTapGestureRecognizer:_aviView];
+    
 }
 
 //确定按钮事件
@@ -359,16 +369,16 @@
     _placeTextField.text = @"";
     _kgTextField.text = @"";
     
-    [_startSiteBtn setTitle:@"选择出发地" forState:UIControlStateNormal];
+    //[_startSiteBtn setTitle:@"选择出发地" forState:UIControlStateNormal];
     [_startSiteBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     _startSiteBtn.selected = NO;
-    [_endSiteBtn setTitle:@"选择目的地" forState:UIControlStateNormal];
+    //[_endSiteBtn setTitle:@"选择目的地" forState:UIControlStateNormal];
     [_endSiteBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     _endSiteBtn.selected = NO;
-    [_takeoffBtn setTitle:@"选择起飞日期 时间" forState:UIControlStateNormal];
+    //[_takeoffBtn setTitle:@"选择起飞日期 时间" forState:UIControlStateNormal];
     [_takeoffBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     _takeoffBtn.selected = NO;
-    [_arriveBtn setTitle:@"选择到达日期 时间" forState:UIControlStateNormal];
+    //[_arriveBtn setTitle:@"选择到达日期 时间" forState:UIControlStateNormal];
     [_arriveBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     _arriveBtn.selected = NO;
     
@@ -400,6 +410,7 @@
             //设置按钮时间
             [_arriveBtn setTitle:nextdate forState:UIControlStateNormal];
         }
+        
     }else{
         //日期转换时间戳
         _endTime = [date timeIntervalSince1970]*1000;
