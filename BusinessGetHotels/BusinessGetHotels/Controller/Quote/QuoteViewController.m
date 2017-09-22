@@ -79,7 +79,7 @@
 //将要来到此页面（显示导航栏）
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:0 animated:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -96,11 +96,11 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     //是否需要毛玻璃的效果
     //self.navigationController.navigationBar.translucent = YES;
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
+    //UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
     //导航栏的返回按钮只保留那个箭头，去掉后边的文字
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    self.navigationItem.backBarButtonItem = item;
+    //[[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+    //[[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    //self.navigationItem.backBarButtonItem = item;
 }
 
 #pragma mark - tableview
@@ -391,7 +391,7 @@
 - (IBAction)cancel:(UIBarButtonItem *)sender {
     _aviView.hidden = YES;
     //调用Datepicker动画
-    [self layoutConstraints:-260];
+    [self layoutConstraints:-320];
     
 }
 //toolbar上的确定按钮事件
@@ -429,7 +429,7 @@
         _arriveBtn.backgroundColor = [UIColor whiteColor];
     }
     _aviView.hidden = YES;
-    [self layoutConstraints:-260];
+    [self layoutConstraints:-320];
 }
 //Datepicker动画
 - (void)layoutConstraints:(CGFloat)space {
@@ -437,7 +437,7 @@
     if (space == 0) {
         distance = _yPosition.constant;
     } else {
-        distance = 260 - _yPosition.constant;
+        distance = 320 - _yPosition.constant;
     }
     //CGFloat percentage = distance / 200.f;
     [UIView animateWithDuration:0.3 animations:^{
@@ -450,7 +450,7 @@
 - (void)tapClick: (UITapGestureRecognizer *)tap {
 //    if (tap.state == UIGestureRecognizerStateRecognized) {
 //        NSLog(@"%@",@"你单击了");
-        [self layoutConstraints:-260];
+        [self layoutConstraints:-320];
         _aviView.hidden = YES;
 //}
 }

@@ -352,11 +352,11 @@
     if (tableView == _canQuoteTableView) {
         CanQuoteTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CanQuoteCell" forIndexPath:indexPath];
         
-        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        //NSDateFormatter *format = [[NSDateFormatter alloc] init];
         
-        format.AMSymbol = @"上午";
-        format.PMSymbol = @"下午";
-        format.dateFormat = @"yyyy-MM-dd aaa";
+        //format.AMSymbol = @"上午";
+        //format.PMSymbol = @"下午";
+        //format.dateFormat = @"yyyy-MM-dd aaa";
         AviationModel * aviationmodel = _canQuoteArr[indexPath.section];
         //cell.timeLabel.text = [Utilities dateStrFromCstampTime:callBack.callTime withDateFormat:@"yyyy-MM-dd HH:mm"];
         NSString *endTimeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"MM-dd"];
@@ -369,9 +369,22 @@
         
         //NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:aviationmodel.start_time/1000];
         
-        NSString *timeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"aaah"];
-        cell.timeLbl.text = [NSString stringWithFormat:@"%@点左右",timeStr];//入住时间
-        
+        //NSString *timeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"aaah"];
+        //cell.timeLbl.text = [NSString stringWithFormat:@"%@点左右",timeStr];//入住时间
+        NSString *timeStr = [Utilities dateStrFromCstampTime:aviationmodel.start_time withDateFormat:@"HH"];
+        NSInteger time = [timeStr intValue];
+        if (time >= 0 && time <= 6) {
+            cell.timeLbl.text = [NSString stringWithFormat:@"凌晨%ld点左右",(long)time];//入住时间
+        }else if (time > 6 && time <12 ) {
+            cell.timeLbl.text = [NSString stringWithFormat:@"上午%ld点左右",(long)time];//入住时间
+        }else if (time >= 12 && time < 13) {
+            cell.timeLbl.text = [NSString stringWithFormat:@"中午%@点左右",timeStr];//入住时间
+            
+        }else if (time >= 13 && time <= 17) {
+            cell.timeLbl.text = [NSString stringWithFormat:@"下午%ld点左右",time - 12];//入住时间
+        }else {
+            cell.timeLbl.text = [NSString stringWithFormat:@"晚上%ld点左右",time - 12];//入住时间
+        }
         
         cell.cabinLbl.text = aviationmodel.aviation_demand_detail;//机舱
         //cell.canQuoteImgView.image = [UIImage imageNamed:@""];
