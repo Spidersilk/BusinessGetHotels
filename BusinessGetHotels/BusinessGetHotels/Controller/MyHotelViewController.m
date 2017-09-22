@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSMutableArray *arr;
 @property (strong, nonatomic) NSArray *arrType;
 @property (strong, nonatomic) UIActivityIndicatorView *avi;
+@property (strong, nonatomic) UIImageView *allOrdersNothingImg;
 - (IBAction)btnAction:(UIButton *)sender forEvent:(UIEvent *)event;
 @end
 
@@ -38,6 +39,9 @@
    _nsmArr = [NSMutableArray new];
     _nsmArrType = [NSMutableArray new];
     _arr = [NSMutableArray new];
+    if(_nsmArr.count == 0){
+        [self nothingForTableView];
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(acquireRef) name:@"AlipayResult" object:nil];
             // Do any additional setup after loading the view.
 }
@@ -55,6 +59,11 @@
 //    [_nsmArr removeAllObjects];
 //    [self netRequest];
 //}
+-(void)nothingForTableView{
+    _allOrdersNothingImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"no_things"]];
+    _allOrdersNothingImg.frame = CGRectMake((UI_SCREEN_W - 100) / 2, 200 , 100, 100);
+    [_myHotelTabelView addSubview:_allOrdersNothingImg];
+}
 //下拉刷新
 - (void)setRefreshControl{
      UIRefreshControl *acquireRef = [UIRefreshControl new];
@@ -76,8 +85,9 @@
         //NSLog(@"responseObject = %@",responseObject);
         UIRefreshControl *ref = (UIRefreshControl *)[_myHotelTabelView viewWithTag:10001];
         [ref endRefreshing];
-        if([responseObject[@"result"] integerValue] == 1)
-        {
+        NSLog(@"responseObject %@",responseObject[@"result"]);
+        //if([responseObject[@"result"] integerValue] == 1)
+        //{
             [_avi stopAnimating];
             _arr = responseObject[@"content"];
             //NSLog(@"%@",arr);
@@ -93,12 +103,17 @@
                 id roomInfoObj = [roomInfoJSONStr JSONCol];
                 [_nsmArrType addObject:roomInfoObj];
             }
-             [_myHotelTabelView reloadData];
+        if (_nsmArr.count == 0) {
+            _allOrdersNothingImg.hidden = NO;
         }else{
-            [_avi stopAnimating];
-            [Utilities popUpAlertViewWithMsg:@"请求发生了错误，请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
-            }];
+            _allOrdersNothingImg.hidden = YES;
         }
+             [_myHotelTabelView reloadData];
+            //}else{
+            //[_avi stopAnimating];
+            //[Utilities popUpAlertViewWithMsg:@"请求发生了错误，请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
+            //}];
+       // }
     } failure:^(NSInteger statusCode, NSError *error) {
         [_avi stopAnimating];
         UIRefreshControl *ref = (UIRefreshControl *)[_myHotelTabelView viewWithTag:10004];
@@ -114,13 +129,13 @@
     //NSLog(@"%ld",(long)hotelModel.hotelId);
     [RequestAPI requestURL:@"/deleteHotel" withParameters:dict andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         //NSLog(@"delete responseObject = %@",responseObject);
-        if([responseObject[@"result"] integerValue] == 1){
+        //if([responseObject[@"result"] integerValue] == 1){
             [_avi stopAnimating];
            //[_myHotelTabelView reloadData];
             [self netRequest];
-        }else{
+        //}else{
             [_avi stopAnimating];
-       }
+       //}
     } failure:^(NSInteger statusCode, NSError *error) {
         [_avi stopAnimating];
         [Utilities forceLogoutCheck:statusCode fromViewController:self];
@@ -156,9 +171,9 @@
     //hotelModel = _nsmArr[indexPath.row];
     //NSLog(@"_nsmArrType = %@",_nsmArrType);
     NSArray *arrType = _nsmArrType[indexPath.row];
-    NSLog(@"arrType = %@",arrType);
+    //NSLog(@"arrType = %@",arrType);
     //for(_arrType in _nsmArrType){
-        NSLog(@"_ArrType = %@",_arrType);
+        //NSLog(@"_ArrType = %@",_arrType);
     if(arrType.count == 4){
                 cell.breakfastLab.text = arrType[1];
                 cell.bedTypeLab.text = arrType[2];
@@ -217,6 +232,9 @@
         
         [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self deleteRequest:indexPath];
+            if(_nsmArr.count == 0){
+                [self nothingForTableView];
+            }
             //[_nsmArr removeObjectAtIndex:indexPath.row];//删除数据
             //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];//删除行cell
             //[self netRequest];

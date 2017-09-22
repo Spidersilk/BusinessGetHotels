@@ -214,7 +214,7 @@
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"发布" style:UIBarButtonItemStylePlain target:self action:@selector(payAction)];
     self.navigationItem.rightBarButtonItem = right;
     //导航栏的返回按钮只保留那个箭头，去掉后边的文字
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+    //[[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsCompact];
 }
 - (void)uilayout{
     //设置按钮的边框
